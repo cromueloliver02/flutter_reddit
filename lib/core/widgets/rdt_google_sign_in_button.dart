@@ -4,12 +4,17 @@ import '../constants/constants.dart';
 import '../utils/utils.dart';
 
 class RDTGoogleSignInButton extends StatelessWidget {
-  const RDTGoogleSignInButton({super.key});
+  final VoidCallback onPressed;
+
+  const RDTGoogleSignInButton({
+    super.key,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      onPressed: () {},
+      onPressed: onPressed,
       icon: Image.asset(kGoogleLogoPath, width: 35),
       label: const Text(
         'Continue with Google',

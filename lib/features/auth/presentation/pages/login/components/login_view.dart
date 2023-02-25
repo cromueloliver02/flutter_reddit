@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/constants/constants.dart';
 import '../../../../../../core/widgets/widgets.dart';
+import '../../../cubits/sign_in/sign_in_cubit.dart';
 import 'login_app_bar.dart';
 
 class LoginView extends StatelessWidget {
@@ -34,9 +36,11 @@ class LoginView extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: RDTGoogleSignInButton(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: RDTGoogleSignInButton(
+              onPressed: context.read<SignInCubit>().signInWithGoogle,
+            ),
           ),
         ],
       ),
