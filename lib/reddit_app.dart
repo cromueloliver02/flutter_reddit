@@ -10,7 +10,9 @@ class RedditApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Reddit',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      themeMode: ThemeMode.dark,
+      theme: AppTheme.lightModeAppTheme,
+      darkTheme: AppTheme.darkModeAppTheme,
       routerConfig: AppRouter.router,
     );
   }
