@@ -6,7 +6,7 @@ abstract class GoogleSignInDataSource {
   Future<fb_auth.OAuthCredential> getOAuthCredential();
 }
 
-class GoogleSignInDataSourceImpl extends GoogleSignInDataSource {
+class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
   final GoogleSignIn _googleSignIn;
 
   GoogleSignInDataSourceImpl({
