@@ -1,8 +1,6 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/typedefs.dart';
 import '../entities/entities.dart';
 
 abstract class AuthRepository {
-  Future<Either<Failure, User>> signInWithGoogle();
+  FutureEither<User> signInWithGoogle();
 }

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import '../../../../core/constants/constants.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/typedefs.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
@@ -23,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  Future<Either<Failure, User>> signInWithGoogle() async {
+  FutureEither<User> signInWithGoogle() async {
     try {
       final fb_auth.OAuthCredential oAuthCredential =
           await _googleSignInDataSource.getOAuthCredential();
