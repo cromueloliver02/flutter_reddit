@@ -9,7 +9,7 @@ abstract class GoogleSignInDataSource {
 class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
   final GoogleSignIn _googleSignIn;
 
-  GoogleSignInDataSourceImpl({
+  const GoogleSignInDataSourceImpl({
     required GoogleSignIn googleSignIn,
   }) : _googleSignIn = googleSignIn;
 

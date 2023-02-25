@@ -10,7 +10,7 @@ abstract class FirebaseAuthDataSource {
 class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
   final fb_auth.FirebaseAuth _firebaseAuth;
 
-  FirebaseAuthDataSourceImpl({
+  const FirebaseAuthDataSourceImpl({
     required fb_auth.FirebaseAuth firebaseAuth,
   }) : _firebaseAuth = firebaseAuth;
 
