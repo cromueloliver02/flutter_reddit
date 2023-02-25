@@ -8,9 +8,6 @@ class UnexpectedFailure extends Failure {
   });
 
   @override
-  List<Object?> get props => [message, exception];
-
-  @override
   String toString() =>
       'UnexpectedFailure(message: $message, exception: $exception)';
 }

@@ -8,9 +8,6 @@ class ServerFailure extends Failure {
   });
 
   @override
-  List<Object?> get props => [message, exception];
-
-  @override
   String toString() =>
       'ServerFailure(message: $message, exception: $exception)';
 }

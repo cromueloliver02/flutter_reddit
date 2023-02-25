@@ -8,9 +8,6 @@ class NetworkFailure extends Failure {
   });
 
   @override
-  List<Object?> get props => [message, exception];
-
-  @override
   String toString() =>
       'NetworkFailure(message: $message, exception: $exception)';
 }
