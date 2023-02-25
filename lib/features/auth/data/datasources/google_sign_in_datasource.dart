@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class GoogleSignInDataSource {
-  Future<fb_auth.OAuthCredential> getUserCredential();
+  Future<fb_auth.OAuthCredential> getOAuthCredential();
 }
 
 class GoogleSignInDataSourceImpl extends GoogleSignInDataSource {
@@ -14,7 +14,7 @@ class GoogleSignInDataSourceImpl extends GoogleSignInDataSource {
   }) : _googleSignIn = googleSignIn;
 
   @override
-  Future<fb_auth.OAuthCredential> getUserCredential() async {
+  Future<fb_auth.OAuthCredential> getOAuthCredential() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
