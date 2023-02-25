@@ -7,6 +7,7 @@ class RedditApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Reddit',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const Scaffold(
         body: Center(
