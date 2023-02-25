@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
-import 'package:flutter/foundation.dart';
+
+import '../../../../core/errors/exceptions/exceptions.dart';
 
 abstract class FirebaseAuthDataSource {
   Future<fb_auth.UserCredential> signInWithCredential(
@@ -23,9 +24,10 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
           await _firebaseAuth.signInWithCredential(oAuthCredential);
 
       return userCredential;
-    } catch (err) {
-      debugPrint(err.toString());
-      rethrow;
+    } on fb_auth.FirebaseAuthException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
   }
 }

@@ -1,10 +1,13 @@
+import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
-import 'package:flutter/foundation.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/errors/exceptions/exceptions.dart';
+import '../../../../core/errors/failures/failures.dart';
+import '../../domain/entities/entities.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
-import '../models/user_model.dart';
+import '../models/models.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignInDataSource _googleSignInDataSource;
@@ -20,15 +23,13 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  Future<void> signInWithGoogle() async {
+  Future<Either<Failure, User>> signInWithGoogle() async {
     try {
       final fb_auth.OAuthCredential oAuthCredential =
           await _googleSignInDataSource.getOAuthCredential();
 
       final fb_auth.UserCredential userCredential =
           await _firebaseAuthDataSource.signInWithCredential(oAuthCredential);
-
-      if (!userCredential.additionalUserInfo!.isNewUser) return;
 
       final UserModel user = UserModel(
         id: userCredential.user!.uid,
@@ -40,10 +41,17 @@ class AuthRepositoryImpl implements AuthRepository {
         awards: const <String>[],
       );
 
-      await _userRemoteDataSource.post(user);
+      if (userCredential.additionalUserInfo!.isNewUser) {
+        await _userRemoteDataSource.post(user);
+      }
+
+      return Right(user);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
     } catch (err) {
-      debugPrint(err.toString());
-      rethrow;
+      return Left(UnexpectedFailure(exception: err));
     }
   }
 }

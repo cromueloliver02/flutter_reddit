@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../../../core/constants/firebase_constants.dart';
+import '../../../../core/errors/exceptions/exceptions.dart';
 import '../models/models.dart';
 
 abstract class UserRemoteDataSource {
@@ -22,9 +22,10 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
           .collection(kUsersCollection)
           .doc(user.id)
           .set(user.toMap());
-    } catch (err) {
-      debugPrint(err.toString());
-      rethrow;
+    } on FirebaseException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
   }
 }

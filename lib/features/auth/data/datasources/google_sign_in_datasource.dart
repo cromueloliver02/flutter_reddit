@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
-import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+import '../../../../core/errors/exceptions/exceptions.dart';
 
 abstract class GoogleSignInDataSource {
   Future<fb_auth.OAuthCredential> getOAuthCredential();
@@ -30,9 +31,8 @@ class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
       );
 
       return oAuthCredential;
-    } catch (err) {
-      debugPrint(err.toString());
-      rethrow;
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
   }
 }
