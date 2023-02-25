@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
+import 'presentation/utils/utils.dart';
+
 class RedditApp extends StatelessWidget {
   const RedditApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Reddit',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Scaffold(
-        body: Center(
-          child: Text('REDDIT CLONE APP'),
-        ),
-      ),
+      routerConfig: AppRouter.router,
     );
   }
 }
