@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:flutter/foundation.dart';
-import 'package:flutter_reddit/features/auth/data/datasources/user_remote_datasource.dart';
-import 'package:flutter_reddit/features/auth/data/models/user_model.dart';
 
 import '../../../../core/constants/constants.dart';
-import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
+import '../models/user_model.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignInDataSource _googleSignInDataSource;
