@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   static final GoRoute route = GoRoute(
     path: '/',
     name: name,
-    builder: (BuildContext context, GoRouterState state) => const HomePage(),
+    builder: (BuildContext ctx, GoRouterState state) => const HomePage(),
   );
 
   const HomePage({super.key});
