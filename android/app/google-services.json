@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "911926943613-eg3mumj84i2p25h1e2pc7cpb1l4tpd7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cromdev.flutterReddit",
+            "certificate_hash": "574d62fe27b046608c177fbfe03fca43c7a03239"
+          }
+        },
+        {
           "client_id": "911926943613-6vpte2fk0ju011g9ugcoscek9eljojbu.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "911926943613-6vpte2fk0ju011g9ugcoscek9eljojbu.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "911926943613-otnqefqrt2mcaaiqgb8n4l37ek8q7puk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cromdev.flutterReddit"
+              }
             }
           ]
         }

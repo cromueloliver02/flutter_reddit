@@ -77,10 +77,10 @@
 		97C146E51CF9000F007C117D = {
 			isa = PBXGroup;
 			children = (
+				D9D3098441CB41C123FF1CCC /* GoogleService-Info.plist */,
 				9740EEB11CF90186004384FC /* Flutter */,
 				97C146F01CF9000F007C117D /* Runner */,
 				97C146EF1CF9000F007C117D /* Products */,
-				D9D3098441CB41C123FF1CCC /* GoogleService-Info.plist */,
 				F9455EC1DFEBE59E6CD1185E /* Pods */,
 				9A9343246B3C411D02A41D0D /* Frameworks */,
 			);
@@ -124,7 +124,6 @@
 				A4C31BDB2534776EB8D38982 /* Pods-Runner.release.xcconfig */,
 				C97B4B512A3B82393B9EFC52 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
