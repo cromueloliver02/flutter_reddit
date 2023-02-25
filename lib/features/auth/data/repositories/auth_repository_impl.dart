@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:flutter/foundation.dart';
+import 'package:flutter_reddit/features/auth/data/datasources/user_remote_datasource.dart';
+import 'package:flutter_reddit/features/auth/data/models/user_model.dart';
 
 import '../../../../core/constants/constants.dart';
 import '../../domain/entities/user_entity.dart';
@@ -9,12 +11,15 @@ import '../datasources/datasources.dart';
 class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignInDataSource _googleSignInDataSource;
   final FirebaseAuthDataSource _firebaseAuthDataSource;
+  final UserRemoteDataSource _userRemoteDataSource;
 
   AuthRepositoryImpl({
     required GoogleSignInDataSource googleSignInDataSource,
     required FirebaseAuthDataSource firebaseAuthDataSource,
+    required UserRemoteDataSource userRemoteDataSource,
   })  : _googleSignInDataSource = googleSignInDataSource,
-        _firebaseAuthDataSource = firebaseAuthDataSource;
+        _firebaseAuthDataSource = firebaseAuthDataSource,
+        _userRemoteDataSource = userRemoteDataSource;
 
   @override
   Future<void> signInWithGoogle() async {
@@ -25,7 +30,9 @@ class AuthRepositoryImpl implements AuthRepository {
       final fb_auth.UserCredential userCredential =
           await _firebaseAuthDataSource.signInWithCredential(oAuthCredential);
 
-      final User user = User(
+      if (!userCredential.additionalUserInfo!.isNewUser) return;
+
+      final UserModel user = UserModel(
         id: userCredential.user!.uid,
         name: userCredential.user?.displayName ?? 'No name',
         profilePic: userCredential.user?.photoURL ?? kAvatarDefault,
@@ -34,6 +41,8 @@ class AuthRepositoryImpl implements AuthRepository {
         karma: 0,
         awards: const <String>[],
       );
+
+      await _userRemoteDataSource.post(user);
     } catch (err) {
       debugPrint(err.toString());
       rethrow;
