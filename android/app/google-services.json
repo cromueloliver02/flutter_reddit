@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "911926943613",
+    "project_id": "flutter-reddit-02",
+    "storage_bucket": "flutter-reddit-02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:911926943613:android:477498973994ff268d7614",
+        "android_client_info": {
+          "package_name": "com.cromdev.flutterReddit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "911926943613-6vpte2fk0ju011g9ugcoscek9eljojbu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBztP6H5mRHiQ_7Etbr9YJTnmsWhYKLj0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911926943613-6vpte2fk0ju011g9ugcoscek9eljojbu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
