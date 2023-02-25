@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'presentation/utils/utils.dart';
+import 'core/utils/utils.dart';
 
 class RedditApp extends StatelessWidget {
   const RedditApp({super.key});
