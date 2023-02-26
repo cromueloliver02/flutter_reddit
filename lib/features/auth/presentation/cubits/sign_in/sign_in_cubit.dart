@@ -21,7 +21,8 @@ class SignInCubit extends Cubit<SignInState> {
   void signInWithGoogle() async {
     emit(state.copyWith(status: () => SignInStatus.loading));
 
-    final Either<Failure, User> eitherUser = await _loginWithGoogle(NoParams());
+    final Either<Failure, User?> eitherUser =
+        await _loginWithGoogle(NoParams());
 
     eitherUser.fold(
       (Failure error) {
@@ -32,7 +33,7 @@ class SignInCubit extends Cubit<SignInState> {
 
         debugPrint(error.toString());
       },
-      (User user) => emit(state.copyWith(
+      (User? user) => emit(state.copyWith(
         status: () => SignInStatus.success,
       )),
     );

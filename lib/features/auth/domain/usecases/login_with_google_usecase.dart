@@ -3,7 +3,7 @@ import '../../../../core/usecases/usecase.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class LoginWithGoogle implements UseCase<User, NoParams> {
+class LoginWithGoogle implements UseCase<User?, NoParams> {
   final AuthRepository _authRepository;
 
   const LoginWithGoogle({
@@ -11,7 +11,7 @@ class LoginWithGoogle implements UseCase<User, NoParams> {
   }) : _authRepository = authRepository;
 
   @override
-  FutureEither<User> call(NoParams params) {
+  FutureEither<User?> call(NoParams params) {
     return _authRepository.signInWithGoogle();
   }
 }

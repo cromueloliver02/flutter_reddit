@@ -22,15 +22,22 @@ class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
 
-      // if (googleAuth == null) return;
+      if (googleAuth == null) {
+        // null googleAuth is a false alert exception, this happens when the
+        // user cancelled the authentication process, throw
+        // GoogleSignInCancelledException to avoid crashing the app
+        throw GoogleSignInCancelledException();
+      }
 
       final fb_auth.OAuthCredential oAuthCredential =
           fb_auth.GoogleAuthProvider.credential(
-        idToken: googleAuth?.idToken,
-        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth.idToken,
+        accessToken: googleAuth.accessToken,
       );
 
       return oAuthCredential;
+    } on GoogleSignInCancelledException {
+      rethrow;
     } catch (err, stackTrace) {
       throw UnexpectedException(error: err, stackTrace: stackTrace);
     }

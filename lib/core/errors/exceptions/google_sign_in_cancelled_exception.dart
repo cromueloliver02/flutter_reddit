@@ -1,0 +1,1 @@
+class GoogleSignInCancelledException implements Exception {}

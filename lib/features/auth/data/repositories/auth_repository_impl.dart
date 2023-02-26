@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  FutureEither<User> signInWithGoogle() async {
+  FutureEither<User?> signInWithGoogle() async {
     try {
       final fb_auth.OAuthCredential oAuthCredential =
           await _googleSignInDataSource.getOAuthCredential();
@@ -49,6 +49,8 @@ class AuthRepositoryImpl implements AuthRepository {
       return Right(user);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
+    } on GoogleSignInCancelledException {
+      return const Right(null);
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {
