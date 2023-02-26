@@ -24,6 +24,9 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
+  Stream<fb_auth.User?> get user => _firebaseAuthDataSource.user;
+
+  @override
   FutureEither<User?> signInWithGoogle() async {
     try {
       final fb_auth.OAuthCredential oAuthCredential =
