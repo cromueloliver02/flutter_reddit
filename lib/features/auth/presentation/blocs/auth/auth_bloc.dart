@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../domain/usecases/usecases.dart';
 
 part 'auth_event.dart';
@@ -23,8 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: () => AuthStatus.loading));
 
-    final Stream<Either<Failure, fb_auth.User?>> eitherAuthStream =
-        _getAuthUser();
+    final StreamEither<fb_auth.User?> eitherAuthStream = _getAuthUser();
 
     await emit.forEach<Either<Failure, fb_auth.User?>>(
       eitherAuthStream,
