@@ -12,11 +12,11 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final GetAuthUser _getAuthUser;
+  final GetAuthStateChanges _getAuthStateChanges;
 
   AuthBloc({
-    required GetAuthUser getAuthUser,
-  })  : _getAuthUser = getAuthUser,
+    required GetAuthStateChanges getAuthStateChanges,
+  })  : _getAuthStateChanges = getAuthStateChanges,
         super(AuthState.initial()) {
     on<AuthStarted>(_onAuthStarted);
   }
@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: () => AuthStatus.loading));
 
-    final StreamEither<fb_auth.User?> eitherAuthStream = _getAuthUser();
+    final StreamEither<fb_auth.User?> eitherAuthStream = _getAuthStateChanges();
 
     await emit.forEach<Either<Failure, fb_auth.User?>>(
       eitherAuthStream,

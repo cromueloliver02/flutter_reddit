@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import '../../../../core/errors/exceptions/exceptions.dart';
 
 abstract class FirebaseAuthDataSource {
-  Stream<fb_auth.User?> get user;
+  Stream<fb_auth.User?> get authStateChanges;
   Future<fb_auth.UserCredential> signInWithCredential(
     fb_auth.OAuthCredential oAuthCredential,
   );
@@ -17,7 +17,9 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
   }) : _firebaseAuth = firebaseAuth;
 
   @override
-  Stream<fb_auth.User?> get user => _firebaseAuth.authStateChanges();
+  Stream<fb_auth.User?> get authStateChanges {
+    return _firebaseAuth.authStateChanges();
+  }
 
   @override
   Future<fb_auth.UserCredential> signInWithCredential(

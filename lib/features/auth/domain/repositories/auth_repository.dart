@@ -4,6 +4,6 @@ import '../../../../core/typedefs.dart';
 import '../entities/entities.dart';
 
 abstract class AuthRepository {
-  StreamEither<fb_auth.User?> user();
+  StreamEither<fb_auth.User?> get authStateChanges;
   FutureEither<User?> signInWithGoogle();
 }

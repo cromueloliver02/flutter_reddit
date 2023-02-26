@@ -41,13 +41,15 @@ void setup() {
   sl.registerLazySingleton<LoginWithGoogle>(
     () => LoginWithGoogle(authRepository: sl<AuthRepository>()),
   );
-  sl.registerLazySingleton<GetAuthUser>(
-    () => GetAuthUser(authRepository: sl<AuthRepository>()),
+  sl.registerLazySingleton<GetAuthStateChanges>(
+    () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
   );
 
   // blocs
   sl.registerFactory<AuthBloc>(
-    () => AuthBloc(getAuthUser: sl<GetAuthUser>())..add(AuthStarted()),
+    () => AuthBloc(
+      getAuthStateChanges: sl<GetAuthStateChanges>(),
+    )..add(AuthStarted()),
   );
 
   // cubits

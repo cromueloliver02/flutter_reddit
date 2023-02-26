@@ -4,14 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import '../../../../core/errors/failures/failures.dart';
 import '../repositories/repositories.dart';
 
-class GetAuthUser {
+class GetAuthStateChanges {
   final AuthRepository _authRepository;
 
-  const GetAuthUser({
+  const GetAuthStateChanges({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 
   Stream<Either<Failure, fb_auth.User?>> call() {
-    return _authRepository.user();
+    return _authRepository.authStateChanges;
   }
 }
