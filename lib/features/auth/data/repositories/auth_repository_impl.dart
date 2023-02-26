@@ -24,7 +24,17 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  Stream<fb_auth.User?> get user => _firebaseAuthDataSource.user;
+  Stream<Either<Failure, fb_auth.User?>> user() {
+    try {
+      return _firebaseAuthDataSource.user.handleError((error) {
+        return Stream.value(Left(UnexpectedFailure(exception: error)));
+      }).map((fb_auth.User? user) {
+        return Right(user);
+      });
+    } catch (err) {
+      return Stream.value(Left(UnexpectedFailure(exception: err)));
+    }
+  }
 
   @override
   FutureEither<User?> signInWithGoogle() async {

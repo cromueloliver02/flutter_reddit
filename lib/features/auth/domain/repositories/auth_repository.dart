@@ -1,9 +1,11 @@
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
+
+import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
 import '../entities/entities.dart';
 
-import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
-
 abstract class AuthRepository {
-  Stream<fb_auth.User?> get user;
+  Stream<Either<Failure, fb_auth.User?>> user();
   FutureEither<User?> signInWithGoogle();
 }

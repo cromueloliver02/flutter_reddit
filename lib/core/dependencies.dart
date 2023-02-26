@@ -7,6 +7,7 @@ import '../features/auth/data/datasources/datasources.dart';
 import '../features/auth/data/repositories/repositories.dart';
 import '../features/auth/domain/repositories/repositories.dart';
 import '../features/auth/domain/usecases/usecases.dart';
+import '../features/auth/presentation/blocs/blocs.dart';
 import '../features/auth/presentation/cubits/cubits.dart';
 
 // service locator
@@ -40,8 +41,14 @@ void setup() {
   sl.registerLazySingleton<LoginWithGoogle>(
     () => LoginWithGoogle(authRepository: sl<AuthRepository>()),
   );
+  sl.registerLazySingleton<GetAuthUser>(
+    () => GetAuthUser(authRepository: sl<AuthRepository>()),
+  );
 
   // blocs
+  sl.registerFactory<AuthBloc>(
+    () => AuthBloc(getAuthUser: sl<GetAuthUser>())..add(AuthStarted()),
+  );
 
   // cubits
   sl.registerFactory<SignInCubit>(
