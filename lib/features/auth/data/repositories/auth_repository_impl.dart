@@ -45,19 +45,22 @@ class AuthRepositoryImpl implements AuthRepository {
       final fb_auth.UserCredential userCredential =
           await _firebaseAuthDataSource.signInWithCredential(oAuthCredential);
 
-      final UserModel user = UserModel(
-        id: userCredential.user!.uid,
-        name: userCredential.user?.displayName ?? 'No name',
-        profilePic: userCredential.user?.photoURL ?? kAvatarDefault,
-        banner: kBannerDefault,
-        isAuthenticated: true,
-        karma: 0,
-        awards: const <String>[],
-      );
-
       if (userCredential.additionalUserInfo!.isNewUser) {
-        await _userRemoteDataSource.post(user);
+        final UserModel payload = UserModel(
+          id: userCredential.user!.uid,
+          name: userCredential.user?.displayName ?? 'No name',
+          profilePic: userCredential.user?.photoURL ?? kAvatarDefault,
+          banner: kBannerDefault,
+          isAuthenticated: true,
+          karma: 0,
+          awards: const <String>[],
+        );
+
+        await _userRemoteDataSource.post(payload);
       }
+
+      final User user =
+          await _userRemoteDataSource.getById(userCredential.user!.uid).first;
 
       return Right(user);
     } on ServerException catch (err) {
