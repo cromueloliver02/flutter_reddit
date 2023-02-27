@@ -6,7 +6,7 @@ import '../../domain/entities/entities.dart';
 import '../models/models.dart';
 
 abstract class UserRemoteDataSource {
-  Future<User> getById(String userId);
+  Stream<User> getById(String userId);
   Future<void> post(UserModel user);
 }
 
@@ -18,14 +18,15 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Future<User> getById(String userId) async {
+  Stream<User> getById(String userId) {
     try {
-      final DocumentSnapshot userDoc =
-          await _firestore.collection(kUsersCollection).doc(userId).get();
+      final Stream<User> userStream = _firestore
+          .collection(kUsersCollection)
+          .doc(userId)
+          .snapshots()
+          .map((DocumentSnapshot userDoc) => UserModel.fromDoc(userDoc));
 
-      final User user = UserModel.fromDoc(userDoc);
-
-      return user;
+      return userStream;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
