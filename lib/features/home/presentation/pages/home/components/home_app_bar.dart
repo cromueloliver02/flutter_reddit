@@ -7,6 +7,8 @@ import '../../../../../auth/presentation/blocs/blocs.dart';
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
 
+  void _openDrawer(BuildContext ctx) => Scaffold.of(ctx).openDrawer();
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -14,7 +16,7 @@ class HomeAppBar extends StatelessWidget {
       centerTitle: false,
       leading: IconButton(
         icon: const Icon(Icons.menu),
-        onPressed: () {},
+        onPressed: () => _openDrawer(context),
       ),
       actions: [
         IconButton(

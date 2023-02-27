@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'community_list_drawer.dart';
 import 'home_app_bar.dart';
 
 class HomeView extends StatelessWidget {
@@ -12,6 +13,7 @@ class HomeView extends StatelessWidget {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: HomeAppBar(),
       ),
+      drawer: CommunityListDrawer(),
       body: Center(
         child: Text('REDDIT CLONE APP'),
       ),
