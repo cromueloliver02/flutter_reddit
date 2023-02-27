@@ -10,8 +10,8 @@ class RedditApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>.value(
-      value: sl<AuthBloc>(),
+    return BlocProvider<AuthBlocImpl>.value(
+      value: sl<AuthBlocImpl>(),
       child: MaterialApp.router(
         title: 'Reddit',
         debugShowCheckedModeBanner: false,

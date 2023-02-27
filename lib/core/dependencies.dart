@@ -9,6 +9,7 @@ import '../features/auth/domain/repositories/repositories.dart';
 import '../features/auth/domain/usecases/usecases.dart';
 import '../features/auth/presentation/blocs/blocs.dart';
 import '../features/auth/presentation/cubits/cubits.dart';
+import 'blocs/blocs.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -46,8 +47,8 @@ void setup() {
   );
 
   // blocs
-  sl.registerFactory<AuthBloc>(
-    () => AuthBloc(
+  sl.registerFactory<AuthBlocImpl>(
+    () => AuthBlocImpl(
       getAuthStateChanges: sl<GetAuthStateChanges>(),
     )..add(AuthStarted()),
   );
