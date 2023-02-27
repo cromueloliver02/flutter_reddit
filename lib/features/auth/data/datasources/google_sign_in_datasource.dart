@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../core/errors/exceptions/exceptions.dart';
@@ -38,6 +39,8 @@ class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
       return oAuthCredential;
     } on GoogleSignInCancelledException {
       rethrow;
+    } on PlatformException catch (err, stackTrace) {
+      throw NetworkException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
       throw UnexpectedException(error: err, stackTrace: stackTrace);
     }

@@ -77,6 +77,8 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Right(null);
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
+    } on NetworkException catch (err) {
+      return Left(NetworkFailure(exception: err));
     } catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }
