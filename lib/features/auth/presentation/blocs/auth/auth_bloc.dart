@@ -1,13 +1,13 @@
 // ignore_for_file: override_on_non_overriding_member
 
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/blocs/blocs.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
+import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class AuthBlocImpl extends Bloc<AuthEvent, AuthState> implements AuthBloc {
@@ -24,11 +24,11 @@ class AuthBlocImpl extends Bloc<AuthEvent, AuthState> implements AuthBloc {
   void _onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: () => AuthStatus.loading));
 
-    final StreamEither<fb_auth.User?> eitherAuthStream = _getAuthStateChanges();
+    final StreamEither<User?> eitherAuthStream = _getAuthStateChanges();
 
-    await emit.forEach<Either<Failure, fb_auth.User?>>(
+    await emit.forEach<Either<Failure, User?>>(
       eitherAuthStream,
-      onData: (Either<Failure, fb_auth.User?> eitherUser) {
+      onData: (Either<Failure, User?> eitherUser) {
         if (eitherUser.isLeft()) {
           late final Failure error;
           eitherUser.leftMap((Failure failure) => error = failure);
@@ -41,16 +41,18 @@ class AuthBlocImpl extends Bloc<AuthEvent, AuthState> implements AuthBloc {
           );
         }
 
-        final fb_auth.User? user = eitherUser.getOrElse(() => null);
+        final User? user = eitherUser.getOrElse(() => null);
 
         if (user == null) {
           return state.copyWith(
+            user: () => null,
             status: () => AuthStatus.success,
             userAuthStatus: () => UserAuthStatus.unauthenticated,
           );
         }
 
         return state.copyWith(
+          user: () => user,
           status: () => AuthStatus.success,
           userAuthStatus: () => UserAuthStatus.authenticated,
         );

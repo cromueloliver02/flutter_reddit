@@ -24,15 +24,23 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  Stream<Either<Failure, fb_auth.User?>> get authStateChanges {
+  Stream<Either<Failure, User?>> get authStateChanges async* {
     try {
-      return _firebaseAuthDataSource.authStateChanges.handleError((error) {
-        return Stream.value(Left(UnexpectedFailure(exception: error)));
-      }).map((fb_auth.User? user) {
-        return Right(user);
-      });
+      final Stream<fb_auth.User?> userStream =
+          _firebaseAuthDataSource.authStateChanges;
+
+      await for (final fb_auth.User? user in userStream) {
+        if (user != null) {
+          final User userEntity =
+              await _userRemoteDataSource.getById(user.uid).first;
+
+          yield Right(userEntity);
+        } else {
+          yield const Right(null);
+        }
+      }
     } catch (err) {
-      return Stream.value(Left(UnexpectedFailure(exception: err)));
+      yield Left(UnexpectedFailure(exception: err));
     }
   }
 

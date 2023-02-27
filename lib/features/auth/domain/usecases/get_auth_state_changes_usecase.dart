@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 
 import '../../../../core/errors/failures/failures.dart';
+import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
 class GetAuthStateChanges {
@@ -11,7 +11,7 @@ class GetAuthStateChanges {
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 
-  Stream<Either<Failure, fb_auth.User?>> call() {
+  Stream<Either<Failure, User?>> call() {
     return _authRepository.authStateChanges;
   }
 }
