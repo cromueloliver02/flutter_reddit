@@ -4,18 +4,31 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/auth/presentation/pages/pages.dart';
 import '../../features/auth/presentation/blocs/blocs.dart';
+import '../../features/auth/presentation/cubits/cubits.dart';
+import '../../features/auth/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
 import '../blocs/blocs.dart';
+import '../dependencies.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: '/login',
+    initialLocation: LoginPage.path,
     redirect: _redirect,
     routes: <GoRoute>[
-      HomePage.route,
-      LoginPage.route,
+      GoRoute(
+        path: HomePage.path,
+        name: HomePage.name,
+        builder: (ctx, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: LoginPage.path,
+        name: LoginPage.name,
+        builder: (ctx, state) => BlocProvider<SignInCubit>.value(
+          value: sl<SignInCubit>(),
+          child: const LoginPage(),
+        ),
+      ),
     ],
   );
 
