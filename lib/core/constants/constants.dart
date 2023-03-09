@@ -1,3 +1,10 @@
+import 'package:keyboard_dismisser/keyboard_dismisser.dart';
+
+const List<GestureType> kDismissKeyboardGestures = [
+  GestureType.onTap,
+  GestureType.onPanUpdateDownDirection,
+];
+
 const String kLogoPath = 'assets/images/logo.png';
 const String kGoogleLogoPath = 'assets/images/google.png';
 const String kLoginEmotePath = 'assets/images/loginEmote.png';
