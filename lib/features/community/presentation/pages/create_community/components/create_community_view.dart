@@ -25,7 +25,7 @@ class _CreateCommunityViewState extends State<CreateCommunityView> {
           child: CreateCommunityAppBar(),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               const Align(
@@ -39,6 +39,11 @@ class _CreateCommunityViewState extends State<CreateCommunityView> {
                 maxLength: 21,
               ),
               const SizedBox(height: 30),
+              RDTElevatedButton(
+                title: 'Create Community',
+                isBlock: true,
+                onPressed: () {},
+              ),
             ],
           ),
         ),

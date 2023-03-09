@@ -27,6 +27,10 @@ class AppTheme {
     // colorScheme: const ColorScheme.dark(background: whiteColor),
     // will be used as alternative background color
     // backgroundColor: whiteColor,
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(fontSize: 18),
+      bodyMedium: TextStyle(fontSize: 16),
+    ),
   );
 
   // DARK THEME
@@ -46,5 +50,9 @@ class AppTheme {
     // colorScheme: const ColorScheme.dark(background: drawerColor),
     // will be used as alternative background color
     // backgroundColor: drawerColor,
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(fontSize: 18),
+      bodyMedium: TextStyle(fontSize: 16),
+    ),
   );
 }
