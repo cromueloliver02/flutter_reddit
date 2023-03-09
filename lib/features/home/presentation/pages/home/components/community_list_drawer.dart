@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../../community/presentation/pages/pages.dart';
 
 class CommunityListDrawer extends StatelessWidget {
   const CommunityListDrawer({super.key});
@@ -12,7 +15,7 @@ class CommunityListDrawer extends StatelessWidget {
             ListTile(
               title: const Text('Create a community'),
               leading: const Icon(Icons.add),
-              onTap: () {},
+              onTap: () => context.pushNamed(CreateCommunityPage.name),
             ),
           ],
         ),

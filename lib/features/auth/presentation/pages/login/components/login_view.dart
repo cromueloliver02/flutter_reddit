@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/constants/constants.dart';
 import '../../../../../../core/widgets/widgets.dart';
-import '../../../cubits/sign_in/sign_in_cubit.dart';
+import '../../../cubits/cubits.dart';
 import 'login_app_bar.dart';
 
 class LoginView extends StatelessWidget {
@@ -18,7 +18,8 @@ class LoginView extends StatelessWidget {
       ),
       body: BlocBuilder<SignInCubit, SignInState>(
         builder: (ctx, state) {
-          if (state.status == SignInStatus.loading) {
+          if (state.status == SignInStatus.loading ||
+              state.status == SignInStatus.success) {
             return const RDTLoader();
           }
 
