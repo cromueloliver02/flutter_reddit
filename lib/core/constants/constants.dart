@@ -21,3 +21,5 @@ const String kServerFailureMsg =
     'Oops! Something went wrong on our end. Please try again later or contact customer support if the problem persists.';
 const String kUnexpectedFailureMsg =
     "Oops! Something went wrong on our end. Our team has been notified and we're working to fix the issue as soon as possible. In the meantime, please try again later or contact customer support for further assistance.";
+const String kCommunityNameAlreadyExistFailureMsg =
+    'Community name already exist.';

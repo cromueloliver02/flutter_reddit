@@ -1,0 +1,1 @@
+class CommunityNameAlreadyExistException implements Exception {}

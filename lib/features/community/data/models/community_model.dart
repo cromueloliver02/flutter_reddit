@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../../domain/entitties/entities.dart';
+import '../../domain/entities/entities.dart';
 
 class CommunityModel extends Community {
   CommunityModel({
@@ -10,8 +10,8 @@ class CommunityModel extends Community {
     required super.avatar,
     required super.members,
     required super.mods,
-    required super.createdAt,
-    required super.updatedAt,
+    super.createdAt,
+    super.updatedAt,
   });
 
   Map<String, dynamic> toMap() {
