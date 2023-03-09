@@ -7,15 +7,20 @@ class Community extends Equatable {
   final String avatar;
   final List<String> members;
   final List<String> mods;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
-  const Community({
+  Community({
     required this.id,
     required this.name,
     required this.banner,
     required this.avatar,
     required this.members,
     required this.mods,
-  });
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  })  : createdAt = createdAt ?? DateTime.now(),
+        updatedAt = updatedAt ?? DateTime.now();
 
   @override
   List<Object> get props {
@@ -26,12 +31,14 @@ class Community extends Equatable {
       avatar,
       members,
       mods,
+      createdAt,
+      updatedAt,
     ];
   }
 
   @override
   String toString() {
-    return 'Community(id: $id, name: $name, banner: $banner, avatar: $avatar, members: $members, mods: $mods)';
+    return 'Community(id: $id, name: $name, banner: $banner, avatar: $avatar, members: $members, mods: $mods, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   Community copyWith({
@@ -41,6 +48,8 @@ class Community extends Equatable {
     String Function()? avatar,
     List<String> Function()? members,
     List<String> Function()? mods,
+    DateTime Function()? createdAt,
+    DateTime Function()? updatedAt,
   }) {
     return Community(
       id: id != null ? id() : this.id,
@@ -49,6 +58,8 @@ class Community extends Equatable {
       avatar: avatar != null ? avatar() : this.avatar,
       members: members != null ? members() : this.members,
       mods: mods != null ? mods() : this.mods,
+      createdAt: createdAt != null ? createdAt() : this.createdAt,
+      updatedAt: updatedAt != null ? updatedAt() : this.updatedAt,
     );
   }
 }
