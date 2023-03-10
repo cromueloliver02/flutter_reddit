@@ -15,7 +15,6 @@ import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
-import 'blocs/blocs.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
