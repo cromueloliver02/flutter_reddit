@@ -26,7 +26,12 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   ) async {
     emit(state.copyWith(formStatus: () => CommunityFormStatus.loading));
 
-    final Either<Failure, void> eitherVoid = await _createCommunity(event.name);
+    final Either<Failure, void> eitherVoid = await _createCommunity(
+      CreateCommunityParams(
+        userId: event.userId,
+        name: event.name,
+      ),
+    );
 
     eitherVoid.fold(
       (Failure error) {
