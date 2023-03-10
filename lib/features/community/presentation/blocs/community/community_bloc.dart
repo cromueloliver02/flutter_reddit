@@ -11,13 +11,50 @@ part 'community_event.dart';
 part 'community_state.dart';
 
 class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
+  final GetUserCommunities _getUserCommunities;
   final CreateCommunity _createCommunity;
 
   CommunityBloc({
+    required GetUserCommunities getUserCommunities,
     required CreateCommunity createCommunity,
-  })  : _createCommunity = createCommunity,
+  })  : _getUserCommunities = getUserCommunities,
+        _createCommunity = createCommunity,
         super(CommunityState.initial()) {
+    on<CommunityUserGetRequested>(_onCommunityUserGetRequested);
     on<CommunityCreated>(_onCommunityCreated);
+  }
+
+  void _onCommunityUserGetRequested(
+    CommunityUserGetRequested event,
+    Emitter<CommunityState> emit,
+  ) async {
+    emit(state.copyWith(loadStatus: () => CommunityLoadStatus.loading));
+
+    final Either<Failure, Stream<List<Community>>> eitherCommunitiesStream =
+        _getUserCommunities(event.userId);
+
+    eitherCommunitiesStream.fold(
+      (Failure error) {
+        emit(state.copyWith(
+          loadStatus: () => CommunityLoadStatus.failure,
+          error: () => error,
+        ));
+
+        debugPrint(error.toString());
+      },
+      (Stream<List<Community>> communitiesStream) async {
+        emit(state.copyWith(
+          loadStatus: () => CommunityLoadStatus.success,
+        ));
+
+        await emit.forEach<List<Community>>(
+          communitiesStream,
+          onData: (List<Community> communities) {
+            return state.copyWith(communities: () => communities);
+          },
+        );
+      },
+    );
   }
 
   void _onCommunityCreated(

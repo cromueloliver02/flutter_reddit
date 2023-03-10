@@ -7,6 +7,17 @@ abstract class CommunityEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class CommunityUserGetRequested extends CommunityEvent {
+  final String userId;
+
+  const CommunityUserGetRequested({
+    required this.userId,
+  });
+
+  @override
+  List<Object> get props => [userId];
+}
+
 class CommunityCreated extends CommunityEvent {
   final String userId;
   final String name;

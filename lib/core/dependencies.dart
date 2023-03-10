@@ -59,13 +59,19 @@ void setup() {
   sl.registerLazySingleton<CreateCommunity>(
     () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<GetUserCommunities>(
+    () => GetUserCommunities(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBlocImpl>(
     () => AuthBlocImpl(getAuthStateChanges: sl<GetAuthStateChanges>()),
   );
   sl.registerFactory<CommunityBloc>(
-    () => CommunityBloc(createCommunity: sl<CreateCommunity>()),
+    () => CommunityBloc(
+      createCommunity: sl<CreateCommunity>(),
+      getUserCommunities: sl<GetUserCommunities>(),
+    ),
   );
 
   // cubits
