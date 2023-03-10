@@ -40,4 +40,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(UnexpectedFailure(exception: err));
     }
   }
+
+  @override
+  Either<Failure, Stream<List<Community>>> getUserCommunities(String userId) {
+    try {
+      final Stream<List<Community>> communitiesStream =
+          _communityRemoteDataSource.getAllByUserId(userId);
+
+      return Right(communitiesStream);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on NetworkException catch (err) {
+      return Left(NetworkFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
 }
