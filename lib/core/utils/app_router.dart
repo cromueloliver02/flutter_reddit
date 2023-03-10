@@ -36,7 +36,9 @@ class AppRouter {
             name: CreateCommunityPage.name,
             builder: (ctx, state) => MultiBlocProvider(
               providers: [
-                BlocProvider<CommunityBloc>.value(value: sl<CommunityBloc>()),
+                BlocProvider<CommunityBlocImpl>.value(
+                  value: sl<CommunityBlocImpl>(),
+                ),
                 BlocProvider<CommunityFormCubit>.value(
                   value: sl<CommunityFormCubit>(),
                 ),

@@ -15,6 +15,7 @@ import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
+import 'blocs/blocs.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -67,8 +68,8 @@ void setup() {
   sl.registerFactory<AuthBlocImpl>(
     () => AuthBlocImpl(getAuthStateChanges: sl<GetAuthStateChanges>()),
   );
-  sl.registerFactory<CommunityBloc>(
-    () => CommunityBloc(
+  sl.registerFactory<CommunityBlocImpl>(
+    () => CommunityBlocImpl(
       createCommunity: sl<CreateCommunity>(),
       getUserCommunities: sl<GetUserCommunities>(),
     ),
