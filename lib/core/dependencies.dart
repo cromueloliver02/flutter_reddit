@@ -14,6 +14,7 @@ import '../features/community/data/repositories/repositories.dart';
 import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
+import '../features/community/presentation/cubits/cubits.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -71,6 +72,7 @@ void setup() {
   sl.registerFactory<SignInCubit>(
     () => SignInCubit(loginWithGoogle: sl<LoginWithGoogle>()),
   );
+  sl.registerFactory<CommunityFormCubit>(() => CommunityFormCubit());
 
   // utilities
 }

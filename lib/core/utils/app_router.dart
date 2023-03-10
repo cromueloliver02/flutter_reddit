@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/cubits/cubits.dart';
 import '../../features/auth/presentation/pages/pages.dart';
 import '../../features/community/presentation/blocs/blocs.dart';
+import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
 import '../dependencies.dart';
@@ -33,8 +34,13 @@ class AppRouter {
           GoRoute(
             path: CreateCommunityPage.path,
             name: CreateCommunityPage.name,
-            builder: (ctx, state) => BlocProvider<CommunityBloc>.value(
-              value: sl<CommunityBloc>(),
+            builder: (ctx, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider<CommunityBloc>.value(value: sl<CommunityBloc>()),
+                BlocProvider<CommunityFormCubit>.value(
+                  value: sl<CommunityFormCubit>(),
+                ),
+              ],
               child: const CreateCommunityPage(),
             ),
           ),

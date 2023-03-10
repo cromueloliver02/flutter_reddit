@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 
-class RDTTextField extends StatelessWidget {
+class RDTTextFormField extends StatelessWidget {
   final String hintText;
   final bool enabled;
   final int? maxLength;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
 
-  const RDTTextField({
+  const RDTTextFormField({
     super.key,
     required this.hintText,
     this.enabled = true,
     this.maxLength,
     this.controller,
+    this.validator,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: controller,
       enabled: enabled,
       maxLength: maxLength,
@@ -26,6 +30,8 @@ class RDTTextField extends StatelessWidget {
         border: InputBorder.none,
         contentPadding: const EdgeInsets.all(18),
       ),
+      validator: validator,
+      onChanged: onChanged,
     );
   }
 }
