@@ -10,7 +10,7 @@ class AppTheme {
   static final blueColor = Colors.blue.shade300;
 
   // LIGHT THEME
-  static final lightModeAppTheme = ThemeData.light().copyWith(
+  static final ThemeData lightModeAppTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor: whiteColor,
     cardColor: greyColor,
     appBarTheme: const AppBarTheme(
@@ -34,7 +34,7 @@ class AppTheme {
   );
 
   // DARK THEME
-  static final darkModeAppTheme = ThemeData.dark().copyWith(
+  static final ThemeData darkModeAppTheme = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: blackColor,
     cardColor: greyColor,
     appBarTheme: const AppBarTheme(

@@ -6,6 +6,11 @@ import '../../../../../community/presentation/pages/pages.dart';
 class CommunityListDrawer extends StatelessWidget {
   const CommunityListDrawer({super.key});
 
+  void _goToCreateCommunityPage(BuildContext ctx) {
+    Navigator.pop(ctx);
+    ctx.pushNamed(CreateCommunityPage.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -15,7 +20,7 @@ class CommunityListDrawer extends StatelessWidget {
             ListTile(
               title: const Text('Create a community'),
               leading: const Icon(Icons.add),
-              onTap: () => context.pushNamed(CreateCommunityPage.name),
+              onTap: () => _goToCreateCommunityPage(context),
             ),
           ],
         ),

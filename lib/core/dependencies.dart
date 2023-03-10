@@ -9,6 +9,11 @@ import '../features/auth/domain/repositories/repositories.dart';
 import '../features/auth/domain/usecases/usecases.dart';
 import '../features/auth/presentation/blocs/blocs.dart';
 import '../features/auth/presentation/cubits/cubits.dart';
+import '../features/community/data/datasources/datasources.dart';
+import '../features/community/data/repositories/repositories.dart';
+import '../features/community/domain/repositories/repositories.dart';
+import '../features/community/domain/usecases/usecases.dart';
+import '../features/community/presentation/blocs/blocs.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -29,12 +34,18 @@ void setup() {
   sl.registerLazySingleton<UserRemoteDataSource>(
     () => UserRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()),
   );
+  sl.registerLazySingleton<CommunityRemoteDataSource>(
+    () => CommunityRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()),
+  );
 
   // repositories
   sl.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(
         googleSignInDataSource: sl<GoogleSignInDataSource>(),
         firebaseAuthDataSource: sl<FirebaseAuthDataSource>(),
         userRemoteDataSource: sl<UserRemoteDataSource>(),
+      ));
+  sl.registerLazySingleton<CommunityRepository>(() => CommunityRepositoryImpl(
+        communityRemoteDataSource: sl<CommunityRemoteDataSource>(),
       ));
 
   // use cases
@@ -44,10 +55,16 @@ void setup() {
   sl.registerLazySingleton<GetAuthStateChanges>(
     () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
   );
+  sl.registerLazySingleton<CreateCommunity>(
+    () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBlocImpl>(
     () => AuthBlocImpl(getAuthStateChanges: sl<GetAuthStateChanges>()),
+  );
+  sl.registerFactory<CommunityBloc>(
+    () => CommunityBloc(createCommunity: sl<CreateCommunity>()),
   );
 
   // cubits

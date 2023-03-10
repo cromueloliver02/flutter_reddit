@@ -24,21 +24,21 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     CommunityCreated event,
     Emitter<CommunityState> emit,
   ) async {
-    emit(state.copyWith(loadStatus: () => CommunityLoadStatus.loading));
+    emit(state.copyWith(formStatus: () => CommunityFormStatus.loading));
 
     final Either<Failure, void> eitherVoid = await _createCommunity(event.name);
 
     eitherVoid.fold(
       (Failure error) {
         emit(state.copyWith(
-          loadStatus: () => CommunityLoadStatus.failure,
+          formStatus: () => CommunityFormStatus.failure,
           error: () => error,
         ));
 
         debugPrint(error.toString());
       },
-      (test) => emit(state.copyWith(
-        loadStatus: () => CommunityLoadStatus.success,
+      (_) => emit(state.copyWith(
+        formStatus: () => CommunityFormStatus.success,
       )),
     );
   }
