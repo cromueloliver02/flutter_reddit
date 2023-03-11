@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../core/blocs/blocs.dart';
+import '../../../../../core/utils/utils.dart';
 import '../../../../community/presentation/blocs/blocs.dart';
 import '../../../../home/presentation/pages/pages.dart';
 import '../../blocs/blocs.dart';
@@ -26,6 +27,10 @@ class _InitSplashPageState extends State<InitSplashPage> {
       listener: (ctx, state) {
         if (state.loadStatus == CommunityLoadStatus.success) {
           ctx.goNamed(HomePage.name);
+        }
+
+        if (state.loadStatus == CommunityLoadStatus.failure) {
+          showErrorDialog(ctx, message: state.error.message);
         }
       },
       child: const InitSplashView(),
