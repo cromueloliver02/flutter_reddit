@@ -18,6 +18,17 @@ class CommunityUserGetRequested extends CommunityEvent {
   List<Object> get props => [userId];
 }
 
+class CommunityStreamed extends CommunityEvent {
+  final List<Community> communities;
+
+  const CommunityStreamed({
+    required this.communities,
+  });
+
+  @override
+  List<Object> get props => [communities];
+}
+
 class CommunityCreated extends CommunityEvent {
   final String userId;
   final String name;

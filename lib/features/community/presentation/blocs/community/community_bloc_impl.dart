@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +11,7 @@ import '../../../domain/usecases/usecases.dart';
 
 class CommunityBlocImpl extends Bloc<CommunityEvent, CommunityState>
     implements CommunityBloc {
+  late final StreamSubscription _communitiesStreamSubscription;
   final GetUserCommunities _getUserCommunities;
   final CreateCommunity _createCommunity;
 
@@ -19,6 +22,7 @@ class CommunityBlocImpl extends Bloc<CommunityEvent, CommunityState>
         _createCommunity = createCommunity,
         super(CommunityState.initial()) {
     on<CommunityUserGetRequested>(_onCommunityUserGetRequested);
+    on<CommunityStreamed>(_onCommunityStreamed);
     on<CommunityCreated>(_onCommunityCreated);
   }
 
@@ -45,14 +49,19 @@ class CommunityBlocImpl extends Bloc<CommunityEvent, CommunityState>
           loadStatus: () => CommunityLoadStatus.success,
         ));
 
-        await emit.forEach<List<Community>>(
-          communitiesStream,
-          onData: (List<Community> communities) {
-            return state.copyWith(communities: () => communities);
-          },
-        );
+        _communitiesStreamSubscription =
+            communitiesStream.listen((List<Community> communities) {
+          add(CommunityStreamed(communities: communities));
+        });
       },
     );
+  }
+
+  void _onCommunityStreamed(
+    CommunityStreamed event,
+    Emitter<CommunityState> emit,
+  ) {
+    emit(state.copyWith(communities: () => event.communities));
   }
 
   void _onCommunityCreated(
@@ -81,5 +90,11 @@ class CommunityBlocImpl extends Bloc<CommunityEvent, CommunityState>
         formStatus: () => CommunityFormStatus.success,
       )),
     );
+  }
+
+  @override
+  Future<void> close() {
+    _communitiesStreamSubscription.cancel();
+    return super.close();
   }
 }

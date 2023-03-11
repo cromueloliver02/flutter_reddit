@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/cubits/cubits.dart';
 import '../../features/auth/presentation/pages/pages.dart';
-import '../../features/community/presentation/blocs/blocs.dart';
 import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
@@ -11,12 +10,17 @@ import '../dependencies.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: SplashPage.path,
+    initialLocation: AuthSplashPage.path,
     routes: <GoRoute>[
       GoRoute(
-        path: SplashPage.path,
-        name: SplashPage.name,
-        builder: (ctx, state) => const SplashPage(),
+        path: AuthSplashPage.path,
+        name: AuthSplashPage.name,
+        builder: (ctx, state) => const AuthSplashPage(),
+      ),
+      GoRoute(
+        path: InitSplashPage.path,
+        name: InitSplashPage.name,
+        builder: (ctx, state) => const InitSplashPage(),
       ),
       GoRoute(
         path: LoginPage.path,
@@ -34,15 +38,8 @@ class AppRouter {
           GoRoute(
             path: CreateCommunityPage.path,
             name: CreateCommunityPage.name,
-            builder: (ctx, state) => MultiBlocProvider(
-              providers: [
-                BlocProvider<CommunityBlocImpl>.value(
-                  value: sl<CommunityBlocImpl>(),
-                ),
-                BlocProvider<CommunityFormCubit>.value(
-                  value: sl<CommunityFormCubit>(),
-                ),
-              ],
+            builder: (ctx, state) => BlocProvider<CommunityFormCubit>.value(
+              value: sl<CommunityFormCubit>(),
               child: const CreateCommunityPage(),
             ),
           ),

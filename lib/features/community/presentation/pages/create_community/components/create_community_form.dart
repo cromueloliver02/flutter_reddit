@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../../../auth/presentation/blocs/blocs.dart';
 import '../../../blocs/blocs.dart';
@@ -19,7 +20,7 @@ class CreateCommunityForm extends StatelessWidget {
     required GlobalKey<FormState> formKey,
   }) {
     final AuthBlocImpl authBloc = ctx.read<AuthBlocImpl>();
-    final CommunityBloc communityBloc = ctx.read<CommunityBloc>();
+    final CommunityBlocImpl communityBloc = ctx.read<CommunityBlocImpl>();
     final CommunityFormCubit communityFormCubit =
         ctx.read<CommunityFormCubit>();
 
@@ -37,7 +38,7 @@ class CreateCommunityForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CommunityBloc, CommunityState, CommunityFormStatus>(
+    return BlocSelector<CommunityBlocImpl, CommunityState, CommunityFormStatus>(
       selector: (state) => state.formStatus,
       builder: (ctx, formStatus) =>
           BlocBuilder<CommunityFormCubit, CommunityFormState>(
