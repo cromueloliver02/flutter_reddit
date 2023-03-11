@@ -1,10 +1,10 @@
 import '../../../../core/constants/constants.dart';
 import '../../../../core/typedefs.dart';
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/usecases/usecases.dart';
 import '../../data/models/models.dart';
 import '../repositories/repositories.dart';
 
-class CreateCommunity implements UseCase<void, CreateCommunityParams> {
+class CreateCommunity implements FutureUseCase<void, CreateCommunityParams> {
   final CommunityRepository _communityRepository;
 
   const CreateCommunity({

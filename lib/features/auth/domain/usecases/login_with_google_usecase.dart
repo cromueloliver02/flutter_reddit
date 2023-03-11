@@ -1,9 +1,9 @@
 import '../../../../core/typedefs.dart';
-import '../../../../core/usecases/usecase.dart';
+import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class LoginWithGoogle implements UseCase<User?, NoParams> {
+class LoginWithGoogle implements FutureUseCase<User?, NoParams> {
   final AuthRepository _authRepository;
 
   const LoginWithGoogle({

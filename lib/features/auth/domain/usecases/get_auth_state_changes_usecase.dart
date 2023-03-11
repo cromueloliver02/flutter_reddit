@@ -1,17 +1,17 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/typedefs.dart';
+import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class GetAuthStateChanges {
+class GetAuthStateChanges implements StreamUseCase<User?, NoParams> {
   final AuthRepository _authRepository;
 
   const GetAuthStateChanges({
     required AuthRepository authRepository,
   }) : _authRepository = authRepository;
 
-  Stream<Either<Failure, User?>> call() {
+  @override
+  StreamEither<User?> call(NoParams params) {
     return _authRepository.authStateChanges;
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/blocs/blocs.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
+import '../../../../../core/usecases/usecases.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
@@ -22,7 +23,8 @@ class AuthBlocImpl extends AuthBloc {
   void onAuthStarted(AuthStarted event, Emitter<AuthState> emit) async {
     emit(state.copyWith(status: () => AuthStatus.loading));
 
-    final StreamEither<User?> eitherAuthStream = _getAuthStateChanges();
+    final StreamEither<User?> eitherAuthStream =
+        _getAuthStateChanges(NoParams());
 
     await emit.forEach<Either<Failure, User?>>(
       eitherAuthStream,
