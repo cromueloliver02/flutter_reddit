@@ -43,6 +43,13 @@ class AppRouter {
               child: const CreateCommunityPage(),
             ),
           ),
+          GoRoute(
+            path: CommunityDetailsPage.path,
+            name: CommunityDetailsPage.name,
+            builder: (ctx, state) => CommunityDetailsPage(
+              communityId: state.params['communityId']!,
+            ),
+          ),
         ],
       ),
     ],
