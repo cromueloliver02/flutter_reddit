@@ -19,7 +19,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   FutureEitherVoid createCommunity(CommunityModel community) async {
     try {
       final Community? existingCommunity =
-          await _communityRemoteDataSource.getById(community.id);
+          await _communityRemoteDataSource.getById(community.id).first;
 
       if (existingCommunity != null) {
         throw CommunityNameAlreadyExistException();

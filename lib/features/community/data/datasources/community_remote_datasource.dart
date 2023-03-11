@@ -6,7 +6,7 @@ import '../../domain/entities/entities.dart';
 import '../models/models.dart';
 
 abstract class CommunityRemoteDataSource {
-  Future<Community?> getById(String id);
+  Stream<Community?> getById(String id);
   Stream<List<Community>> getAllByUserId(String userId);
   Future<void> post(CommunityModel community);
 }
@@ -19,16 +19,20 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Future<Community?> getById(String communityId) async {
+  @override
+  Stream<Community?> getById(String communityId) {
     try {
-      final DocumentSnapshot communityDoc = await _firestore
+      final Stream<Community?> communityStream = _firestore
           .collection(kCommunitiesCollection)
           .doc(communityId)
-          .get();
+          .snapshots()
+          .map((DocumentSnapshot communityDoc) {
+        if (!communityDoc.exists) return null;
 
-      if (!communityDoc.exists) return null;
+        return CommunityModel.fromDoc(communityDoc);
+      });
 
-      return CommunityModel.fromDoc(communityDoc);
+      return communityStream;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
