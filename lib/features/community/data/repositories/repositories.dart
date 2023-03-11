@@ -1,1 +1,1 @@
-export 'create_community_impl.dart';
+export 'community_repository_impl.dart';

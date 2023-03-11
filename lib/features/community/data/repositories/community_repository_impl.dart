@@ -16,6 +16,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) : _communityRemoteDataSource = communityRemoteDataSource;
 
   @override
+  Either<Failure, Stream<Community?>> getCommunityById(String communityId) {
+    try {
+      final Stream<Community?> communityStream =
+          _communityRemoteDataSource.getById(communityId);
+
+      return Right(communityStream);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
+
+  @override
   Either<Failure, Stream<List<Community>>> getUserCommunities(String userId) {
     try {
       final Stream<List<Community>> communitiesStream =
@@ -24,8 +40,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Right(communitiesStream);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
-    } on NetworkException catch (err) {
-      return Left(NetworkFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {
@@ -50,8 +64,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(CommunityNameAlreadyExistFailure());
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
-    } on NetworkException catch (err) {
-      return Left(NetworkFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {

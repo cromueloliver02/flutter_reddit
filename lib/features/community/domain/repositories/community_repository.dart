@@ -6,6 +6,7 @@ import '../../data/models/models.dart';
 import '../entities/entities.dart';
 
 abstract class CommunityRepository {
-  FutureEitherVoid createCommunity(CommunityModel community);
+  Either<Failure, Stream<Community?>> getCommunityById(String communityId);
   Either<Failure, Stream<List<Community>>> getUserCommunities(String userId);
+  FutureEitherVoid createCommunity(CommunityModel community);
 }
