@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
-import '../../../../../auth/presentation/blocs/blocs.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -24,7 +23,7 @@ class HomeAppBar extends StatelessWidget {
           icon: const Icon(Icons.search),
         ),
         IconButton(
-          icon: BlocBuilder<AuthBlocImpl, AuthState>(
+          icon: BlocBuilder<AuthBloc, AuthState>(
             builder: (ctx, state) => CircleAvatar(
               backgroundImage: NetworkImage(state.user!.profilePic),
             ),

@@ -1,14 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../features/auth/presentation/blocs/blocs.dart';
-import '../../features/community/presentation/blocs/blocs.dart';
+import '../blocs/blocs.dart';
 import '../dependencies.dart';
 
 class GlobalBlocProviders {
   static final List<BlocProvider> blocProviders = [
-    BlocProvider<AuthBlocImpl>.value(value: sl<AuthBlocImpl>()),
-    BlocProvider<CommunityListBlocImpl>.value(
-      value: sl<CommunityListBlocImpl>(),
-    ),
+    BlocProvider<AuthBloc>.value(value: sl<AuthBloc>()),
+    BlocProvider<CommunityListBloc>.value(value: sl<CommunityListBloc>()),
   ];
 }

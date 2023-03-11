@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../community/domain/entities/entities.dart';
-import '../../../../../community/presentation/blocs/blocs.dart';
 import '../../../../../community/presentation/pages/pages.dart';
 
 class CommunityListDrawer extends StatelessWidget {
@@ -37,7 +36,7 @@ class CommunityListDrawer extends StatelessWidget {
               onTap: () => _goToCreateCommunityPage(context),
             ),
             Expanded(
-              child: BlocBuilder<CommunityListBlocImpl, CommunityListState>(
+              child: BlocBuilder<CommunityListBloc, CommunityListState>(
                 builder: (ctx, state) {
                   final List<Community> communityList = state.communityList;
 

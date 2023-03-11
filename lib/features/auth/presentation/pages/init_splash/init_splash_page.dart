@@ -4,9 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../core/blocs/blocs.dart';
 import '../../../../../core/utils/utils.dart';
-import '../../../../community/presentation/blocs/blocs.dart';
 import '../../../../home/presentation/pages/pages.dart';
-import '../../blocs/blocs.dart';
 import 'components/init_splash_view.dart';
 
 class InitSplashPage extends StatefulWidget {
@@ -32,7 +30,7 @@ class _InitSplashPageState extends State<InitSplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CommunityListBlocImpl, CommunityListState>(
+    return BlocListener<CommunityListBloc, CommunityListState>(
       listenWhen: (prev, curr) => prev.status != curr.status,
       listener: _communityListListener,
       child: const InitSplashView(),
@@ -44,10 +42,10 @@ class _InitSplashPageState extends State<InitSplashPage> {
   void initState() {
     super.initState();
 
-    final String userId = context.read<AuthBlocImpl>().state.user!.id;
+    final String userId = context.read<AuthBloc>().state.user!.id;
 
     context
-        .read<CommunityListBlocImpl>()
+        .read<CommunityListBloc>()
         .add(CommunityListUserFetched(userId: userId));
   }
 }

@@ -9,8 +9,7 @@ import '../../../../../core/errors/failures/failures.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
-class CommunityListBlocImpl extends Bloc<CommunityListEvent, CommunityListState>
-    implements CommunityListBloc {
+class CommunityListBlocImpl extends CommunityListBloc {
   late final StreamSubscription _communitiesStreamSubscription;
   final FetchUserCommunities _fetchUserCommunities;
 
@@ -18,11 +17,12 @@ class CommunityListBlocImpl extends Bloc<CommunityListEvent, CommunityListState>
     required FetchUserCommunities getUserCommunities,
   })  : _fetchUserCommunities = getUserCommunities,
         super(CommunityListState.initial()) {
-    on<CommunityListUserFetched>(_onCommunityListUserFetched);
-    on<CommunityListChanged>(_onCommunityListChanged);
+    on<CommunityListUserFetched>(onCommunityListUserGetRequested);
+    on<CommunityListChanged>(onCommunityListChanged);
   }
 
-  void _onCommunityListUserFetched(
+  @override
+  void onCommunityListUserGetRequested(
     CommunityListUserFetched event,
     Emitter<CommunityListState> emit,
   ) async {
@@ -53,7 +53,8 @@ class CommunityListBlocImpl extends Bloc<CommunityListEvent, CommunityListState>
     );
   }
 
-  void _onCommunityListChanged(
+  @override
+  void onCommunityListChanged(
     CommunityListChanged event,
     Emitter<CommunityListState> emit,
   ) {

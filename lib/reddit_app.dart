@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'core/blocs/blocs.dart';
 import 'core/utils/utils.dart';
-import 'features/auth/presentation/blocs/blocs.dart';
 import 'features/auth/presentation/pages/pages.dart';
 
 class RedditApp extends StatelessWidget {
@@ -27,7 +26,7 @@ class RedditApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: GlobalBlocProviders.blocProviders,
-      child: BlocListener<AuthBlocImpl, AuthState>(
+      child: BlocListener<AuthBloc, AuthState>(
         listenWhen: (prev, curr) => prev.userAuthStatus != curr.userAuthStatus,
         listener: _authListener,
         child: MaterialApp.router(

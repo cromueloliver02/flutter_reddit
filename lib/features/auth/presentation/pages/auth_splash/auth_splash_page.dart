@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/blocs/blocs.dart';
 import '../../../../../core/utils/utils.dart';
-import '../../blocs/blocs.dart';
 import 'components/auth_splash_view.dart';
 
 class AuthSplashPage extends StatefulWidget {
@@ -25,7 +24,7 @@ class _AuthSplashPageState extends State<AuthSplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBlocImpl, AuthState>(
+    return BlocListener<AuthBloc, AuthState>(
       listenWhen: (prev, curr) => prev.status != curr.status,
       listener: _authListener,
       child: const AuthSplashView(),
@@ -37,6 +36,6 @@ class _AuthSplashPageState extends State<AuthSplashPage> {
   void initState() {
     super.initState();
 
-    context.read<AuthBlocImpl>().add(AuthStarted());
+    context.read<AuthBloc>().add(AuthStarted());
   }
 }
