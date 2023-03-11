@@ -26,6 +26,7 @@ class _AuthSplashPageState extends State<AuthSplashPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBlocImpl, AuthState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
       listener: _authListener,
       child: const AuthSplashView(),
     );
