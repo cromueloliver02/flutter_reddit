@@ -16,6 +16,24 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) : _communityRemoteDataSource = communityRemoteDataSource;
 
   @override
+  Either<Failure, Stream<List<Community>>> getUserCommunities(String userId) {
+    try {
+      final Stream<List<Community>> communitiesStream =
+          _communityRemoteDataSource.getAllByUserId(userId);
+
+      return Right(communitiesStream);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on NetworkException catch (err) {
+      return Left(NetworkFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
+
+  @override
   FutureEitherVoid createCommunity(CommunityModel community) async {
     try {
       final Community? existingCommunity =
@@ -30,24 +48,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return const Right(null);
     } on CommunityNameAlreadyExistException {
       return Left(CommunityNameAlreadyExistFailure());
-    } on ServerException catch (err) {
-      return Left(ServerFailure(exception: err));
-    } on NetworkException catch (err) {
-      return Left(NetworkFailure(exception: err));
-    } on UnexpectedException catch (err) {
-      return Left(UnexpectedFailure(exception: err));
-    } catch (err) {
-      return Left(UnexpectedFailure(exception: err));
-    }
-  }
-
-  @override
-  Either<Failure, Stream<List<Community>>> getUserCommunities(String userId) {
-    try {
-      final Stream<List<Community>> communitiesStream =
-          _communityRemoteDataSource.getAllByUserId(userId);
-
-      return Right(communitiesStream);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
     } on NetworkException catch (err) {
