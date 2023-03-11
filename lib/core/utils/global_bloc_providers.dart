@@ -7,6 +7,8 @@ import '../dependencies.dart';
 class GlobalBlocProviders {
   static final List<BlocProvider> blocProviders = [
     BlocProvider<AuthBlocImpl>.value(value: sl<AuthBlocImpl>()),
-    BlocProvider<CommunityBlocImpl>.value(value: sl<CommunityBlocImpl>()),
+    BlocProvider<CommunityListBlocImpl>.value(
+      value: sl<CommunityListBlocImpl>(),
+    ),
   ];
 }

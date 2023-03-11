@@ -22,6 +22,17 @@ class Community extends Equatable {
   })  : createdAt = createdAt ?? DateTime.now(),
         updatedAt = updatedAt ?? DateTime.now();
 
+  factory Community.empty() {
+    return Community(
+      id: '',
+      name: '',
+      banner: '',
+      avatar: '',
+      members: const <String>[],
+      mods: const <String>[],
+    );
+  }
+
   @override
   List<Object> get props {
     return [

@@ -67,9 +67,8 @@ void setup() {
   sl.registerFactory<AuthBlocImpl>(
     () => AuthBlocImpl(getAuthStateChanges: sl<GetAuthStateChanges>()),
   );
-  sl.registerFactory<CommunityBlocImpl>(
-    () => CommunityBlocImpl(
-      createCommunity: sl<CreateCommunity>(),
+  sl.registerFactory<CommunityListBlocImpl>(
+    () => CommunityListBlocImpl(
       getUserCommunities: sl<GetUserCommunities>(),
     ),
   );
@@ -79,6 +78,9 @@ void setup() {
     () => SignInCubit(loginWithGoogle: sl<LoginWithGoogle>()),
   );
   sl.registerFactory<CommunityFormCubit>(() => CommunityFormCubit());
+  sl.registerFactory<CreateCommunityCubit>(() => CreateCommunityCubit(
+        createCommunity: sl<CreateCommunity>(),
+      ));
 
   // utilities
 }

@@ -20,21 +20,21 @@ class InitSplashPage extends StatefulWidget {
 }
 
 class _InitSplashPageState extends State<InitSplashPage> {
-  void _communityListener(BuildContext ctx, CommunityState state) {
-    if (state.loadStatus == CommunityLoadStatus.success) {
+  void _communityListListener(BuildContext ctx, CommunityListState state) {
+    if (state.status == CommunityListStatus.success) {
       ctx.goNamed(HomePage.name);
     }
 
-    if (state.loadStatus == CommunityLoadStatus.failure) {
+    if (state.status == CommunityListStatus.failure) {
       showErrorDialog(ctx, message: state.error.message);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CommunityBlocImpl, CommunityState>(
-      listenWhen: (prev, curr) => prev.loadStatus != curr.loadStatus,
-      listener: _communityListener,
+    return BlocListener<CommunityListBlocImpl, CommunityListState>(
+      listenWhen: (prev, curr) => prev.status != curr.status,
+      listener: _communityListListener,
       child: const InitSplashView(),
     );
   }
@@ -47,7 +47,7 @@ class _InitSplashPageState extends State<InitSplashPage> {
     final String userId = context.read<AuthBlocImpl>().state.user!.id;
 
     context
-        .read<CommunityBlocImpl>()
-        .add(CommunityUserGetRequested(userId: userId));
+        .read<CommunityListBlocImpl>()
+        .add(CommunityListUserGetRequested(userId: userId));
   }
 }

@@ -1,1 +1,1 @@
-export 'community/community_bloc_impl.dart';
+export 'community_list/community_list_bloc_impl.dart';

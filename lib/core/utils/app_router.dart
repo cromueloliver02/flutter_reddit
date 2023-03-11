@@ -38,8 +38,15 @@ class AppRouter {
           GoRoute(
             path: CreateCommunityPage.path,
             name: CreateCommunityPage.name,
-            builder: (ctx, state) => BlocProvider<CommunityFormCubit>.value(
-              value: sl<CommunityFormCubit>(),
+            builder: (ctx, state) => MultiBlocProvider(
+              providers: [
+                BlocProvider<CreateCommunityCubit>.value(
+                  value: sl<CreateCommunityCubit>(),
+                ),
+                BlocProvider<CommunityFormCubit>.value(
+                  value: sl<CommunityFormCubit>(),
+                ),
+              ],
               child: const CreateCommunityPage(),
             ),
           ),

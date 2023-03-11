@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../../../auth/presentation/blocs/blocs.dart';
-import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
 
 class CreateCommunityForm extends StatelessWidget {
@@ -20,7 +18,6 @@ class CreateCommunityForm extends StatelessWidget {
     required GlobalKey<FormState> formKey,
   }) {
     final AuthBlocImpl authBloc = ctx.read<AuthBlocImpl>();
-    final CommunityBlocImpl communityBloc = ctx.read<CommunityBlocImpl>();
     final CommunityFormCubit communityFormCubit =
         ctx.read<CommunityFormCubit>();
 
@@ -32,15 +29,19 @@ class CreateCommunityForm extends StatelessWidget {
       final String userId = authBloc.state.user!.id;
       final String name = communityFormCubit.state.name;
 
-      communityBloc.add(CommunityCreated(name: name, userId: userId));
+      ctx.read<CreateCommunityCubit>().createCommunity(
+            userId: userId,
+            name: name,
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CommunityBlocImpl, CommunityState, CommunityFormStatus>(
-      selector: (state) => state.formStatus,
-      builder: (ctx, formStatus) =>
+    return BlocSelector<CreateCommunityCubit, CreateCommunityState,
+        CreateCommunityStatus>(
+      selector: (state) => state.status,
+      builder: (ctx, status) =>
           BlocBuilder<CommunityFormCubit, CommunityFormState>(
         builder: (ctx, state) => Form(
           key: formKey,
@@ -54,7 +55,7 @@ class CreateCommunityForm extends StatelessWidget {
               const SizedBox(height: 10),
               RDTTextFormField(
                 hintText: 'r/Community_name',
-                enabled: formStatus != CommunityFormStatus.loading,
+                enabled: status != CreateCommunityStatus.loading,
                 maxLength: 21,
                 validator:
                     context.read<CommunityFormCubit>().communityNameValidator,
@@ -65,7 +66,7 @@ class CreateCommunityForm extends StatelessWidget {
               RDTElevatedButton(
                 title: 'Create Community',
                 isBlock: true,
-                loading: formStatus == CommunityFormStatus.loading,
+                loading: status == CreateCommunityStatus.loading,
                 onPressed: () => _createCommunity(context, formKey: formKey),
               ),
             ],

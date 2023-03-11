@@ -37,14 +37,14 @@ class CommunityListDrawer extends StatelessWidget {
               onTap: () => _goToCreateCommunityPage(context),
             ),
             Expanded(
-              child: BlocBuilder<CommunityBlocImpl, CommunityState>(
+              child: BlocBuilder<CommunityListBlocImpl, CommunityListState>(
                 builder: (ctx, state) {
-                  final List<Community> communities = state.communities;
+                  final List<Community> communityList = state.communityList;
 
                   return ListView.builder(
-                    itemCount: communities.length,
+                    itemCount: communityList.length,
                     itemBuilder: (ctx, idx) {
-                      final Community community = communities[idx];
+                      final Community community = communityList[idx];
 
                       return ListTile(
                         leading: CircleAvatar(
