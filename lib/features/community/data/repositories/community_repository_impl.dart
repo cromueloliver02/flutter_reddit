@@ -32,10 +32,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Either<Failure, Stream<List<Community>>> getUserCommunities(String userId) {
+  Either<Failure, Stream<List<Community>>> fetchUserCommunities(String userId) {
     try {
       final Stream<List<Community>> communitiesStream =
-          _communityRemoteDataSource.getAllByUserId(userId);
+          _communityRemoteDataSource.fetchCommunitiesByUserId(userId);
 
       return Right(communitiesStream);
     } on ServerException catch (err) {

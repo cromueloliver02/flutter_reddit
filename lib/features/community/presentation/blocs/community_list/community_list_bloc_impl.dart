@@ -12,26 +12,26 @@ import '../../../domain/usecases/usecases.dart';
 class CommunityListBlocImpl extends Bloc<CommunityListEvent, CommunityListState>
     implements CommunityListBloc {
   late final StreamSubscription _communitiesStreamSubscription;
-  final GetUserCommunities _getUserCommunities;
+  final FetchUserCommunities _fetchUserCommunities;
 
   CommunityListBlocImpl({
-    required GetUserCommunities getUserCommunities,
-  })  : _getUserCommunities = getUserCommunities,
+    required FetchUserCommunities getUserCommunities,
+  })  : _fetchUserCommunities = getUserCommunities,
         super(CommunityListState.initial()) {
-    on<CommunityListUserGetRequested>(_onCommunityListUserGetRequested);
+    on<CommunityListUserFetched>(_onCommunityListUserFetched);
     on<CommunityListChanged>(_onCommunityListChanged);
   }
 
-  void _onCommunityListUserGetRequested(
-    CommunityListUserGetRequested event,
+  void _onCommunityListUserFetched(
+    CommunityListUserFetched event,
     Emitter<CommunityListState> emit,
   ) async {
     emit(state.copyWith(status: () => CommunityListStatus.loading));
 
-    final Either<Failure, Stream<List<Community>>> eitherCommunityListStream =
-        _getUserCommunities(event.userId);
+    final Either<Failure, Stream<List<Community>>> eitherCommunitiesStream =
+        _fetchUserCommunities(event.userId);
 
-    eitherCommunityListStream.fold(
+    eitherCommunitiesStream.fold(
       (Failure error) {
         emit(state.copyWith(
           status: () => CommunityListStatus.failure,
@@ -40,13 +40,13 @@ class CommunityListBlocImpl extends Bloc<CommunityListEvent, CommunityListState>
 
         debugPrint(error.toString());
       },
-      (Stream<List<Community>> communityListStream) async {
+      (Stream<List<Community>> communitiesStream) async {
         emit(state.copyWith(
           status: () => CommunityListStatus.success,
         ));
 
         _communitiesStreamSubscription =
-            communityListStream.listen((List<Community> communityList) {
+            communitiesStream.listen((List<Community> communityList) {
           add(CommunityListChanged(communityList: communityList));
         });
       },

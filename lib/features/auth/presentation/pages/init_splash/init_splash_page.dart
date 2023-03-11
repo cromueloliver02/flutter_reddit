@@ -48,6 +48,6 @@ class _InitSplashPageState extends State<InitSplashPage> {
 
     context
         .read<CommunityListBlocImpl>()
-        .add(CommunityListUserGetRequested(userId: userId));
+        .add(CommunityListUserFetched(userId: userId));
   }
 }

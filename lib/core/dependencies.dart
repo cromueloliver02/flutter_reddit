@@ -59,8 +59,8 @@ void setup() {
   sl.registerLazySingleton<CreateCommunity>(
     () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
   );
-  sl.registerLazySingleton<GetUserCommunities>(
-    () => GetUserCommunities(communityRepository: sl<CommunityRepository>()),
+  sl.registerLazySingleton<FetchUserCommunities>(
+    () => FetchUserCommunities(communityRepository: sl<CommunityRepository>()),
   );
 
   // blocs
@@ -69,7 +69,7 @@ void setup() {
   );
   sl.registerFactory<CommunityListBlocImpl>(
     () => CommunityListBlocImpl(
-      getUserCommunities: sl<GetUserCommunities>(),
+      getUserCommunities: sl<FetchUserCommunities>(),
     ),
   );
 

@@ -7,7 +7,7 @@ import '../models/models.dart';
 
 abstract class CommunityRemoteDataSource {
   Stream<Community?> getById(String id);
-  Stream<List<Community>> getAllByUserId(String userId);
+  Stream<List<Community>> fetchCommunitiesByUserId(String userId);
   Future<void> post(CommunityModel community);
 }
 
@@ -41,7 +41,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Stream<List<Community>> getAllByUserId(String userId) {
+  Stream<List<Community>> fetchCommunitiesByUserId(String userId) {
     try {
       final Stream<List<Community>> communitiesStream = _firestore
           .collection(kCommunitiesCollection)

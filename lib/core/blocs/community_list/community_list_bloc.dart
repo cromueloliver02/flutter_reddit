@@ -11,7 +11,7 @@ part 'community_list_state.dart';
 
 abstract class CommunityListBloc {
   void _onCommunityListUserGetRequested(
-    CommunityListUserGetRequested event,
+    CommunityListUserFetched event,
     Emitter<CommunityListState> emit,
   );
 }
