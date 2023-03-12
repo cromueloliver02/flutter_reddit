@@ -57,11 +57,14 @@ void setup() {
   sl.registerLazySingleton<GetAuthStateChanges>(
     () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
   );
-  sl.registerLazySingleton<CreateCommunity>(
-    () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
+  sl.registerLazySingleton<GetCommunity>(
+    () => GetCommunity(communityRepository: sl<CommunityRepository>()),
   );
   sl.registerLazySingleton<FetchUserCommunities>(
     () => FetchUserCommunities(communityRepository: sl<CommunityRepository>()),
+  );
+  sl.registerLazySingleton<CreateCommunity>(
+    () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
   );
 
   // blocs
@@ -77,9 +80,12 @@ void setup() {
     () => SignInCubit(loginWithGoogle: sl<LoginWithGoogle>()),
   );
   sl.registerFactory<CommunityFormCubit>(() => CommunityFormCubit());
-  sl.registerFactory<CreateCommunityCubit>(() => CreateCommunityCubit(
-        createCommunity: sl<CreateCommunity>(),
-      ));
+  sl.registerFactory<CreateCommunityCubit>(
+    () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
+  );
+  sl.registerFactory<CommunityDetailsCubit>(
+    () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
+  );
 
   // utilities
 }
