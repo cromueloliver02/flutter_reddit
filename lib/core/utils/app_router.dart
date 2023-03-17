@@ -53,11 +53,8 @@ class AppRouter {
           GoRoute(
             path: CommunityDetailsPage.path,
             name: CommunityDetailsPage.name,
-            builder: (ctx, state) => BlocProvider<CommunityDetailsCubit>.value(
-              value: sl<CommunityDetailsCubit>(),
-              child: CommunityDetailsPage(
-                communityId: state.params['communityId']!,
-              ),
+            builder: (ctx, state) => CommunityDetailsPage(
+              communityId: state.params['communityId']!,
             ),
           ),
         ],
