@@ -19,7 +19,6 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  @override
   Stream<Community?> getById(String communityId) {
     try {
       final Stream<Community?> communityStream = _firestore

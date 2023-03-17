@@ -57,9 +57,6 @@ void setup() {
   sl.registerLazySingleton<GetAuthStateChanges>(
     () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
   );
-  sl.registerLazySingleton<GetCommunity>(
-    () => GetCommunity(communityRepository: sl<CommunityRepository>()),
-  );
   sl.registerLazySingleton<FetchUserCommunities>(
     () => FetchUserCommunities(communityRepository: sl<CommunityRepository>()),
   );
