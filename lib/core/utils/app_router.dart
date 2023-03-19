@@ -6,6 +6,7 @@ import '../../features/auth/presentation/pages/pages.dart';
 import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
+import '../../features/splash/presentation/pages/pages.dart';
 import '../dependencies.dart';
 
 class AppRouter {

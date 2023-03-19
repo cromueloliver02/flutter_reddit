@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/blocs/blocs.dart';
 import 'core/utils/utils.dart';
 import 'features/auth/presentation/pages/pages.dart';
+import 'features/splash/presentation/pages/pages.dart';
 
 class RedditApp extends StatelessWidget {
   const RedditApp({super.key});
