@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../pages.dart';
+import 'moderator_tools_app_bar.dart';
 
 class ModeratorToolsView extends StatelessWidget {
   final String communityId;
@@ -21,7 +22,10 @@ class ModeratorToolsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Mod tools')),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: ModeratorToolsAppBar(),
+      ),
       body: Column(
         children: [
           ListTile(
