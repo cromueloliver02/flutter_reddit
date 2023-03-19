@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../pages.dart';
 
 class ModeratorToolsView extends StatelessWidget {
-  const ModeratorToolsView({super.key});
+  final String communityId;
+
+  const ModeratorToolsView({
+    super.key,
+    required this.communityId,
+  });
+
+  void _goToEditCommunityPage(BuildContext ctx) {
+    ctx.goNamed(
+      EditCommunityPage.name,
+      params: {'communityId': communityId},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +32,7 @@ class ModeratorToolsView extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.edit),
             title: const Text('Edit Community'),
-            onTap: () {},
+            onTap: () => _goToEditCommunityPage(context),
           ),
         ],
       ),
