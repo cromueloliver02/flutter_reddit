@@ -28,8 +28,8 @@ class AppTheme {
     // will be used as alternative background color
     // backgroundColor: whiteColor,
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontSize: 18),
-      bodyMedium: TextStyle(fontSize: 16),
+      bodyLarge: TextStyle(fontSize: 18, color: blackColor),
+      bodyMedium: TextStyle(fontSize: 16, color: blackColor),
     ),
   );
 
@@ -51,8 +51,8 @@ class AppTheme {
     // will be used as alternative background color
     // backgroundColor: drawerColor,
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(fontSize: 18),
-      bodyMedium: TextStyle(fontSize: 16),
+      bodyLarge: TextStyle(fontSize: 18, color: whiteColor),
+      bodyMedium: TextStyle(fontSize: 16, color: whiteColor),
     ),
   );
 }

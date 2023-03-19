@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/cubits/cubits.dart';
 import '../../features/auth/presentation/pages/pages.dart';
-import '../../features/community/domain/usecases/usecases.dart';
 import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
@@ -55,10 +54,8 @@ class AppRouter {
           GoRoute(
             path: CommunityDetailsPage.path,
             name: CommunityDetailsPage.name,
-            builder: (ctx, state) => BlocProvider<CommunityDetailsCubit>(
-              create: (ctx) => CommunityDetailsCubit(
-                getCommunity: sl<GetCommunity>(),
-              ),
+            builder: (ctx, state) => BlocProvider<CommunityDetailsCubit>.value(
+              value: sl<CommunityDetailsCubit>(),
               child: CommunityDetailsPage(
                 communityId: state.params['communityId']!,
               ),
@@ -74,8 +71,12 @@ class AppRouter {
                   GoRoute(
                     path: EditCommunityPage.path,
                     name: EditCommunityPage.name,
-                    builder: (ctx, state) => EditCommunityPage(
-                      communityId: state.params['communityId']!,
+                    builder: (ctx, state) =>
+                        BlocProvider<CommunityDetailsCubit>.value(
+                      value: sl<CommunityDetailsCubit>(),
+                      child: EditCommunityPage(
+                        communityId: state.params['communityId']!,
+                      ),
                     ),
                   ),
                 ],
