@@ -19,7 +19,7 @@ class CreateCommunity implements FutureUseCase<void, CreateCommunityParams> {
       banner: kBannerDefault,
       avatar: kAvatarDefault,
       members: <String>[params.userId],
-      mods: const <String>[],
+      mods: <String>[params.userId],
     );
 
     return _communityRepository.createCommunity(community);
