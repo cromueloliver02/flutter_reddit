@@ -14,10 +14,11 @@ class CommunityListDrawer extends StatelessWidget {
     ctx.pushNamed(CreateCommunityPage.name);
   }
 
-  void _goToCommunityPage(
+  void _goToCommunityDetailsPage(
     BuildContext ctx, {
     required String communityId,
   }) {
+    Navigator.pop(ctx);
     ctx.goNamed(
       CommunityDetailsPage.name,
       params: {'communityId': communityId},
@@ -50,7 +51,7 @@ class CommunityListDrawer extends StatelessWidget {
                           backgroundImage: NetworkImage(community.avatar),
                         ),
                         title: Text('r/${community.name}'),
-                        onTap: () => _goToCommunityPage(
+                        onTap: () => _goToCommunityDetailsPage(
                           context,
                           communityId: community.id,
                         ),
