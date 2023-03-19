@@ -1,7 +1,8 @@
+
 import 'package:flutter/material.dart';
 
-class RDTLoader extends StatelessWidget {
-  const RDTLoader({super.key});
+class RDTLoaderCard extends StatelessWidget {
+  const RDTLoaderCard({super.key});
 
   @override
   Widget build(BuildContext context) {

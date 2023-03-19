@@ -19,7 +19,7 @@ class CommunityDetailsPostList extends StatelessWidget {
       }
 
       if (state.status == CommunityDetailsStatus.loading) {
-        return const RDTLoader();
+        return const RDTLoaderCard();
       }
 
       if (state.status == CommunityDetailsStatus.failure) {

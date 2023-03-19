@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
         builder: (ctx, state) {
           if (state.status == SignInStatus.loading ||
               state.status == SignInStatus.success) {
-            return const RDTLoader();
+            return const RDTLoaderCard();
           }
 
           return Column(
