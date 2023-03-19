@@ -17,7 +17,7 @@ class CreateCommunityState extends Equatable {
     return CreateCommunityState(
       community: Community.empty(),
       status: CreateCommunityStatus.initial,
-      error: Failure(),
+      error: const Failure(),
     );
   }
 

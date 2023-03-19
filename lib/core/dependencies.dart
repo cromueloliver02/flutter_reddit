@@ -83,9 +83,6 @@ void setup() {
   sl.registerFactory<CreateCommunityCubit>(
     () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
   );
-  sl.registerFactory<CommunityDetailsCubit>(
-    () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
-  );
 
   // utilities
 }

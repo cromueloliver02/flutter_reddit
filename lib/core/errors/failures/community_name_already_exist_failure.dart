@@ -2,7 +2,7 @@ import '../../constants/constants.dart';
 import 'failure.dart';
 
 class CommunityNameAlreadyExistFailure extends Failure {
-  CommunityNameAlreadyExistFailure({
+  const CommunityNameAlreadyExistFailure({
     super.message = kCommunityNameAlreadyExistFailureMsg,
     super.exception,
   });

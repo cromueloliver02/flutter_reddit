@@ -12,7 +12,7 @@ class SignInState extends Equatable {
   });
 
   factory SignInState.initial() {
-    return SignInState(
+    return const SignInState(
       status: SignInStatus.initial,
       error: Failure(),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_reddit/features/community/domain/usecases/get_community_usecase.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/auth/presentation/cubits/cubits.dart';
@@ -54,12 +55,21 @@ class AppRouter {
           GoRoute(
             path: CommunityDetailsPage.path,
             name: CommunityDetailsPage.name,
-            builder: (ctx, state) => BlocProvider<CommunityDetailsCubit>.value(
-              value: sl<CommunityDetailsCubit>(),
+            builder: (ctx, state) => BlocProvider<CommunityDetailsCubit>(
+              create: (ctx) => CommunityDetailsCubit(
+                getCommunity: sl<GetCommunity>(),
+              ),
               child: CommunityDetailsPage(
                 communityId: state.params['communityId']!,
               ),
             ),
+            routes: [
+              GoRoute(
+                path: ModeratorToolsPage.path,
+                name: ModeratorToolsPage.name,
+                builder: (ctx, state) => const ModeratorToolsPage(),
+              ),
+            ],
           ),
         ],
       ),

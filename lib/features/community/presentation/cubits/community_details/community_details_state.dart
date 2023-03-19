@@ -14,7 +14,7 @@ class CommunityDetailsState extends Equatable {
   });
 
   factory CommunityDetailsState.initial() {
-    return CommunityDetailsState(
+    return const CommunityDetailsState(
       community: null,
       status: CommunityDetailsStatus.initial,
       error: Failure(),

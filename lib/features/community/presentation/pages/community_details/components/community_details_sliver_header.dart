@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../cubits/cubits.dart';
+import '../../pages.dart';
 
 class CommunityDetailsSliverHeader extends StatelessWidget {
   final CommunityDetailsState state;
@@ -12,6 +14,13 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
     super.key,
     required this.state,
   });
+
+  void _goToModToolsPage(BuildContext ctx) {
+    ctx.goNamed(
+      ModeratorToolsPage.name,
+      params: {'communityId': state.community!.id},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +51,7 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
               if (state.community!.mods.contains(userId))
                 RDTOutlinedButton(
                   title: 'Mod Tools',
-                  onPressed: () {},
+                  onPressed: () => _goToModToolsPage(context),
                 ),
               if (!state.community!.mods.contains(userId))
                 RDTOutlinedButton(

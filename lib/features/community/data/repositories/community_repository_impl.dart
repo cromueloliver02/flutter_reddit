@@ -61,7 +61,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
 
       return const Right(null);
     } on CommunityNameAlreadyExistException {
-      return Left(CommunityNameAlreadyExistFailure());
+      return const Left(CommunityNameAlreadyExistFailure());
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {

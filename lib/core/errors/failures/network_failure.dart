@@ -2,7 +2,7 @@ import '../../constants/constants.dart';
 import 'failure.dart';
 
 class NetworkFailure extends Failure {
-  NetworkFailure({
+  const NetworkFailure({
     super.message = kNetworkFailureMsg,
     super.exception,
   });

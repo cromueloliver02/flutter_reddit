@@ -2,7 +2,7 @@ import '../../constants/constants.dart';
 import 'failure.dart';
 
 class UnexpectedFailure extends Failure {
-  UnexpectedFailure({
+  const UnexpectedFailure({
     super.message = kUnexpectedFailureMsg,
     super.exception,
   });

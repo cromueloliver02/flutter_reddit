@@ -2,7 +2,7 @@ import '../../constants/constants.dart';
 import 'failure.dart';
 
 class ServerFailure extends Failure {
-  ServerFailure({
+  const ServerFailure({
     super.message = kServerFailureMsg,
     super.exception,
   });

@@ -14,8 +14,8 @@ class CommunityListState extends Equatable {
   });
 
   factory CommunityListState.initial() {
-    return CommunityListState(
-      communityList: const <Community>[],
+    return const CommunityListState(
+      communityList: <Community>[],
       status: CommunityListStatus.initial,
       error: Failure(),
     );
