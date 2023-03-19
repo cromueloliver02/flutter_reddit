@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../cubits/cubits.dart';
+import 'avatar_image_field.dart';
+import 'banner_image_field.dart';
 import 'edit_community_app_bar.dart';
-import 'image_field.dart';
 
 class EditCommunityView extends StatelessWidget {
   const EditCommunityView({super.key});
@@ -19,8 +22,22 @@ class EditCommunityView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
-          children: const [
-            ImageField(),
+          children: [
+            BlocBuilder<CommunityDetailsCubit, CommunityDetailsState>(
+              builder: (ctx, state) => SizedBox(
+                height: 180,
+                child: Stack(
+                  children: [
+                    BannerImageField(banner: state.community!.banner),
+                    Positioned(
+                      left: 20,
+                      bottom: 0,
+                      child: AvatarImageField(avatar: state.community!.avatar),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),

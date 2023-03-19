@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../widgets/widgets.dart';
 
@@ -19,4 +20,11 @@ void showErrorDialog(BuildContext ctx, {required String message}) {
     barrierDismissible: false,
     builder: (ctx) => RDTErrorDialog(message: message),
   );
+}
+
+Future<XFile?> pickImage() async {
+  final ImagePicker picker = ImagePicker();
+  final XFile? imageFile = await picker.pickImage(source: ImageSource.gallery);
+
+  return imageFile;
 }
