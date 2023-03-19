@@ -7,7 +7,13 @@ class EditCommunityAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('Edit Community'),
-      centerTitle: true,
+      centerTitle: false,
+      actions: [
+        TextButton(
+          onPressed: () {},
+          child: const Text('Save'),
+        ),
+      ],
     );
   }
 }
