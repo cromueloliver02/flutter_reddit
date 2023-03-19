@@ -6,10 +6,10 @@ import '../../cubits/cubits.dart';
 import 'components/login_view.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   static const String name = 'login';
   static const String path = '/$name';
-
-  const LoginPage({super.key});
 
   void _signInListener(BuildContext ctx, SignInState state) {
     if (state.status == SignInStatus.failure) {

@@ -7,10 +7,10 @@ import '../../cubits/cubits.dart';
 import 'components/create_community_view.dart';
 
 class CreateCommunityPage extends StatelessWidget {
+  const CreateCommunityPage({super.key});
+
   static const String name = 'create-community';
   static const String path = name;
-
-  const CreateCommunityPage({super.key});
 
   @override
   Widget build(BuildContext context) {

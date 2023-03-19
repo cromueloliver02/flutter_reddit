@@ -7,13 +7,13 @@ import 'components/community_details_view.dart';
 class CommunityDetailsPage extends StatefulWidget {
   final String communityId;
 
-  static const String name = 'community-details';
-  static const String path = 'community/:communityId';
-
   const CommunityDetailsPage({
     super.key,
     required this.communityId,
   });
+
+  static const String name = 'community-details';
+  static const String path = 'community/:communityId';
 
   @override
   State<CommunityDetailsPage> createState() => _CommunityDetailsPageState();

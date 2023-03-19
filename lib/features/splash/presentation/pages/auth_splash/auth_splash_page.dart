@@ -6,10 +6,10 @@ import '../../../../../core/utils/utils.dart';
 import 'components/auth_splash_view.dart';
 
 class AuthSplashPage extends StatefulWidget {
+  const AuthSplashPage({super.key});
+
   static const String name = 'auth-splash';
   static const String path = '/$name';
-
-  const AuthSplashPage({super.key});
 
   @override
   State<AuthSplashPage> createState() => _AuthSplashPageState();

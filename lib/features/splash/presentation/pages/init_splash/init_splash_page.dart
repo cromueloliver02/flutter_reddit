@@ -8,10 +8,10 @@ import '../../../../home/presentation/pages/pages.dart';
 import 'components/init_splash_view.dart';
 
 class InitSplashPage extends StatefulWidget {
+  const InitSplashPage({super.key});
+
   static const String name = 'init-splash';
   static const String path = '/$name';
-
-  const InitSplashPage({super.key});
 
   @override
   State<InitSplashPage> createState() => _InitSplashPageState();
