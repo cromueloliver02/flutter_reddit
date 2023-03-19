@@ -16,6 +16,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) : _communityRemoteDataSource = communityRemoteDataSource;
 
   @override
+  Future<Either<Failure, Community?>> getCommunity(String communityId) async {
+    try {
+      final Community? community =
+          await _communityRemoteDataSource.getById(communityId).first;
+
+      return Right(community);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
+
+  @override
   Either<Failure, Stream<List<Community>>> fetchUserCommunities(String userId) {
     try {
       final Stream<List<Community>> communitiesStream =

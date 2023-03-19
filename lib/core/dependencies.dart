@@ -63,6 +63,9 @@ void setup() {
   sl.registerLazySingleton<CreateCommunity>(
     () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<GetCommunity>(
+    () => GetCommunity(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
@@ -79,6 +82,9 @@ void setup() {
   sl.registerFactory<CommunityFormCubit>(() => CommunityFormCubit());
   sl.registerFactory<CreateCommunityCubit>(
     () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
+  );
+  sl.registerFactory<CommunityDetailsCubit>(
+    () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
   );
 
   // utilities

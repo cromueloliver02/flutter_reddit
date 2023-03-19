@@ -13,6 +13,8 @@ const String kBannerDefault =
     'https://thumbs.dreamstime.com/b/abstract-stained-pattern-rectangle-background-blue-sky-over-fiery-red-orange-color-modern-painting-art-watercolor-effe-texture-123047399.jpg';
 const String kAvatarDefault =
     'https://external-preview.redd.it/5kh5OreeLd85QsqYO1Xz_4XSLYwZntfjqou-8fyBFoE.png?auto=webp&s=dbdabd04c399ce9c761ff899f5d38656d1de87c2';
+const String kNotFoundDefault =
+    'https://img.freepik.com/premium-vector/flat-404-error-template_23-2147753090.jpg?w=1380';
 
 // failure messages
 const String kNetworkFailureMsg =
@@ -23,3 +25,5 @@ const String kUnexpectedFailureMsg =
     "Oops! Something went wrong on our end. Our team has been notified and we're working to fix the issue as soon as possible. In the meantime, please try again later or contact customer support for further assistance.";
 const String kCommunityNameAlreadyExistFailureMsg =
     'Community name already exist.';
+const String kDefaultErrorMsg = 'Error: Something went wrong';
+const String kDefaultNotFoundMsg = '404: Not found.';
