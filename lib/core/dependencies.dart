@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -25,6 +26,7 @@ void setup() {
   sl.registerLazySingleton<GoogleSignIn>(() => GoogleSignIn());
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
+  sl.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
 
   // data sources
   sl.registerLazySingleton<GoogleSignInDataSource>(
@@ -38,6 +40,9 @@ void setup() {
   );
   sl.registerLazySingleton<CommunityRemoteDataSource>(
     () => CommunityRemoteDataSourceImpl(firestore: sl<FirebaseFirestore>()),
+  );
+  sl.registerLazySingleton<StorageRemoteDataSource>(
+    () => StorageRemoteDataSourceImpl(storage: sl<FirebaseStorage>()),
   );
 
   // repositories
