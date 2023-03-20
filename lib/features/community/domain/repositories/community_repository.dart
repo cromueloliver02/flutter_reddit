@@ -19,4 +19,6 @@ abstract class CommunityRepository {
     required File? avatarImageFile,
     required File? bannerImageFile,
   });
+
+  Either<Failure, Stream<List<Community>>> searchCommunity(String query);
 }

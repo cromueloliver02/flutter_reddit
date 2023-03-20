@@ -31,8 +31,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
-    } catch (err) {
-      return Left(UnexpectedFailure(exception: err));
     }
   }
 
@@ -46,8 +44,6 @@ class CommunityRepositoryImpl implements CommunityRepository {
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
-      return Left(UnexpectedFailure(exception: err));
-    } catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }
   }
@@ -104,6 +100,20 @@ class CommunityRepositoryImpl implements CommunityRepository {
       await _communityRemoteDataSource.update(community);
 
       return const Right(null);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
+
+  @override
+  Either<Failure, Stream<List<Community>>> searchCommunity(String query) {
+    try {
+      final Stream<List<Community>> communitiesStream =
+          _communityRemoteDataSource.searchCommunity(query);
+
+      return Right(communitiesStream);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
