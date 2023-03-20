@@ -9,6 +9,7 @@ abstract class CommunityRemoteDataSource {
   Stream<Community?> getById(String id);
   Stream<List<Community>> fetchCommunitiesByUserId(String userId);
   Future<void> post(CommunityModel community);
+  Future<void> update(CommunityModel community);
 }
 
 class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
@@ -65,6 +66,20 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           .collection(kCommunitiesCollection)
           .doc(community.id)
           .set(community.toMap());
+    } on FirebaseException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
+  }
+
+  @override
+  Future<void> update(CommunityModel community) async {
+    try {
+      await _firestore
+          .collection(kCommunitiesCollection)
+          .doc(community.id)
+          .update(community.toMap());
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
