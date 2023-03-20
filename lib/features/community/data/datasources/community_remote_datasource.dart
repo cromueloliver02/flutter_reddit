@@ -10,6 +10,7 @@ abstract class CommunityRemoteDataSource {
   Stream<List<Community>> fetchCommunitiesByUserId(String userId);
   Future<void> post(CommunityModel community);
   Future<void> update(CommunityModel community);
+  Stream<List<Community>> searchCommunity(String query);
 }
 
 class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
@@ -80,6 +81,32 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           .collection(kCommunitiesCollection)
           .doc(community.id)
           .update(community.toMap());
+    } on FirebaseException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
+  }
+
+  @override
+  Stream<List<Community>> searchCommunity(String query) {
+    try {
+      final String isLessThanQuery = query.substring(0, query.length - 1) +
+          String.fromCharCode(query.codeUnitAt(query.length - 1) + 1);
+
+      final Stream<List<Community>> communitiesStream = _firestore
+          .collection(kCommunitiesCollection)
+          .where(
+            'name',
+            isGreaterThanOrEqualTo: query.isEmpty ? 0 : query,
+            isLessThan: query.isEmpty ? null : isLessThanQuery,
+          )
+          .snapshots()
+          .map((snapshot) => snapshot.docs
+              .map((DocumentSnapshot doc) => CommunityModel.fromDoc(doc))
+              .toList());
+
+      return communitiesStream;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
