@@ -27,8 +27,8 @@ class StorageRemoteDataSourceImpl implements StorageRemoteDataSource {
   }) async {
     try {
       final Reference ref = _storage.ref().child(path).child(id);
-      final UploadTask uploadTask = ref.putFile(file);
-      final String downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+      final TaskSnapshot taskSnapshot = await ref.putFile(file);
+      final String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
       return downloadUrl;
     } on FirebaseException catch (err, stackTrace) {
