@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_reddit/core/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../home/presentation/pages/pages.dart';
@@ -20,6 +21,7 @@ class UpdateCommunityPage extends StatelessWidget {
   void _updateCommunityListener(BuildContext ctx, UpdateCommunityState state) {
     if (state.status == UpdateCommunityStatus.success) {
       ctx.goNamed(HomePage.name);
+      showSnackBar(ctx, message: 'Community successfully updated');
     }
   }
 
