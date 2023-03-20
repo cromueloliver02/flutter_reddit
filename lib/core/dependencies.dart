@@ -53,6 +53,7 @@ void setup() {
       ));
   sl.registerLazySingleton<CommunityRepository>(() => CommunityRepositoryImpl(
         communityRemoteDataSource: sl<CommunityRemoteDataSource>(),
+        storageRemoteDataSource: sl<StorageRemoteDataSource>(),
       ));
 
   // use cases

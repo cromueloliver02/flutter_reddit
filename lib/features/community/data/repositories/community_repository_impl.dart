@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/exceptions/exceptions.dart';
@@ -10,10 +12,13 @@ import '../models/models.dart';
 
 class CommunityRepositoryImpl implements CommunityRepository {
   final CommunityRemoteDataSource _communityRemoteDataSource;
+  final StorageRemoteDataSource _storageRemoteDataSource;
 
   const CommunityRepositoryImpl({
     required CommunityRemoteDataSource communityRemoteDataSource,
-  }) : _communityRemoteDataSource = communityRemoteDataSource;
+    required StorageRemoteDataSource storageRemoteDataSource,
+  })  : _communityRemoteDataSource = communityRemoteDataSource,
+        _storageRemoteDataSource = storageRemoteDataSource;
 
   @override
   Future<Either<Failure, Community?>> getCommunity(String communityId) async {
@@ -66,7 +71,46 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
-    } catch (err) {
+    }
+  }
+
+  @override
+  FutureEitherVoid updateCommunity({
+    required CommunityModel community,
+    File? avatarImageFile,
+    File? bannerImageFile,
+  }) async {
+    try {
+      late final String? avatarDownloadUrl;
+      late final String? bannerDownloadUrl;
+
+      if (avatarImageFile != null) {
+        avatarDownloadUrl = await _storageRemoteDataSource.storeFile(
+          path: 'communities/avatars',
+          id: community.id,
+          file: avatarImageFile,
+        );
+      }
+
+      if (bannerImageFile != null) {
+        bannerDownloadUrl = await _storageRemoteDataSource.storeFile(
+          path: 'communities/banners',
+          id: community.id,
+          file: bannerImageFile,
+        );
+      }
+
+      community = community.copyWith(
+        avatar: avatarDownloadUrl == null ? null : () => avatarDownloadUrl!,
+        banner: bannerDownloadUrl == null ? null : () => bannerDownloadUrl!,
+      ) as CommunityModel;
+
+      await _communityRemoteDataSource.update(community);
+
+      return const Right(null);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }
   }
