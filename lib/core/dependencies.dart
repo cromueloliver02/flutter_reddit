@@ -75,6 +75,9 @@ void setup() {
   sl.registerLazySingleton<UpdateCommunity>(
     () => UpdateCommunity(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<SearchCommunity>(
+    () => SearchCommunity(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
