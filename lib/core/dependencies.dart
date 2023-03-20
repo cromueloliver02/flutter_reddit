@@ -94,7 +94,9 @@ void setup() {
   sl.registerFactory<CreateCommunityCubit>(
     () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
   );
-  sl.registerFactory<EditCommunityFormCubit>(() => EditCommunityFormCubit());
+  sl.registerFactory<UpdateCommunityFormCubit>(
+    () => UpdateCommunityFormCubit(),
+  );
   sl.registerLazySingleton<CommunityDetailsCubit>(
     () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
   );

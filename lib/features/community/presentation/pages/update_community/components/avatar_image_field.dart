@@ -17,9 +17,9 @@ class AvatarImageField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: context.read<EditCommunityFormCubit>().pickAvatarImage,
-      child:
-          BlocSelector<EditCommunityFormCubit, EditCommunityFormState, XFile?>(
+      onTap: context.read<UpdateCommunityFormCubit>().pickAvatarImage,
+      child: BlocSelector<UpdateCommunityFormCubit, UpdateCommunityFormState,
+          XFile?>(
         selector: (state) => state.avatarImageFile,
         builder: (ctx, avatarImageFile) {
           if (avatarImageFile == null) {

@@ -76,8 +76,8 @@ class AppRouter {
                         BlocProvider<CommunityDetailsCubit>.value(
                           value: sl<CommunityDetailsCubit>(),
                         ),
-                        BlocProvider<EditCommunityFormCubit>.value(
-                          value: sl<EditCommunityFormCubit>(),
+                        BlocProvider<UpdateCommunityFormCubit>.value(
+                          value: sl<UpdateCommunityFormCubit>(),
                         ),
                       ],
                       child: UpdateCommunityPage(

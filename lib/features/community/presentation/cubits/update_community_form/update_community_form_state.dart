@@ -1,16 +1,16 @@
-part of 'edit_community_form_cubit.dart';
+part of 'update_community_form_cubit.dart';
 
-class EditCommunityFormState extends Equatable {
+class UpdateCommunityFormState extends Equatable {
   final XFile? avatarImageFile;
   final XFile? bannerImageFile;
 
-  const EditCommunityFormState({
+  const UpdateCommunityFormState({
     required this.avatarImageFile,
     required this.bannerImageFile,
   });
 
-  factory EditCommunityFormState.initial() {
-    return const EditCommunityFormState(
+  factory UpdateCommunityFormState.initial() {
+    return const UpdateCommunityFormState(
       avatarImageFile: null,
       bannerImageFile: null,
     );
@@ -21,13 +21,13 @@ class EditCommunityFormState extends Equatable {
 
   @override
   String toString() =>
-      'EditCommunityFormState(avatarImageFile: $avatarImageFile, bannerImageFile: $bannerImageFile)';
+      'UpdateCommunityFormState(avatarImageFile: $avatarImageFile, bannerImageFile: $bannerImageFile)';
 
-  EditCommunityFormState copyWith({
+  UpdateCommunityFormState copyWith({
     XFile? Function()? avatarImageFile,
     XFile? Function()? bannerImageFile,
   }) {
-    return EditCommunityFormState(
+    return UpdateCommunityFormState(
       avatarImageFile:
           avatarImageFile != null ? avatarImageFile() : this.avatarImageFile,
       bannerImageFile:

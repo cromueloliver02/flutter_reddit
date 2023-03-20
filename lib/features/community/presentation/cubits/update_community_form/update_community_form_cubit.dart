@@ -4,10 +4,10 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../../core/utils/utils.dart';
 
-part 'edit_community_form_state.dart';
+part 'update_community_form_state.dart';
 
-class EditCommunityFormCubit extends Cubit<EditCommunityFormState> {
-  EditCommunityFormCubit() : super(EditCommunityFormState.initial());
+class UpdateCommunityFormCubit extends Cubit<UpdateCommunityFormState> {
+  UpdateCommunityFormCubit() : super(UpdateCommunityFormState.initial());
 
   void pickAvatarImage() async {
     final XFile? avatarImageFile = await pickImage();

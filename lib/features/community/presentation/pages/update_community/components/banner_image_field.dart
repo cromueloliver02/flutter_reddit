@@ -20,10 +20,11 @@ class BannerImageField extends StatelessWidget {
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
-    return BlocSelector<EditCommunityFormCubit, EditCommunityFormState, XFile?>(
+    return BlocSelector<UpdateCommunityFormCubit, UpdateCommunityFormState,
+        XFile?>(
       selector: (state) => state.bannerImageFile,
       builder: (ctx, bannerImageFile) => GestureDetector(
-        onTap: ctx.read<EditCommunityFormCubit>().pickBannerImage,
+        onTap: ctx.read<UpdateCommunityFormCubit>().pickBannerImage,
         child: DottedBorder(
           radius: const Radius.circular(10),
           dashPattern: const [10, 4],
