@@ -16,7 +16,7 @@ abstract class CommunityRepository {
 
   FutureEitherVoid updateCommunity({
     required CommunityModel community,
-    File? avatarImageFile,
-    File? bannerImageFile,
+    required File? avatarImageFile,
+    required File? bannerImageFile,
   });
 }

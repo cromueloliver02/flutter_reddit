@@ -77,8 +77,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   FutureEitherVoid updateCommunity({
     required CommunityModel community,
-    File? avatarImageFile,
-    File? bannerImageFile,
+    required File? avatarImageFile,
+    required File? bannerImageFile,
   }) async {
     try {
       if (avatarImageFile != null) {

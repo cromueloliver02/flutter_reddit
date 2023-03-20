@@ -29,7 +29,7 @@ class UpdateCommunityParams {
 
   const UpdateCommunityParams({
     required this.community,
-    this.avatarImageFile,
-    this.bannerImageFile,
+    required this.avatarImageFile,
+    required this.bannerImageFile,
   });
 }
