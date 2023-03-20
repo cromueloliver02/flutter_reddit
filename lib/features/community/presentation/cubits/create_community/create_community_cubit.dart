@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
-import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 part 'create_community_state.dart';
