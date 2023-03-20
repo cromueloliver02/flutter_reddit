@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_reddit/core/utils/utils.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/utils/utils.dart';
 import '../../../../home/presentation/pages/pages.dart';
 import '../../cubits/cubits.dart';
 import 'components/update_community_view.dart';
@@ -22,6 +22,10 @@ class UpdateCommunityPage extends StatelessWidget {
     if (state.status == UpdateCommunityStatus.success) {
       ctx.goNamed(HomePage.name);
       showSnackBar(ctx, message: 'Community successfully updated');
+    }
+
+    if (state.status == UpdateCommunityStatus.failure) {
+      showErrorDialog(ctx, message: state.error.message);
     }
   }
 
