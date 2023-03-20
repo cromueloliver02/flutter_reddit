@@ -69,8 +69,8 @@ class AppRouter {
                 ),
                 routes: [
                   GoRoute(
-                    path: EditCommunityPage.path,
-                    name: EditCommunityPage.name,
+                    path: UpdateCommunityPage.path,
+                    name: UpdateCommunityPage.name,
                     builder: (ctx, state) => MultiBlocProvider(
                       providers: [
                         BlocProvider<CommunityDetailsCubit>.value(
@@ -80,7 +80,7 @@ class AppRouter {
                           value: sl<EditCommunityFormCubit>(),
                         ),
                       ],
-                      child: EditCommunityPage(
+                      child: UpdateCommunityPage(
                         communityId: state.params['communityId']!,
                       ),
                     ),

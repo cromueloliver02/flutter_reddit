@@ -12,9 +12,9 @@ class ModeratorToolsView extends StatelessWidget {
     required this.communityId,
   });
 
-  void _goToEditCommunityPage(BuildContext ctx) {
+  void _goToUpdateCommunityPage(BuildContext ctx) {
     ctx.goNamed(
-      EditCommunityPage.name,
+      UpdateCommunityPage.name,
       params: {'communityId': communityId},
     );
   }
@@ -35,8 +35,8 @@ class ModeratorToolsView extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Icons.edit),
-            title: const Text('Edit Community'),
-            onTap: () => _goToEditCommunityPage(context),
+            title: const Text('Update Community'),
+            onTap: () => _goToUpdateCommunityPage(context),
           ),
         ],
       ),

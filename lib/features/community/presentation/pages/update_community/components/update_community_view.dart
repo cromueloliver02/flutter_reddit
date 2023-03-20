@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../cubits/cubits.dart';
 import 'avatar_image_field.dart';
 import 'banner_image_field.dart';
-import 'edit_community_app_bar.dart';
+import 'update_community_app_bar.dart';
 
-class EditCommunityView extends StatelessWidget {
-  const EditCommunityView({super.key});
+class UpdateCommunityView extends StatelessWidget {
+  const UpdateCommunityView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class EditCommunityView extends StatelessWidget {
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: EditCommunityAppBar(),
+        child: UpdateCommunityAppBar(),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
