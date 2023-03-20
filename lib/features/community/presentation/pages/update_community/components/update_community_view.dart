@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/widgets/widgets.dart';
 import '../../../cubits/cubits.dart';
 import 'avatar_image_field.dart';
 import 'banner_image_field.dart';
@@ -19,27 +20,38 @@ class UpdateCommunityView extends StatelessWidget {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: UpdateCommunityAppBar(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            BlocBuilder<CommunityDetailsCubit, CommunityDetailsState>(
-              builder: (ctx, state) => SizedBox(
-                height: 180,
-                child: Stack(
-                  children: [
-                    BannerImageField(banner: state.community!.banner),
-                    Positioned(
-                      left: 20,
-                      bottom: 0,
-                      child: AvatarImageField(avatar: state.community!.avatar),
-                    )
-                  ],
+      body: BlocBuilder<UpdateCommunityCubit, UpdateCommunityState>(
+        buildWhen: (prev, curr) => prev.status != curr.status,
+        builder: (ctx, state) {
+          if (state.status == UpdateCommunityStatus.loading) {
+            return const RDTLoaderCard();
+          }
+
+          return Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                BlocBuilder<CommunityDetailsCubit, CommunityDetailsState>(
+                  builder: (ctx, state) => SizedBox(
+                    height: 180,
+                    child: Stack(
+                      children: [
+                        BannerImageField(banner: state.community!.banner),
+                        Positioned(
+                          left: 20,
+                          bottom: 0,
+                          child: AvatarImageField(
+                            avatar: state.community!.avatar,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

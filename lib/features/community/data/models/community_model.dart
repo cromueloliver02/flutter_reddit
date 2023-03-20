@@ -14,6 +14,29 @@ class CommunityModel extends Community {
     super.updatedAt,
   });
 
+  @override
+  CommunityModel copyWith({
+    String Function()? id,
+    String Function()? name,
+    String Function()? banner,
+    String Function()? avatar,
+    List<String> Function()? members,
+    List<String> Function()? mods,
+    DateTime Function()? createdAt,
+    DateTime Function()? updatedAt,
+  }) {
+    return CommunityModel(
+      id: id != null ? id() : this.id,
+      name: name != null ? name() : this.name,
+      banner: banner != null ? banner() : this.banner,
+      avatar: avatar != null ? avatar() : this.avatar,
+      members: members != null ? members() : this.members,
+      mods: mods != null ? mods() : this.mods,
+      createdAt: createdAt != null ? createdAt() : this.createdAt,
+      updatedAt: updatedAt != null ? updatedAt() : this.updatedAt,
+    );
+  }
+
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 

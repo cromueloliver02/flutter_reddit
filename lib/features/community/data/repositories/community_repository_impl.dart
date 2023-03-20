@@ -81,29 +81,25 @@ class CommunityRepositoryImpl implements CommunityRepository {
     File? bannerImageFile,
   }) async {
     try {
-      late final String? avatarDownloadUrl;
-      late final String? bannerDownloadUrl;
-
       if (avatarImageFile != null) {
-        avatarDownloadUrl = await _storageRemoteDataSource.storeFile(
+        final String avatarUrl = await _storageRemoteDataSource.storeFile(
           path: 'communities/avatars',
           id: community.id,
           file: avatarImageFile,
         );
+
+        community = community.copyWith(avatar: () => avatarUrl);
       }
 
       if (bannerImageFile != null) {
-        bannerDownloadUrl = await _storageRemoteDataSource.storeFile(
+        final String bannerUrl = await _storageRemoteDataSource.storeFile(
           path: 'communities/banners',
           id: community.id,
           file: bannerImageFile,
         );
-      }
 
-      community = community.copyWith(
-        avatar: avatarDownloadUrl == null ? null : () => avatarDownloadUrl!,
-        banner: bannerDownloadUrl == null ? null : () => bannerDownloadUrl!,
-      ) as CommunityModel;
+        community = community.copyWith(banner: () => bannerUrl);
+      }
 
       await _communityRemoteDataSource.update(community);
 
