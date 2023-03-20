@@ -79,7 +79,9 @@ void setup() {
   sl.registerFactory<SignInCubit>(
     () => SignInCubit(loginWithGoogle: sl<LoginWithGoogle>()),
   );
-  sl.registerFactory<CommunityFormCubit>(() => CommunityFormCubit());
+  sl.registerFactory<CreateCommunityFormCubit>(
+    () => CreateCommunityFormCubit(),
+  );
   sl.registerFactory<CreateCommunityCubit>(
     () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
   );

@@ -18,16 +18,16 @@ class CreateCommunityForm extends StatelessWidget {
     required GlobalKey<FormState> formKey,
   }) {
     final AuthBloc authBloc = ctx.read<AuthBloc>();
-    final CommunityFormCubit communityFormCubit =
-        ctx.read<CommunityFormCubit>();
+    final CreateCommunityFormCubit createCommunityFormCubit =
+        ctx.read<CreateCommunityFormCubit>();
 
-    communityFormCubit.toggleAutovalidateMode();
+    createCommunityFormCubit.toggleAutovalidateMode();
 
     final FormState? formState = formKey.currentState;
 
     if (formState != null && formState.validate()) {
       final String userId = authBloc.state.user!.id;
-      final String name = communityFormCubit.state.name;
+      final String name = createCommunityFormCubit.state.name;
 
       ctx.read<CreateCommunityCubit>().createCommunity(
             userId: userId,
@@ -42,7 +42,7 @@ class CreateCommunityForm extends StatelessWidget {
         CreateCommunityStatus>(
       selector: (state) => state.status,
       builder: (ctx, status) =>
-          BlocBuilder<CommunityFormCubit, CommunityFormState>(
+          BlocBuilder<CreateCommunityFormCubit, CreateCommunityFormState>(
         builder: (ctx, state) => Form(
           key: formKey,
           autovalidateMode: state.autovalidateMode,
@@ -57,10 +57,12 @@ class CreateCommunityForm extends StatelessWidget {
                 hintText: 'r/Community_name',
                 enabled: status != CreateCommunityStatus.loading,
                 maxLength: 21,
-                validator:
-                    context.read<CommunityFormCubit>().communityNameValidator,
-                onChanged:
-                    context.read<CommunityFormCubit>().onCommunityNameChanged,
+                validator: context
+                    .read<CreateCommunityFormCubit>()
+                    .communityNameValidator,
+                onChanged: context
+                    .read<CreateCommunityFormCubit>()
+                    .onCommunityNameChanged,
               ),
               const SizedBox(height: 30),
               RDTElevatedButton(

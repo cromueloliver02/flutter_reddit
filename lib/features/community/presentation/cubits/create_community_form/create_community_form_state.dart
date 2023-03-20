@@ -1,16 +1,16 @@
-part of 'community_form_cubit.dart';
+part of 'create_community_form_cubit.dart';
 
-class CommunityFormState extends Equatable {
+class CreateCommunityFormState extends Equatable {
   final AutovalidateMode autovalidateMode;
   final String name;
 
-  const CommunityFormState({
+  const CreateCommunityFormState({
     required this.autovalidateMode,
     required this.name,
   });
 
-  factory CommunityFormState.initial() {
-    return const CommunityFormState(
+  factory CreateCommunityFormState.initial() {
+    return const CreateCommunityFormState(
       autovalidateMode: AutovalidateMode.disabled,
       name: '',
     );
@@ -21,13 +21,13 @@ class CommunityFormState extends Equatable {
 
   @override
   String toString() =>
-      'CommunityFormState(autovalidateMode: $autovalidateMode, name: $name)';
+      'CreateCommunityFormState(autovalidateMode: $autovalidateMode, name: $name)';
 
-  CommunityFormState copyWith({
+  CreateCommunityFormState copyWith({
     AutovalidateMode Function()? autovalidateMode,
     String Function()? name,
   }) {
-    return CommunityFormState(
+    return CreateCommunityFormState(
       autovalidateMode:
           autovalidateMode != null ? autovalidateMode() : this.autovalidateMode,
       name: name != null ? name() : this.name,

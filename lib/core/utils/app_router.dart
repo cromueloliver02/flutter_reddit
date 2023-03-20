@@ -44,8 +44,8 @@ class AppRouter {
                 BlocProvider<CreateCommunityCubit>.value(
                   value: sl<CreateCommunityCubit>(),
                 ),
-                BlocProvider<CommunityFormCubit>.value(
-                  value: sl<CommunityFormCubit>(),
+                BlocProvider<CreateCommunityFormCubit>.value(
+                  value: sl<CreateCommunityFormCubit>(),
                 ),
               ],
               child: const CreateCommunityPage(),

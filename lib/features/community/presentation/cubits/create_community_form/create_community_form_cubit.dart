@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'community_form_state.dart';
+part 'create_community_form_state.dart';
 
-class CommunityFormCubit extends Cubit<CommunityFormState> {
-  CommunityFormCubit() : super(CommunityFormState.initial());
+class CreateCommunityFormCubit extends Cubit<CreateCommunityFormState> {
+  CreateCommunityFormCubit() : super(CreateCommunityFormState.initial());
 
   void onCommunityNameChanged(String value) {
     emit(state.copyWith(name: () => value));
