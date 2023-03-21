@@ -21,6 +21,8 @@ class ImageRepositoryImpl implements ImageRepository {
           await _imageLocalDataSource.pickImage(source: source);
 
       return Right(imageFile);
+    } on CorruptedImageException catch (err) {
+      return Left(CorruptedImageFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }

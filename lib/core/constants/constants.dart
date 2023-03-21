@@ -25,5 +25,12 @@ const String kUnexpectedFailureMsg =
     "Oops! Something went wrong on our end. Our team has been notified and we're working to fix the issue as soon as possible. In the meantime, please try again later or contact customer support for further assistance.";
 const String kCommunityNameAlreadyExistFailureMsg =
     'Community name already exist.';
+const String kCorruptedImageFailureMsg =
+    'The image file you\'re trying to open is invalid or damaged. Please check the file and try again.';
+
+// default messages
 const String kDefaultErrorMsg = 'Error: Something went wrong';
 const String kDefaultNotFoundMsg = '404: Not found.';
+
+// platform exception codes
+const String kInvalidImage = 'invalid_image';

@@ -29,11 +29,29 @@ class UpdateCommunityPage extends StatelessWidget {
     }
   }
 
+  void _updateCommunityFormListener(
+    BuildContext ctx,
+    UpdateCommunityFormState state,
+  ) {
+    if (state.pickImageStatus == PickImageStatus.failure) {
+      showErrorDialog(ctx, message: state.error.message);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocListener<UpdateCommunityCubit, UpdateCommunityState>(
-      listenWhen: (prev, curr) => prev.status != curr.status,
-      listener: _updateCommunityListener,
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<UpdateCommunityCubit, UpdateCommunityState>(
+          listenWhen: (prev, curr) => prev.status != curr.status,
+          listener: _updateCommunityListener,
+        ),
+        BlocListener<UpdateCommunityFormCubit, UpdateCommunityFormState>(
+          listenWhen: (prev, curr) =>
+              prev.pickImageStatus != curr.pickImageStatus,
+          listener: _updateCommunityFormListener,
+        ),
+      ],
       child: const UpdateCommunityView(),
     );
   }

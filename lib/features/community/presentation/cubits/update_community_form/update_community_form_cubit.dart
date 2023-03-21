@@ -19,6 +19,8 @@ class UpdateCommunityFormCubit extends Cubit<UpdateCommunityFormState> {
         super(UpdateCommunityFormState.initial());
 
   void pickAvatarImage() async {
+    emit(state.copyWith(pickImageStatus: () => PickImageStatus.loading));
+
     final Either<Failure, XFile?> eitherAvatarImageFile =
         await _pickImage(NoParams());
 
@@ -39,6 +41,8 @@ class UpdateCommunityFormCubit extends Cubit<UpdateCommunityFormState> {
   }
 
   void pickBannerImage() async {
+    emit(state.copyWith(pickImageStatus: () => PickImageStatus.loading));
+
     final Either<Failure, XFile?> eitherBannerImageFile =
         await _pickImage(NoParams());
 
