@@ -1,5 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../core/errors/exceptions/exceptions.dart';
+
 abstract class ImageLocalDataSource {
   Future<XFile?> pickImage({required ImageSource source});
 }
@@ -13,8 +15,12 @@ class ImageLocalDataSourceImpl implements ImageLocalDataSource {
 
   @override
   Future<XFile?> pickImage({required ImageSource source}) async {
-    final XFile? imageFile = await _imagePicker.pickImage(source: source);
+    try {
+      final XFile? imageFile = await _imagePicker.pickImage(source: source);
 
-    return imageFile;
+      return imageFile;
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
   }
 }

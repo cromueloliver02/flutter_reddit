@@ -13,6 +13,7 @@ import '../features/auth/presentation/blocs/blocs.dart';
 import '../features/auth/presentation/cubits/cubits.dart';
 import '../features/community/data/datasources/datasources.dart';
 import '../features/community/data/repositories/repositories.dart';
+import '../features/community/domain/repositories/image_repository.dart';
 import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
@@ -60,6 +61,9 @@ void setup() {
   sl.registerLazySingleton<CommunityRepository>(() => CommunityRepositoryImpl(
         communityRemoteDataSource: sl<CommunityRemoteDataSource>(),
         storageRemoteDataSource: sl<StorageRemoteDataSource>(),
+      ));
+  sl.registerLazySingleton<ImageRepository>(() => ImageRepositoryImpl(
+        imageLocalDataSource: sl<ImageLocalDataSource>(),
       ));
 
   // use cases
