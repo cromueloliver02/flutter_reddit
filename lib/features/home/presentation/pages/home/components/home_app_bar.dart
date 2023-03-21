@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_reddit/core/constants/constants.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/cubits/cubits.dart';
@@ -41,7 +42,9 @@ class HomeAppBar extends StatelessWidget {
         IconButton(
           icon: BlocBuilder<AuthBloc, AuthState>(
             builder: (ctx, state) => CircleAvatar(
-              backgroundImage: NetworkImage(state.user!.profilePic),
+              backgroundImage: NetworkImage(
+                state.user?.profilePic ?? kAvatarDefault,
+              ),
             ),
           ),
           onPressed: () => _openEndDrawer(context),

@@ -20,6 +20,7 @@ class AuthBlocImpl extends AuthBloc {
         _signOut = signOut,
         super(AuthState.initial()) {
     on<AuthStarted>(onAuthStarted);
+    on<AuthSignOutRequested>(onAuthSignOutRequested);
   }
 
   @override

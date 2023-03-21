@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
+import '../../../../../../core/constants/constants.dart';
 import '../../../../../../core/utils/utils.dart';
 
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
+
+  void _signOut(BuildContext ctx) {
+    ctx.read<AuthBloc>().add(AuthSignOutRequested());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +25,14 @@ class ProfileDrawer extends StatelessWidget {
               builder: (ctx, state) => Column(
                 children: [
                   CircleAvatar(
-                    backgroundImage: NetworkImage(state.user!.profilePic),
+                    backgroundImage: NetworkImage(
+                      state.user?.profilePic ?? kAvatarDefault,
+                    ),
                     radius: 70,
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'u/${state.user!.name}',
+                    'u/${state.user?.name ?? 'Anonymous Guest'}',
                     style: textTheme.bodyLarge!.copyWith(
                       fontWeight: FontWeight.w500,
                     ),
@@ -54,7 +61,7 @@ class ProfileDrawer extends StatelessWidget {
                 Icons.logout,
                 color: AppTheme.redColor,
               ),
-              onTap: () {},
+              onTap: () => _signOut(context),
             ),
             const Spacer(),
             Text(
