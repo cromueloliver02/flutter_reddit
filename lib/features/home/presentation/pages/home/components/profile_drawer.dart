@@ -51,6 +51,23 @@ class ProfileDrawer extends StatelessWidget {
               ),
               onTap: () {},
             ),
+            const Spacer(),
+            Text(
+              'Developed by:',
+              style: TextStyle(
+                color: Colors.grey[500],
+                fontSize: 14,
+              ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              'Cromuel D. Barut',
+              style: TextStyle(
+                color: Colors.grey[300],
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ],
         ),
       ),
