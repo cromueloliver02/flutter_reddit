@@ -4,7 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
-import '../../domain/repositories/image_repository.dart';
+import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
 
 class ImageRepositoryImpl implements ImageRepository {
@@ -15,10 +15,10 @@ class ImageRepositoryImpl implements ImageRepository {
   }) : _imageLocalDataSource = imageLocalDataSource;
 
   @override
-  FutureEither<XFile?> pickImage() async {
+  FutureEither<XFile?> pickImage({required ImageSource source}) async {
     try {
       final XFile? imageFile =
-          await _imageLocalDataSource.pickImage(source: ImageSource.gallery);
+          await _imageLocalDataSource.pickImage(source: source);
 
       return Right(imageFile);
     } on UnexpectedException catch (err) {

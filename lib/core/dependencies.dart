@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_reddit/features/community/domain/usecases/pick_image_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -13,7 +14,6 @@ import '../features/auth/presentation/blocs/blocs.dart';
 import '../features/auth/presentation/cubits/cubits.dart';
 import '../features/community/data/datasources/datasources.dart';
 import '../features/community/data/repositories/repositories.dart';
-import '../features/community/domain/repositories/image_repository.dart';
 import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
@@ -87,6 +87,9 @@ void setup() {
   );
   sl.registerLazySingleton<SearchCommunity>(
     () => SearchCommunity(communityRepository: sl<CommunityRepository>()),
+  );
+  sl.registerLazySingleton<PickImage>(
+    () => PickImage(imageRepository: sl<ImageRepository>()),
   );
 
   // blocs
