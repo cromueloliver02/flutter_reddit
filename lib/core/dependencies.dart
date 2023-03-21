@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter_reddit/features/community/presentation/cubits/search_community/search_community_cubit_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -17,6 +18,7 @@ import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
 import 'blocs/blocs.dart';
+import 'cubits/cubits.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -105,6 +107,9 @@ void setup() {
   );
   sl.registerLazySingleton<UpdateCommunityCubit>(
     () => UpdateCommunityCubit(updateCommunity: sl<UpdateCommunity>()),
+  );
+  sl.registerLazySingleton<SearchCommunityCubit>(
+    () => SearchCommunityCubitImpl(searchCommunity: sl<SearchCommunity>()),
   );
 
   // utilities

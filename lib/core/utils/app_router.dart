@@ -7,6 +7,7 @@ import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
 import '../../features/splash/presentation/pages/pages.dart';
+import '../cubits/cubits.dart';
 import '../dependencies.dart';
 
 class AppRouter {
@@ -34,7 +35,10 @@ class AppRouter {
       GoRoute(
         path: HomePage.path,
         name: HomePage.name,
-        builder: (ctx, state) => const HomePage(),
+        builder: (ctx, state) => BlocProvider<SearchCommunityCubit>.value(
+          value: sl<SearchCommunityCubit>(),
+          child: const HomePage(),
+        ),
         routes: [
           GoRoute(
             path: CreateCommunityPage.path,

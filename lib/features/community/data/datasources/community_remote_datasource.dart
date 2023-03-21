@@ -91,15 +91,18 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   @override
   Stream<List<Community>> searchCommunity(String query) {
     try {
-      final String isLessThanQuery = query.substring(0, query.length - 1) +
-          String.fromCharCode(query.codeUnitAt(query.length - 1) + 1);
+      final Object isGreaterThanOrEqualTo = query.isEmpty ? 0 : query;
+      final String? isLessThan = query.isEmpty
+          ? null
+          : query.substring(0, query.length - 1) +
+              String.fromCharCode(query.codeUnitAt(query.length - 1) + 1);
 
       final Stream<List<Community>> communitiesStream = _firestore
           .collection(kCommunitiesCollection)
           .where(
             'name',
-            isGreaterThanOrEqualTo: query.isEmpty ? 0 : query,
-            isLessThan: query.isEmpty ? null : isLessThanQuery,
+            isGreaterThanOrEqualTo: isGreaterThanOrEqualTo,
+            isLessThan: isLessThan,
           )
           .snapshots()
           .map((snapshot) => snapshot.docs

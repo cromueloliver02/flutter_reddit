@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
+import '../../../../../../core/cubits/cubits.dart';
 import '../delegates/search_community_delegate.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -10,7 +11,15 @@ class HomeAppBar extends StatelessWidget {
   void _openDrawer(BuildContext ctx) => Scaffold.of(ctx).openDrawer();
 
   void _showSearch(BuildContext ctx) {
-    showSearch(context: ctx, delegate: SearchCommunityDelegate());
+    final SearchCommunityCubit searchCommunityCubit =
+        ctx.read<SearchCommunityCubit>();
+
+    showSearch(
+      context: ctx,
+      delegate: SearchCommunityDelegate(
+        searchCommunityCubit: searchCommunityCubit,
+      ),
+    );
   }
 
   @override
