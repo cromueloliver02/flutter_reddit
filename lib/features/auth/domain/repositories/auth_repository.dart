@@ -6,5 +6,5 @@ abstract class AuthRepository {
 
   FutureEither<User?> signInWithGoogle();
 
-  void signOut();
+  FutureEitherVoid signOut();
 }

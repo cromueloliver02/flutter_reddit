@@ -85,8 +85,16 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  void signOut() {
-    _firebaseAuthDataSource.signOut();
-    _googleSignInDataSource.signOut();
+  FutureEitherVoid signOut() async {
+    try {
+      await Future.wait([
+        _firebaseAuthDataSource.signOut(),
+        _googleSignInDataSource.signOut(),
+      ]);
+
+      return const Right(null);
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
   }
 }

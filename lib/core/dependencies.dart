@@ -90,6 +90,9 @@ void setup() {
   sl.registerLazySingleton<PickImage>(
     () => PickImage(imageRepository: sl<ImageRepository>()),
   );
+  sl.registerLazySingleton<SignOut>(
+    () => SignOut(authRepository: sl<AuthRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(

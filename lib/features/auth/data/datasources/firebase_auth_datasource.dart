@@ -9,7 +9,7 @@ abstract class FirebaseAuthDataSource {
     fb_auth.OAuthCredential oAuthCredential,
   );
 
-  void signOut();
+  Future<void> signOut();
 }
 
 class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
@@ -41,5 +41,11 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
   }
 
   @override
-  void signOut() => _firebaseAuth.signOut();
+  Future<void> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
+  }
 }
