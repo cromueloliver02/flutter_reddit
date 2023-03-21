@@ -10,6 +10,8 @@ class HomeAppBar extends StatelessWidget {
 
   void _openDrawer(BuildContext ctx) => Scaffold.of(ctx).openDrawer();
 
+  void _openEndDrawer(BuildContext ctx) => Scaffold.of(ctx).openEndDrawer();
+
   void _showSearch(BuildContext ctx) {
     final SearchCommunityCubit searchCommunityCubit =
         ctx.read<SearchCommunityCubit>();
@@ -42,7 +44,7 @@ class HomeAppBar extends StatelessWidget {
               backgroundImage: NetworkImage(state.user!.profilePic),
             ),
           ),
-          onPressed: () {},
+          onPressed: () => _openEndDrawer(context),
         ),
       ],
     );

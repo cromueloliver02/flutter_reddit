@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'community_list_drawer.dart';
 import 'home_app_bar.dart';
+import 'profile_drawer.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -14,6 +15,7 @@ class HomeView extends StatelessWidget {
         child: HomeAppBar(),
       ),
       drawer: CommunityListDrawer(),
+      endDrawer: ProfileDrawer(),
       body: Center(
         child: Text('REDDIT CLONE APP'),
       ),
