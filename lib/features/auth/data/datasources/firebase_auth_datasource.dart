@@ -4,9 +4,12 @@ import '../../../../core/errors/exceptions/exceptions.dart';
 
 abstract class FirebaseAuthDataSource {
   Stream<fb_auth.User?> get authStateChanges;
+
   Future<fb_auth.UserCredential> signInWithCredential(
     fb_auth.OAuthCredential oAuthCredential,
   );
+
+  void signOut();
 }
 
 class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
@@ -36,4 +39,7 @@ class FirebaseAuthDataSourceImpl implements FirebaseAuthDataSource {
       throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
   }
+
+  @override
+  void signOut() => _firebaseAuth.signOut();
 }

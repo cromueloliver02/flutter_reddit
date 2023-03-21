@@ -6,6 +6,8 @@ import '../../../../core/errors/exceptions/exceptions.dart';
 
 abstract class GoogleSignInDataSource {
   Future<fb_auth.OAuthCredential> getOAuthCredential();
+
+  void signOut();
 }
 
 class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
@@ -45,4 +47,7 @@ class GoogleSignInDataSourceImpl implements GoogleSignInDataSource {
       throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
   }
+
+  @override
+  void signOut() => _googleSignIn.signOut();
 }
