@@ -67,4 +67,10 @@ class AuthBlocImpl extends AuthBloc {
       },
     );
   }
+
+  @override
+  void onAuthSignOutRequested(
+    AuthSignOutRequested event,
+    Emitter<AuthState> emit,
+  ) {}
 }

@@ -11,4 +11,9 @@ abstract class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc(super.initialState);
 
   void onAuthStarted(AuthStarted event, Emitter<AuthState> emit);
+
+  void onAuthSignOutRequested(
+    AuthSignOutRequested event,
+    Emitter<AuthState> emit,
+  );
 }
