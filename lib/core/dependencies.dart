@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_reddit/features/community/presentation/cubits/search_community/search_community_cubit_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../features/auth/data/datasources/datasources.dart';
 import '../features/auth/data/repositories/repositories.dart';
@@ -29,6 +29,7 @@ void setup() {
   sl.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
   sl.registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance);
   sl.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
+  sl.registerLazySingleton<ImagePicker>(() => ImagePicker());
 
   // data sources
   sl.registerLazySingleton<GoogleSignInDataSource>(
@@ -45,6 +46,9 @@ void setup() {
   );
   sl.registerLazySingleton<StorageRemoteDataSource>(
     () => StorageRemoteDataSourceImpl(storage: sl<FirebaseStorage>()),
+  );
+  sl.registerLazySingleton<ImageLocalDataSource>(
+    () => ImageLocalDataSourceImpl(imagePicker: sl<ImagePicker>()),
   );
 
   // repositories
@@ -105,10 +109,10 @@ void setup() {
   sl.registerLazySingleton<CommunityDetailsCubit>(
     () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
   );
-  sl.registerLazySingleton<UpdateCommunityCubit>(
+  sl.registerFactory<UpdateCommunityCubit>(
     () => UpdateCommunityCubit(updateCommunity: sl<UpdateCommunity>()),
   );
-  sl.registerLazySingleton<SearchCommunityCubit>(
+  sl.registerFactory<SearchCommunityCubit>(
     () => SearchCommunityCubitImpl(searchCommunity: sl<SearchCommunity>()),
   );
 

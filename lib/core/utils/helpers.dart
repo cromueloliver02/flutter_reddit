@@ -22,6 +22,7 @@ void showErrorDialog(BuildContext ctx, {required String message}) {
   );
 }
 
+// TODO: to be removed
 Future<XFile?> pickImage() async {
   final ImagePicker picker = ImagePicker();
   final XFile? imageFile = await picker.pickImage(source: ImageSource.gallery);
