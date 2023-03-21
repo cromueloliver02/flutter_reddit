@@ -96,7 +96,10 @@ void setup() {
 
   // blocs
   sl.registerFactory<AuthBloc>(
-    () => AuthBlocImpl(getAuthStateChanges: sl<GetAuthStateChanges>()),
+    () => AuthBlocImpl(
+      getAuthStateChanges: sl<GetAuthStateChanges>(),
+      signOut: sl<SignOut>(),
+    ),
   );
   sl.registerFactory<CommunityListBloc>(
     () => CommunityListBlocImpl(getUserCommunities: sl<FetchUserCommunities>()),
