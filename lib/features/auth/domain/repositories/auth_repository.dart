@@ -3,5 +3,8 @@ import '../entities/entities.dart';
 
 abstract class AuthRepository {
   StreamEither<User?> get authStateChanges;
+
   FutureEither<User?> signInWithGoogle();
+
+  void signOut();
 }

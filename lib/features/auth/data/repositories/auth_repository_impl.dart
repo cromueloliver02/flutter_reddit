@@ -83,4 +83,10 @@ class AuthRepositoryImpl implements AuthRepository {
       return Left(UnexpectedFailure(exception: err));
     }
   }
+
+  @override
+  void signOut() {
+    _firebaseAuthDataSource.signOut();
+    _googleSignInDataSource.signOut();
+  }
 }
