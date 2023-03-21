@@ -36,20 +36,20 @@ class ProfileDrawer extends StatelessWidget {
               onTap: () {},
             ),
             ListTile(
-              title: const Text('Logout'),
-              leading: Icon(
-                Icons.logout,
-                color: AppTheme.redColor,
-              ),
-              onTap: () {},
-            ),
-            ListTile(
               title: const Text('Dark Mode'),
               leading: const Icon(Icons.dark_mode),
               trailing: Switch.adaptive(
                 value: true,
                 onChanged: (bool value) {},
               ),
+            ),
+            ListTile(
+              title: const Text('Logout'),
+              leading: Icon(
+                Icons.logout,
+                color: AppTheme.redColor,
+              ),
+              onTap: () {},
             ),
           ],
         ),
