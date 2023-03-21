@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_reddit/features/community/domain/usecases/pick_image_usecase.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -111,7 +110,7 @@ void setup() {
     () => CreateCommunityCubit(createCommunity: sl<CreateCommunity>()),
   );
   sl.registerFactory<UpdateCommunityFormCubit>(
-    () => UpdateCommunityFormCubit(),
+    () => UpdateCommunityFormCubit(pickImage: sl<PickImage>()),
   );
   sl.registerLazySingleton<CommunityDetailsCubit>(
     () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
