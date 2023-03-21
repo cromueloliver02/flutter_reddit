@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/utils/utils.dart';
-import '../../../../../auth/domain/entities/entities.dart';
 
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
@@ -11,21 +10,27 @@ class ProfileDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    final User user = context.watch<AuthBloc>().state.user!;
 
     return Drawer(
       child: SafeArea(
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(user.profilePic),
-              radius: 70,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'u/${user.name}',
-              style: textTheme.bodyLarge!.copyWith(
-                fontWeight: FontWeight.w500,
+            BlocBuilder<AuthBloc, AuthState>(
+              buildWhen: (prev, curr) => prev.user != curr.user,
+              builder: (ctx, state) => Column(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(state.user!.profilePic),
+                    radius: 70,
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    'u/${state.user!.name}',
+                    style: textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 20),
