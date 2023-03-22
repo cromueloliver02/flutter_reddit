@@ -100,6 +100,13 @@ class AppRouter {
                       ),
                     ),
                   ),
+                  GoRoute(
+                    path: AddModeratorPage.path,
+                    name: AddModeratorPage.name,
+                    builder: (ctx, state) => AddModeratorPage(
+                      communityId: state.params['communityId']!,
+                    ),
+                  ),
                 ],
               ),
             ],

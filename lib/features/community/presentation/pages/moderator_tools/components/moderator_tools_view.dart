@@ -19,6 +19,13 @@ class ModeratorToolsView extends StatelessWidget {
     );
   }
 
+  void _goToAddModeratorPage(BuildContext ctx) {
+    ctx.goNamed(
+      AddModeratorPage.name,
+      params: {'communityId': communityId},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +38,7 @@ class ModeratorToolsView extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.add_moderator),
             title: const Text('Add Moderator'),
-            onTap: () {},
+            onTap: () => _goToAddModeratorPage(context),
           ),
           ListTile(
             leading: const Icon(Icons.edit),
