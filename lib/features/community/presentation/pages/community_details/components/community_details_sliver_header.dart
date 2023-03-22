@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
+import '../../../../domain/entities/entities.dart';
 import '../../../blocs/blocs.dart';
+import '../../../cubits/cubits.dart';
 import '../../pages.dart';
 
 class CommunityDetailsSliverHeader extends StatelessWidget {
@@ -22,9 +24,20 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
     );
   }
 
+  void _joinOrLeaveCommunity(BuildContext ctx) {
+    final String userId = ctx.read<AuthBloc>().state.user!.id;
+    final Community community =
+        ctx.read<CommunityDetailsBloc>().state.community!;
+
+    ctx
+        .read<JoinOrLeaveCommunityCubit>()
+        .joinOrLeaveCommunity(community: community, userId: userId);
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
+    // TODO: refactor this code, this is a bad practice
     final String userId = context.read<AuthBloc>().state.user!.id;
 
     return SliverPadding(
@@ -58,8 +71,7 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
                   title: state.community!.members.contains(userId)
                       ? 'Joined'
                       : 'Join',
-                  onPressed:
-                      state.community!.members.contains(userId) ? null : () {},
+                  onPressed: () => _joinOrLeaveCommunity(context),
                 ),
             ],
           ),

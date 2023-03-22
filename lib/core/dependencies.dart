@@ -95,6 +95,9 @@ void setup() {
   sl.registerLazySingleton<SignOut>(
     () => SignOut(authRepository: sl<AuthRepository>()),
   );
+  sl.registerLazySingleton<JoinOrLeaveCommunity>(
+    () => JoinOrLeaveCommunity(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
@@ -125,6 +128,11 @@ void setup() {
   );
   sl.registerFactory<UpdateCommunityCubit>(
     () => UpdateCommunityCubit(updateCommunity: sl<UpdateCommunity>()),
+  );
+  sl.registerFactory<JoinOrLeaveCommunityCubit>(
+    () => JoinOrLeaveCommunityCubit(
+      joinOrLeaveCommunity: sl<JoinOrLeaveCommunity>(),
+    ),
   );
 
   // utilities

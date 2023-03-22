@@ -18,4 +18,14 @@ abstract class CommunityRepository {
   });
 
   StreamEither<List<Community>> searchCommunity(String query);
+
+  FutureEither<void> joinCommunity({
+    required String communityId,
+    required String userId,
+  });
+
+  FutureEither<void> leaveCommunity({
+    required String communityId,
+    required String userId,
+  });
 }
