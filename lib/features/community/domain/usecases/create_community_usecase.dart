@@ -13,9 +13,11 @@ class CreateCommunity implements FutureUseCase<void, CreateCommunityParams> {
 
   @override
   FutureEither<void> call(CreateCommunityParams params) {
+    final String name = params.name.replaceAll(' ', '');
+
     final CommunityModel community = CommunityModel(
-      id: params.name, // name of community is the same as the id
-      name: params.name,
+      id: name, // name of community is the same as the id
+      name: name,
       banner: kBannerDefault,
       avatar: kAvatarDefault,
       members: <String>[params.userId],
