@@ -5,7 +5,7 @@ import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class FetchUserCommunities implements UseCase<Stream<List<Community>>, String> {
+class FetchUserCommunities implements StreamUseCase<List<Community>, String> {
   final CommunityRepository _communityRepository;
 
   const FetchUserCommunities({
@@ -13,7 +13,7 @@ class FetchUserCommunities implements UseCase<Stream<List<Community>>, String> {
   }) : _communityRepository = communityRepository;
 
   @override
-  Either<Failure, Stream<List<Community>>> call(String userId) {
+  Stream<Either<Failure, List<Community>>> call(String userId) {
     return _communityRepository.fetchUserCommunities(userId);
   }
 }

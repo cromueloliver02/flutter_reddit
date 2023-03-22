@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/blocs/blocs.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
 import '../../../../../core/usecases/usecases.dart';
@@ -66,7 +67,10 @@ class AuthBlocImpl extends AuthBloc {
 
         return state.copyWith(
           status: () => AuthStatus.failure,
-          error: () => error as Failure,
+          error: () => Failure(
+            message: kDefaultErrorMsg,
+            exception: error,
+          ),
         );
       },
     );

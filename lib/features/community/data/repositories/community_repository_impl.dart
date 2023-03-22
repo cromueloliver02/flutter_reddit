@@ -35,16 +35,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Either<Failure, Stream<List<Community>>> fetchUserCommunities(String userId) {
+  Stream<Either<Failure, List<Community>>> fetchUserCommunities(
+    String userId,
+  ) async* {
     try {
       final Stream<List<Community>> communitiesStream =
           _communityRemoteDataSource.fetchCommunitiesByUserId(userId);
 
-      return Right(communitiesStream);
+      await for (final List<Community> communities in communitiesStream) {
+        yield Right(communities);
+      }
     } on ServerException catch (err) {
-      return Left(ServerFailure(exception: err));
+      yield Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
-      return Left(UnexpectedFailure(exception: err));
+      yield Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      yield Left(UnexpectedFailure(exception: err));
     }
   }
 

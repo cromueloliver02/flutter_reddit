@@ -10,7 +10,7 @@ import '../entities/entities.dart';
 abstract class CommunityRepository {
   Future<Either<Failure, Community?>> getCommunity(String communityId);
 
-  Either<Failure, Stream<List<Community>>> fetchUserCommunities(String userId);
+  Stream<Either<Failure, List<Community>>> fetchUserCommunities(String userId);
 
   FutureEitherVoid createCommunity(CommunityModel community);
 
@@ -20,5 +20,6 @@ abstract class CommunityRepository {
     required File? bannerImageFile,
   });
 
+  // TODO: to be converted to Stream<Either<Failure, List<Community>>>
   Either<Failure, Stream<List<Community>>> searchCommunity(String query);
 }

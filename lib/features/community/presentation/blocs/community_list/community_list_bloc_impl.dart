@@ -1,16 +1,15 @@
-import 'dart:async';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/blocs/blocs.dart';
+import '../../../../../core/constants/constants.dart';
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class CommunityListBlocImpl extends CommunityListBloc {
-  late final StreamSubscription _communitiesStreamSubscription;
   final FetchUserCommunities _fetchUserCommunities;
 
   CommunityListBlocImpl({
@@ -28,27 +27,42 @@ class CommunityListBlocImpl extends CommunityListBloc {
   ) async {
     emit(state.copyWith(status: () => CommunityListStatus.loading));
 
-    final Either<Failure, Stream<List<Community>>> eitherCommunitiesStream =
+    final StreamEither<List<Community>> eitherCommunitiesStream =
         _fetchUserCommunities(event.userId);
 
-    eitherCommunitiesStream.fold(
-      (Failure error) {
-        emit(state.copyWith(
-          status: () => CommunityListStatus.failure,
-          error: () => error,
-        ));
+    await emit.forEach<Either<Failure, List<Community>>>(
+      eitherCommunitiesStream,
+      onData: (Either<Failure, List<Community>> eitherCommunities) {
+        if (eitherCommunities.isLeft()) {
+          late final Failure error;
+          eitherCommunities.leftMap((Failure failure) => error = failure);
 
-        debugPrint(error.toString());
-      },
-      (Stream<List<Community>> communitiesStream) async {
-        emit(state.copyWith(
+          debugPrint(error.toString());
+
+          return state.copyWith(
+            status: () => CommunityListStatus.failure,
+            error: () => error,
+          );
+        }
+
+        final List<Community> communityList =
+            eitherCommunities.getOrElse(() => []);
+
+        return state.copyWith(
+          communityList: () => communityList,
           status: () => CommunityListStatus.success,
-        ));
+        );
+      },
+      onError: (error, stackTrace) {
+        debugPrint(error.toString());
 
-        _communitiesStreamSubscription =
-            communitiesStream.listen((List<Community> communityList) {
-          add(CommunityListChanged(communityList: communityList));
-        });
+        return state.copyWith(
+          status: () => CommunityListStatus.failure,
+          error: () => Failure(
+            message: kDefaultErrorMsg,
+            exception: error,
+          ),
+        );
       },
     );
   }
@@ -59,11 +73,5 @@ class CommunityListBlocImpl extends CommunityListBloc {
     Emitter<CommunityListState> emit,
   ) {
     emit(state.copyWith(communityList: () => event.communityList));
-  }
-
-  @override
-  Future<void> close() {
-    _communitiesStreamSubscription.cancel();
-    return super.close();
   }
 }
