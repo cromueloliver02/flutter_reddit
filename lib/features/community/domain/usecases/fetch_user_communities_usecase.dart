@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/typedefs.dart';
 import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
@@ -13,7 +11,7 @@ class FetchUserCommunities implements StreamUseCase<List<Community>, String> {
   }) : _communityRepository = communityRepository;
 
   @override
-  Stream<Either<Failure, List<Community>>> call(String userId) {
+  StreamEither<List<Community>> call(String userId) {
     return _communityRepository.fetchUserCommunities(userId);
   }
 }

@@ -13,7 +13,7 @@ class UpdateCommunity implements FutureUseCase<void, UpdateCommunityParams> {
   }) : _communityRepository = communityRepository;
 
   @override
-  FutureEitherVoid call(UpdateCommunityParams params) {
+  FutureEither<void> call(UpdateCommunityParams params) {
     return _communityRepository.updateCommunity(
       community: params.community,
       avatarImageFile: params.avatarImageFile,

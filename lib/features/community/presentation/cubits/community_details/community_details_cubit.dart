@@ -1,9 +1,9 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
@@ -20,7 +20,7 @@ class CommunityDetailsCubit extends Cubit<CommunityDetailsState> {
   void getCommunity(String communityId) async {
     emit(state.copyWith(status: () => CommunityDetailsStatus.loading));
 
-    final Either<Failure, Community?> eitherCommunity =
+    final SyncEither<Community?> eitherCommunity =
         await _getCommunity(communityId);
 
     eitherCommunity.fold(

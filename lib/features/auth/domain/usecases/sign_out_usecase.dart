@@ -10,7 +10,7 @@ class SignOut implements FutureUseCase<void, NoParams> {
   }) : _authRepository = authRepository;
 
   @override
-  FutureEitherVoid call(NoParams params) {
+  FutureEither<void> call(NoParams params) {
     return _authRepository.signOut();
   }
 }

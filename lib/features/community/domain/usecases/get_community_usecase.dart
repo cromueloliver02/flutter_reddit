@@ -1,6 +1,4 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/typedefs.dart';
 import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
@@ -13,7 +11,7 @@ class GetCommunity implements FutureUseCase<Community?, String> {
   }) : _communityRepository = communityRepository;
 
   @override
-  Future<Either<Failure, Community?>> call(String communityId) {
+  FutureEither<Community?> call(String communityId) {
     return _communityRepository.getCommunity(communityId);
   }
 }

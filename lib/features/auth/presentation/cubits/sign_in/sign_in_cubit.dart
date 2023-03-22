@@ -1,9 +1,9 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../../../core/usecases/usecases.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -21,8 +21,7 @@ class SignInCubit extends Cubit<SignInState> {
   void signInWithGoogle() async {
     emit(state.copyWith(status: () => SignInStatus.loading));
 
-    final Either<Failure, User?> eitherUser =
-        await _loginWithGoogle(NoParams());
+    final SyncEither<User?> eitherUser = await _loginWithGoogle(NoParams());
 
     eitherUser.fold(
       (Failure error) {

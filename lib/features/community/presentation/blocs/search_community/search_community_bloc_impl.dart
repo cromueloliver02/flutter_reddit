@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,9 +28,9 @@ class SearchCommunityBlocImpl extends SearchCommunityBloc {
     final StreamEither<List<Community>> eitherCommunitiesStream =
         _searchCommunity(event.query);
 
-    await emit.forEach<Either<Failure, List<Community>>>(
+    await emit.forEach<SyncEither<List<Community>>>(
       eitherCommunitiesStream,
-      onData: (Either<Failure, List<Community>> eitherCommunities) {
+      onData: (SyncEither<List<Community>> eitherCommunities) {
         if (eitherCommunities.isLeft()) {
           late final Failure error;
           eitherCommunities.leftMap((Failure failure) => error = failure);

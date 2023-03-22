@@ -24,7 +24,7 @@ class AuthRepositoryImpl implements AuthRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  Stream<Either<Failure, User?>> get authStateChanges async* {
+  StreamEither<User?> get authStateChanges async* {
     try {
       final Stream<fb_auth.User?> userStream =
           _firebaseAuthDataSource.authStateChanges;
@@ -85,7 +85,7 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
   @override
-  FutureEitherVoid signOut() async {
+  FutureEither<void> signOut() async {
     try {
       await Future.wait([
         _firebaseAuthDataSource.signOut(),

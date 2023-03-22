@@ -1,10 +1,10 @@
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../../../core/usecases/usecases.dart';
 import '../../../domain/usecases/usecases.dart';
 
@@ -21,7 +21,7 @@ class UpdateCommunityFormCubit extends Cubit<UpdateCommunityFormState> {
   void pickAvatarImage() async {
     emit(state.copyWith(pickImageStatus: () => PickImageStatus.loading));
 
-    final Either<Failure, XFile?> eitherAvatarImageFile =
+    final SyncEither<XFile?> eitherAvatarImageFile =
         await _pickImage(NoParams());
 
     eitherAvatarImageFile.fold(
@@ -43,7 +43,7 @@ class UpdateCommunityFormCubit extends Cubit<UpdateCommunityFormState> {
   void pickBannerImage() async {
     emit(state.copyWith(pickImageStatus: () => PickImageStatus.loading));
 
-    final Either<Failure, XFile?> eitherBannerImageFile =
+    final SyncEither<XFile?> eitherBannerImageFile =
         await _pickImage(NoParams());
 
     eitherBannerImageFile.fold(

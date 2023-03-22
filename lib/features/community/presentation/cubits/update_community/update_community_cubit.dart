@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/errors/failures/failures.dart';
+import '../../../../../core/typedefs.dart';
 import '../../../data/models/models.dart';
 import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
@@ -27,7 +27,7 @@ class UpdateCommunityCubit extends Cubit<UpdateCommunityState> {
   }) async {
     emit(state.copyWith(status: () => UpdateCommunityStatus.loading));
 
-    final Either<Failure, void> eitherVoid =
+    final SyncEither<void> eitherVoid =
         await _updateCommunity(UpdateCommunityParams(
       community: community as CommunityModel,
       avatarImageFile: avatarImageFile,

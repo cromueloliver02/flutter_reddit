@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,9 +30,9 @@ class AuthBlocImpl extends AuthBloc {
     final StreamEither<User?> eitherAuthStream =
         _getAuthStateChanges(NoParams());
 
-    await emit.forEach<Either<Failure, User?>>(
+    await emit.forEach<SyncEither<User?>>(
       eitherAuthStream,
-      onData: (Either<Failure, User?> eitherUser) {
+      onData: (SyncEither<User?> eitherUser) {
         if (eitherUser.isLeft()) {
           late final Failure error;
           eitherUser.leftMap((Failure failure) => error = failure);
@@ -83,7 +82,7 @@ class AuthBlocImpl extends AuthBloc {
   ) async {
     emit(state.copyWith(status: () => AuthStatus.loading));
 
-    final Either<Failure, void> eitherVoid = await _signOut(NoParams());
+    final SyncEither<void> eitherVoid = await _signOut(NoParams());
 
     eitherVoid.fold(
       (Failure error) {

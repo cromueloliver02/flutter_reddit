@@ -21,7 +21,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
         _storageRemoteDataSource = storageRemoteDataSource;
 
   @override
-  Future<Either<Failure, Community?>> getCommunity(String communityId) async {
+  FutureEither<Community?> getCommunity(String communityId) async {
     try {
       final Community? community =
           await _communityRemoteDataSource.getById(communityId).first;
@@ -35,7 +35,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  Stream<Either<Failure, List<Community>>> fetchUserCommunities(
+  StreamEither<List<Community>> fetchUserCommunities(
     String userId,
   ) async* {
     try {
@@ -55,7 +55,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  FutureEitherVoid createCommunity(CommunityModel community) async {
+  FutureEither<void> createCommunity(CommunityModel community) async {
     try {
       final Community? existingCommunity =
           await _communityRemoteDataSource.getById(community.id).first;
@@ -77,7 +77,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  FutureEitherVoid updateCommunity({
+  FutureEither<void> updateCommunity({
     required CommunityModel community,
     required File? avatarImageFile,
     required File? bannerImageFile,

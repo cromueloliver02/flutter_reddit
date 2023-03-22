@@ -1,4 +1,3 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,9 +29,9 @@ class CommunityListBlocImpl extends CommunityListBloc {
     final StreamEither<List<Community>> eitherCommunitiesStream =
         _fetchUserCommunities(event.userId);
 
-    await emit.forEach<Either<Failure, List<Community>>>(
+    await emit.forEach<SyncEither<List<Community>>>(
       eitherCommunitiesStream,
-      onData: (Either<Failure, List<Community>> eitherCommunities) {
+      onData: (SyncEither<List<Community>> eitherCommunities) {
         if (eitherCommunities.isLeft()) {
           late final Failure error;
           eitherCommunities.leftMap((Failure failure) => error = failure);

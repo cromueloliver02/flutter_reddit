@@ -12,7 +12,7 @@ class CreateCommunity implements FutureUseCase<void, CreateCommunityParams> {
   }) : _communityRepository = communityRepository;
 
   @override
-  FutureEitherVoid call(CreateCommunityParams params) {
+  FutureEither<void> call(CreateCommunityParams params) {
     final CommunityModel community = CommunityModel(
       id: params.name, // name of community is the same as the id
       name: params.name,
