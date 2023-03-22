@@ -37,8 +37,6 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
-    // TODO: refactor this code, this is a bad practice
-    final String userId = context.read<AuthBloc>().state.user!.id;
 
     return SliverPadding(
       padding: const EdgeInsets.all(16),
@@ -61,18 +59,29 @@ class CommunityDetailsSliverHeader extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (state.community!.mods.contains(userId))
-                RDTOutlinedButton(
-                  title: 'Mod Tools',
-                  onPressed: () => _goToModToolsPage(context),
+              BlocSelector<AuthBloc, AuthState, String>(
+                selector: (state) => state.user!.id,
+                builder: (ctx, userId) => Stack(
+                  children: [
+                    Visibility(
+                      visible: state.community!.mods.contains(userId),
+                      child: RDTOutlinedButton(
+                        title: 'Mod Tools',
+                        onPressed: () => _goToModToolsPage(context),
+                      ),
+                    ),
+                    Visibility(
+                      visible: !state.community!.mods.contains(userId),
+                      child: RDTOutlinedButton(
+                        title: state.community!.members.contains(userId)
+                            ? 'Joined'
+                            : 'Join',
+                        onPressed: () => _joinOrLeaveCommunity(context),
+                      ),
+                    ),
+                  ],
                 ),
-              if (!state.community!.mods.contains(userId))
-                RDTOutlinedButton(
-                  title: state.community!.members.contains(userId)
-                      ? 'Joined'
-                      : 'Join',
-                  onPressed: () => _joinOrLeaveCommunity(context),
-                ),
+              ),
             ],
           ),
           const SizedBox(height: 10),
