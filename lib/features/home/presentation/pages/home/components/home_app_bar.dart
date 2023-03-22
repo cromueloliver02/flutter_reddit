@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_reddit/core/constants/constants.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
-import '../../../../../../core/cubits/cubits.dart';
+import '../../../../../../core/constants/constants.dart';
 import '../delegates/search_community_delegate.dart';
 
 class HomeAppBar extends StatelessWidget {
@@ -14,13 +13,13 @@ class HomeAppBar extends StatelessWidget {
   void _openEndDrawer(BuildContext ctx) => Scaffold.of(ctx).openEndDrawer();
 
   void _showSearch(BuildContext ctx) {
-    final SearchCommunityCubit searchCommunityCubit =
-        ctx.read<SearchCommunityCubit>();
+    final SearchCommunityBloc searchCommunityBloc =
+        ctx.read<SearchCommunityBloc>();
 
     showSearch(
       context: ctx,
       delegate: SearchCommunityDelegate(
-        searchCommunityCubit: searchCommunityCubit,
+        searchCommunityBloc: searchCommunityBloc,
       ),
     );
   }

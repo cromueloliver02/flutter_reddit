@@ -20,6 +20,5 @@ abstract class CommunityRepository {
     required File? bannerImageFile,
   });
 
-  // TODO: to be converted to Stream<Either<Failure, List<Community>>>
-  Either<Failure, Stream<List<Community>>> searchCommunity(String query);
+  Stream<Either<Failure, List<Community>>> searchCommunity(String query);
 }

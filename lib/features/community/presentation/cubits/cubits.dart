@@ -1,6 +1,5 @@
 export 'community_details/community_details_cubit.dart';
 export 'create_community/create_community_cubit.dart';
 export 'create_community_form/create_community_form_cubit.dart';
-export 'search_community/search_community_cubit_impl.dart';
 export 'update_community/update_community_cubit.dart';
 export 'update_community_form/update_community_form_cubit.dart';

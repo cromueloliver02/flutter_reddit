@@ -1,4 +1,4 @@
-part of 'search_community_cubit.dart';
+part of 'search_community_bloc.dart';
 
 enum SearchCommunityStatus { initial, loading, success, failure }
 

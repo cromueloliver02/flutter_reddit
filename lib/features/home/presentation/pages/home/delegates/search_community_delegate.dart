@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../../../core/cubits/cubits.dart';
+import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../../../community/domain/entities/entities.dart';
 import '../../../../../community/presentation/pages/pages.dart';
 import '../../../widgets/widgets.dart';
 
 class SearchCommunityDelegate extends SearchDelegate {
-  final SearchCommunityCubit _searchCommunityCubit;
+  final SearchCommunityBloc _searchCommunityBloc;
 
   SearchCommunityDelegate({
-    required SearchCommunityCubit searchCommunityCubit,
-  }) : _searchCommunityCubit = searchCommunityCubit;
+    required SearchCommunityBloc searchCommunityBloc,
+  }) : _searchCommunityBloc = searchCommunityBloc;
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -37,10 +37,10 @@ class SearchCommunityDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    _searchCommunityCubit.searchCommunity(query);
+    _searchCommunityBloc.add(SearchCommunityRequested(query: query));
 
-    return BlocBuilder<SearchCommunityCubit, SearchCommunityState>(
-      bloc: _searchCommunityCubit,
+    return BlocBuilder<SearchCommunityBloc, SearchCommunityState>(
+      bloc: _searchCommunityBloc,
       buildWhen: (prev, curr) => prev.status != curr.status,
       builder: (ctx, state) {
         if (query.isEmpty) {

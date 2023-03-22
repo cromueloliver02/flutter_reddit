@@ -18,7 +18,6 @@ import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
 import 'blocs/blocs.dart';
-import 'cubits/cubits.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -104,6 +103,9 @@ void setup() {
   sl.registerFactory<CommunityListBloc>(
     () => CommunityListBlocImpl(getUserCommunities: sl<FetchUserCommunities>()),
   );
+  sl.registerFactory<SearchCommunityBloc>(
+    () => SearchCommunityBlocImpl(searchCommunity: sl<SearchCommunity>()),
+  );
 
   // cubits
   sl.registerFactory<SignInCubit>(
@@ -123,9 +125,6 @@ void setup() {
   );
   sl.registerFactory<UpdateCommunityCubit>(
     () => UpdateCommunityCubit(updateCommunity: sl<UpdateCommunity>()),
-  );
-  sl.registerFactory<SearchCommunityCubit>(
-    () => SearchCommunityCubitImpl(searchCommunity: sl<SearchCommunity>()),
   );
 
   // utilities
