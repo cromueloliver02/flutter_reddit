@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 
+import '../../../../core/constants/constants.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
@@ -21,16 +22,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
         _storageRemoteDataSource = storageRemoteDataSource;
 
   @override
-  FutureEither<Community?> getCommunity(String communityId) async {
+  StreamEither<Community> getCommunity(String communityId) async* {
     try {
-      final Community? community =
-          await _communityRemoteDataSource.getById(communityId).first;
+      final Stream<Community?> communityStream =
+          _communityRemoteDataSource.getById(communityId);
 
-      return Right(community);
+      await for (final Community? community in communityStream) {
+        if (community != null) {
+          yield Right(community);
+        } else {
+          yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
+        }
+      }
     } on ServerException catch (err) {
-      return Left(ServerFailure(exception: err));
+      yield Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
-      return Left(UnexpectedFailure(exception: err));
+      yield Left(UnexpectedFailure(exception: err));
     }
   }
 

@@ -63,6 +63,9 @@ void setup() {
   sl.registerLazySingleton<ImageRepository>(() => ImageRepositoryImpl(
         imageLocalDataSource: sl<ImageLocalDataSource>(),
       ));
+  sl.registerLazySingleton<CommunityDetailsBloc>(
+    () => CommunityDetailsBloc(getCommunity: sl<GetCommunity>()),
+  );
 
   // use cases
   sl.registerLazySingleton<LoginWithGoogle>(
@@ -119,9 +122,6 @@ void setup() {
   );
   sl.registerFactory<UpdateCommunityFormCubit>(
     () => UpdateCommunityFormCubit(pickImage: sl<PickImage>()),
-  );
-  sl.registerLazySingleton<CommunityDetailsCubit>(
-    () => CommunityDetailsCubit(getCommunity: sl<GetCommunity>()),
   );
   sl.registerFactory<UpdateCommunityCubit>(
     () => UpdateCommunityCubit(updateCommunity: sl<UpdateCommunity>()),

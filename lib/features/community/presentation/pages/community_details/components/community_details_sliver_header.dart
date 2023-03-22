@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/widgets/widgets.dart';
-import '../../../cubits/cubits.dart';
+import '../../../blocs/blocs.dart';
 import '../../pages.dart';
 
 class CommunityDetailsSliverHeader extends StatelessWidget {

@@ -3,7 +3,7 @@ import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class GetCommunity implements FutureUseCase<Community?, String> {
+class GetCommunity implements StreamUseCase<Community, String> {
   final CommunityRepository _communityRepository;
 
   const GetCommunity({
@@ -11,7 +11,7 @@ class GetCommunity implements FutureUseCase<Community?, String> {
   }) : _communityRepository = communityRepository;
 
   @override
-  FutureEither<Community?> call(String communityId) {
+  StreamEither<Community> call(String communityId) {
     return _communityRepository.getCommunity(communityId);
   }
 }

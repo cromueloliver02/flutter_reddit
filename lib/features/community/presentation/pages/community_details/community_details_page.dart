@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../cubits/cubits.dart';
+import '../../blocs/blocs.dart';
 import 'components/community_details_view.dart';
 
 class CommunityDetailsPage extends StatefulWidget {
@@ -27,6 +27,8 @@ class _CommunityDetailsPageState extends State<CommunityDetailsPage> {
   void initState() {
     super.initState();
 
-    context.read<CommunityDetailsCubit>().getCommunity(widget.communityId);
+    context
+        .read<CommunityDetailsBloc>()
+        .add(CommunityDetailsGetRequested(communityId: widget.communityId));
   }
 }

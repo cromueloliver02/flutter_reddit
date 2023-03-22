@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/widgets/widgets.dart';
+import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
 import 'avatar_image_field.dart';
 import 'banner_image_field.dart';
@@ -31,7 +32,7 @@ class UpdateCommunityView extends StatelessWidget {
             padding: const EdgeInsets.all(10),
             child: Column(
               children: [
-                BlocBuilder<CommunityDetailsCubit, CommunityDetailsState>(
+                BlocBuilder<CommunityDetailsBloc, CommunityDetailsState>(
                   builder: (ctx, state) => SizedBox(
                     height: 180,
                     child: Stack(

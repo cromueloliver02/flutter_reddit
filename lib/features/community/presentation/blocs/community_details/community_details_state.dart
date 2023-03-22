@@ -1,4 +1,4 @@
-part of 'community_details_cubit.dart';
+part of 'community_details_bloc.dart';
 
 enum CommunityDetailsStatus { initial, loading, success, failure }
 

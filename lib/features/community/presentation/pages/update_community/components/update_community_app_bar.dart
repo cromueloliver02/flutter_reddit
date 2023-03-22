@@ -5,14 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../domain/entities/entities.dart';
+import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
 
 class UpdateCommunityAppBar extends StatelessWidget {
   const UpdateCommunityAppBar({super.key});
 
   void _save(BuildContext ctx) {
-    final CommunityDetailsCubit communityDetailsCubit =
-        ctx.read<CommunityDetailsCubit>();
+    final CommunityDetailsBloc communityDetailsCubit =
+        ctx.read<CommunityDetailsBloc>();
     final UpdateCommunityFormCubit updateCommunityFormCubit =
         ctx.read<UpdateCommunityFormCubit>();
 

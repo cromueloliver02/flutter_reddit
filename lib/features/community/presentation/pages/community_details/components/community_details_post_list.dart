@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/widgets/widgets.dart';
-import '../../../cubits/cubits.dart';
+import '../../../blocs/blocs.dart';
 
 class CommunityDetailsPostList extends StatelessWidget {
   final CommunityDetailsState state;
