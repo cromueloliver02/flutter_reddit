@@ -76,7 +76,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
         throw CommunityNameAlreadyExistException();
       }
 
-      await _communityRemoteDataSource.post(community);
+      await _communityRemoteDataSource.create(community);
 
       return const Right(null);
     } on CommunityNameAlreadyExistException {
