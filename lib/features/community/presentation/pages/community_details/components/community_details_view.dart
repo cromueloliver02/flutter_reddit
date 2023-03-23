@@ -15,7 +15,10 @@ class CommunityDetailsView extends StatelessWidget {
       body: BlocBuilder<CommunityDetailsBloc, CommunityDetailsState>(
         builder: (ctx, state) => NestedScrollView(
           headerSliverBuilder: (ctx, innerBoxIsScrolled) => [
-            CommunityDetailsSliverAppBar(community: state.community),
+            CommunityDetailsSliverAppBar(
+              community: state.community,
+              status: state.status,
+            ),
             if (state.community == null)
               const SliverToBoxAdapter(child: SizedBox.shrink()),
             if (state.community != null)
