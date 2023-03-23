@@ -30,7 +30,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   StreamEither<Community> getCommunity(String communityId) async* {
     try {
       final Stream<Community?> communityStream =
-          _communityRemoteDataSource.getById(communityId);
+          _communityRemoteDataSource.getCommunityById(communityId);
 
       await for (final Community? community in communityStream) {
         if (community != null) {
@@ -52,7 +52,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   ) async* {
     try {
       final Stream<List<Community>> communitiesStream =
-          _communityRemoteDataSource.fetchCommunitiesByUserId(userId);
+          _communityRemoteDataSource.getCommunitiesByUserId(userId);
 
       await for (final List<Community> communities in communitiesStream) {
         yield Right(communities);
@@ -70,13 +70,13 @@ class CommunityRepositoryImpl implements CommunityRepository {
   FutureEither<void> createCommunity(CommunityModel community) async {
     try {
       final Community? existingCommunity =
-          await _communityRemoteDataSource.getById(community.id).first;
+          await _communityRemoteDataSource.getCommunityById(community.id).first;
 
       if (existingCommunity != null) {
         throw CommunityNameAlreadyExistException();
       }
 
-      await _communityRemoteDataSource.create(community);
+      await _communityRemoteDataSource.createCommunity(community);
 
       return const Right(null);
     } on CommunityNameAlreadyExistException {
@@ -115,7 +115,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
         community = community.copyWith(banner: () => bannerUrl);
       }
 
-      await _communityRemoteDataSource.update(community);
+      await _communityRemoteDataSource.updateCommunity(community);
 
       return const Right(null);
     } on ServerException catch (err) {
@@ -150,7 +150,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) async {
     try {
       final Community? community =
-          await _communityRemoteDataSource.getById(communityId).first;
+          await _communityRemoteDataSource.getCommunityById(communityId).first;
 
       if (community == null) {
         return const Left(ServerFailure(message: kDefaultNotFoundMsg));
@@ -160,7 +160,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
         members: () => [...community.members, userId],
       );
 
-      await _communityRemoteDataSource.update(newCommunity as CommunityModel);
+      await _communityRemoteDataSource
+          .updateCommunity(newCommunity as CommunityModel);
 
       return const Right(null);
     } on ServerException catch (err) {
@@ -179,7 +180,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) async {
     try {
       final Community? community =
-          await _communityRemoteDataSource.getById(communityId).first;
+          await _communityRemoteDataSource.getCommunityById(communityId).first;
 
       if (community == null) {
         return const Left(ServerFailure(message: kDefaultNotFoundMsg));
@@ -189,7 +190,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
         members: () => community.members.where((d) => d != userId).toList(),
       );
 
-      await _communityRemoteDataSource.update(newCommunity as CommunityModel);
+      await _communityRemoteDataSource
+          .updateCommunity(newCommunity as CommunityModel);
 
       return const Right(null);
     } on ServerException catch (err) {
@@ -205,7 +207,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   StreamEither<List<User>> fetchCommunityMembers(String communityId) async* {
     try {
       final Community? community =
-          await _communityRemoteDataSource.getById(communityId).first;
+          await _communityRemoteDataSource.getCommunityById(communityId).first;
 
       if (community == null) {
         yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
@@ -238,7 +240,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }) async {
     try {
       final Community? community =
-          await _communityRemoteDataSource.getById(communityId).first;
+          await _communityRemoteDataSource.getCommunityById(communityId).first;
 
       if (community == null) {
         return const Left(ServerFailure(message: kDefaultNotFoundMsg));
@@ -248,7 +250,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
         mods: () => moderatorIds,
       );
 
-      await _communityRemoteDataSource.update(newCommunity as CommunityModel);
+      await _communityRemoteDataSource
+          .updateCommunity(newCommunity as CommunityModel);
 
       return const Right(null);
     } on ServerException catch (err) {

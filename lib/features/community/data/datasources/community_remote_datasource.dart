@@ -6,13 +6,13 @@ import '../../domain/entities/entities.dart';
 import '../models/models.dart';
 
 abstract class CommunityRemoteDataSource {
-  Stream<Community?> getById(String id);
+  Stream<Community?> getCommunityById(String id);
 
-  Stream<List<Community>> fetchCommunitiesByUserId(String userId);
+  Stream<List<Community>> getCommunitiesByUserId(String userId);
 
-  Future<void> create(CommunityModel community);
+  Future<void> createCommunity(CommunityModel community);
 
-  Future<void> update(CommunityModel community);
+  Future<void> updateCommunity(CommunityModel community);
 
   Stream<List<Community>> searchCommunity(String query);
 }
@@ -25,7 +25,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Stream<Community?> getById(String communityId) {
+  Stream<Community?> getCommunityById(String communityId) {
     try {
       final Stream<Community?> communityStream = _firestore
           .collection(kCommunitiesCollection)
@@ -46,7 +46,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Stream<List<Community>> fetchCommunitiesByUserId(String userId) {
+  Stream<List<Community>> getCommunitiesByUserId(String userId) {
     try {
       final Stream<List<Community>> communitiesStream = _firestore
           .collection(kCommunitiesCollection)
@@ -65,7 +65,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Future<void> create(CommunityModel community) async {
+  Future<void> createCommunity(CommunityModel community) async {
     try {
       await _firestore
           .collection(kCommunitiesCollection)
@@ -79,7 +79,7 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }
 
   @override
-  Future<void> update(CommunityModel community) async {
+  Future<void> updateCommunity(CommunityModel community) async {
     try {
       await _firestore
           .collection(kCommunitiesCollection)
