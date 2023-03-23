@@ -31,4 +31,9 @@ abstract class CommunityRepository {
     required String communityId,
     required String userId,
   });
+
+  FutureEither<void> saveModerators({
+    required String communityId,
+    required List<String> moderatorIds,
+  });
 }

@@ -230,4 +230,33 @@ class CommunityRepositoryImpl implements CommunityRepository {
       yield Left(UnexpectedFailure(exception: err));
     }
   }
+
+  @override
+  FutureEither<void> saveModerators({
+    required String communityId,
+    required List<String> moderatorIds,
+  }) async {
+    try {
+      final Community? community =
+          await _communityRemoteDataSource.getById(communityId).first;
+
+      if (community == null) {
+        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
+      }
+
+      final Community newCommunity = community.copyWith(
+        mods: () => moderatorIds,
+      );
+
+      await _communityRemoteDataSource.update(newCommunity as CommunityModel);
+
+      return const Right(null);
+    } on ServerException catch (err) {
+      return Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    }
+  }
 }
