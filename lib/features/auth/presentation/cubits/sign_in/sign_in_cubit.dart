@@ -11,17 +11,17 @@ import '../../../domain/usecases/usecases.dart';
 part 'sign_in_state.dart';
 
 class SignInCubit extends Cubit<SignInState> {
-  final LoginWithGoogle _loginWithGoogle;
+  final SignInWithGoogle _signInWithGoogle;
 
   SignInCubit({
-    required LoginWithGoogle loginWithGoogle,
-  })  : _loginWithGoogle = loginWithGoogle,
+    required SignInWithGoogle signInWithGoogle,
+  })  : _signInWithGoogle = signInWithGoogle,
         super(SignInState.initial());
 
   void signInWithGoogle() async {
     emit(state.copyWith(status: () => SignInStatus.loading));
 
-    final SyncEither<User?> eitherUser = await _loginWithGoogle(NoParams());
+    final SyncEither<User?> eitherUser = await _signInWithGoogle(NoParams());
 
     eitherUser.fold(
       (Failure error) {

@@ -71,8 +71,8 @@ void setup() {
   );
 
   // use cases
-  sl.registerLazySingleton<LoginWithGoogle>(
-    () => LoginWithGoogle(authRepository: sl<AuthRepository>()),
+  sl.registerLazySingleton<SignInWithGoogle>(
+    () => SignInWithGoogle(authRepository: sl<AuthRepository>()),
   );
   sl.registerLazySingleton<GetAuthStateChanges>(
     () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
@@ -129,7 +129,7 @@ void setup() {
 
   // cubits
   sl.registerFactory<SignInCubit>(
-    () => SignInCubit(loginWithGoogle: sl<LoginWithGoogle>()),
+    () => SignInCubit(signInWithGoogle: sl<SignInWithGoogle>()),
   );
   sl.registerFactory<CreateCommunityFormCubit>(
     () => CreateCommunityFormCubit(),
