@@ -108,6 +108,9 @@ class AppRouter {
                         BlocProvider<CommunityMembersBloc>.value(
                           value: sl<CommunityMembersBloc>(),
                         ),
+                        BlocProvider<CommunityDetailsBloc>.value(
+                          value: sl<CommunityDetailsBloc>(),
+                        ),
                         BlocProvider<AddModeratorFormCubit>.value(
                           value: sl<AddModeratorFormCubit>(),
                         ),

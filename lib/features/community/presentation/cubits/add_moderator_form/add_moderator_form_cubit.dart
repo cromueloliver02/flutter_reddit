@@ -6,6 +6,14 @@ part 'add_moderator_form_state.dart';
 class AddModeratorFormCubit extends Cubit<AddModeratorFormState> {
   AddModeratorFormCubit() : super(AddModeratorFormState.initial());
 
+  void setSelectedModerators(List<String> existingModeratorIds) {
+    Set<String> moderatorIds = state.moderatorIds;
+
+    moderatorIds = {...moderatorIds, ...existingModeratorIds}.toSet();
+
+    emit(state.copyWith(moderatorIds: () => moderatorIds));
+  }
+
   void toggleModerator(String userId) {
     Set<String> moderatorIds = state.moderatorIds;
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../blocs/blocs.dart';
+import '../../cubits/cubits.dart';
 import 'components/add_moderator_view.dart';
 
 class AddModeratorPage extends StatefulWidget {
@@ -28,6 +29,10 @@ class _AddModeratorPageState extends State<AddModeratorPage> {
     context
         .read<CommunityMembersBloc>()
         .add(CommunityMembersFetched(communityId: widget.communityId));
+
+    final List<String> moderatorIds =
+        context.read<CommunityDetailsBloc>().state.community!.mods;
+    context.read<AddModeratorFormCubit>().setSelectedModerators(moderatorIds);
 
     super.initState();
   }
