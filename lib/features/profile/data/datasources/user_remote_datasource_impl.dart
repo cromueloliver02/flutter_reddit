@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../core/constants/firebase_constants.dart';
+import '../../../../core/datasources/datasources.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
-import '../../domain/entities/entities.dart';
-import '../models/models.dart';
-
-abstract class UserRemoteDataSource {
-  Stream<User> getById(String userId);
-  Future<void> post(UserModel user);
-}
+import '../../../auth/domain/entities/entities.dart';
+import '../../../auth/data/models/models.dart';
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final FirebaseFirestore _firestore;
@@ -18,15 +14,41 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Stream<User> getById(String userId) {
+  Stream<User?> getById(String userId) {
     try {
-      final Stream<User> userStream = _firestore
+      final Stream<User?> userStream = _firestore
           .collection(kUsersCollection)
           .doc(userId)
           .snapshots()
-          .map((DocumentSnapshot userDoc) => UserModel.fromDoc(userDoc));
+          .map((DocumentSnapshot doc) {
+        if (!doc.exists) return null;
+
+        return UserModel.fromDoc(doc);
+      });
 
       return userStream;
+    } on FirebaseException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
+  }
+
+  @override
+  Stream<List<User?>> getByIds(List<String> userIds) {
+    try {
+      final Stream<List<User?>> usersStream = _firestore
+          .collection(kUsersCollection)
+          .where(FieldPath.documentId, whereIn: userIds)
+          .snapshots()
+          .map((QuerySnapshot snapshot) =>
+              snapshot.docs.map((DocumentSnapshot doc) {
+                if (!doc.exists) return null;
+
+                return UserModel.fromDoc(doc);
+              }).toList());
+
+      return usersStream;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {

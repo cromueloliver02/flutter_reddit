@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../../../../core/typedefs.dart';
+import '../../../auth/domain/entities/entities.dart';
 import '../../data/models/models.dart';
 import '../entities/entities.dart';
 
@@ -8,6 +9,8 @@ abstract class CommunityRepository {
   StreamEither<Community> getCommunity(String communityId);
 
   StreamEither<List<Community>> fetchUserCommunities(String userId);
+
+  StreamEither<List<User>> fetchCommunityMembers(String communityId);
 
   FutureEither<void> createCommunity(CommunityModel community);
 

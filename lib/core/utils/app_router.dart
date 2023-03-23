@@ -103,8 +103,18 @@ class AppRouter {
                   GoRoute(
                     path: AddModeratorPage.path,
                     name: AddModeratorPage.name,
-                    builder: (ctx, state) => AddModeratorPage(
-                      communityId: state.params['communityId']!,
+                    builder: (ctx, state) => MultiBlocProvider(
+                      providers: [
+                        BlocProvider<CommunityMembersBloc>.value(
+                          value: sl<CommunityMembersBloc>(),
+                        ),
+                        BlocProvider<AddModeratorFormCubit>.value(
+                          value: sl<AddModeratorFormCubit>(),
+                        ),
+                      ],
+                      child: AddModeratorPage(
+                        communityId: state.params['communityId']!,
+                      ),
                     ),
                   ),
                 ],

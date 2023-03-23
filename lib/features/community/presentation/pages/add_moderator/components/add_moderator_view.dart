@@ -1,22 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../../core/widgets/widgets.dart';
+import '../../../blocs/blocs.dart';
+import 'add_moderator_app_bar.dart';
+import 'community_member_list.dart';
 
 class AddModeratorView extends StatelessWidget {
   const AddModeratorView({super.key});
 
+  Widget _communityMembersBuilder(
+    BuildContext ctx,
+    CommunityMembersState state,
+  ) {
+    if (state.status == CommunityMembersStatus.initial) {
+      return const SizedBox.shrink();
+    }
+
+    if (state.status == CommunityMembersStatus.loading) {
+      return const RDTLoaderCard();
+    }
+
+    if (state.status == CommunityMembersStatus.failure) {
+      return const RDTErrorCard();
+    }
+
+    if (state.communityMembers.isEmpty) {
+      return const Center(
+        child: Text('NO MEMBERS FOR THIS COMMUNITY'),
+      );
+    }
+
+    return CommunityMemberList(communityMembers: state.communityMembers);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add Moderator'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.done),
-          ),
-        ],
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: AddModeratorAppBar(),
       ),
-      body: const Center(
-        child: Text('ADD MODERATOR PAGE'),
+      body: BlocBuilder<CommunityMembersBloc, CommunityMembersState>(
+        buildWhen: (prev, curr) => prev.status != curr.status,
+        builder: _communityMembersBuilder,
       ),
     );
   }

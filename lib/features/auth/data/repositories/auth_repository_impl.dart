@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/datasources/datasources.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
@@ -26,15 +27,19 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   StreamEither<User?> get authStateChanges async* {
     try {
-      final Stream<fb_auth.User?> userStream =
+      final Stream<fb_auth.User?> authStateChanges =
           _firebaseAuthDataSource.authStateChanges;
 
-      await for (final fb_auth.User? user in userStream) {
-        if (user != null) {
-          final User userEntity =
-              await _userRemoteDataSource.getById(user.uid).first;
+      await for (final fb_auth.User? authUser in authStateChanges) {
+        if (authUser != null) {
+          final User? user =
+              await _userRemoteDataSource.getById(authUser.uid).first;
 
-          yield Right(userEntity);
+          if (user == null) {
+            yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
+          }
+
+          yield Right(user);
         } else {
           yield const Right(null);
         }
@@ -67,8 +72,12 @@ class AuthRepositoryImpl implements AuthRepository {
         await _userRemoteDataSource.post(payload);
       }
 
-      final User user =
+      final User? user =
           await _userRemoteDataSource.getById(userCredential.user!.uid).first;
+
+      if (user == null) {
+        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
+      }
 
       return Right(user);
     } on ServerException catch (err) {

@@ -17,7 +17,9 @@ import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
+import '../features/profile/data/datasources/datasources.dart';
 import 'blocs/blocs.dart';
+import 'datasources/datasources.dart';
 
 // service locator
 final GetIt sl = GetIt.instance;
@@ -59,6 +61,7 @@ void setup() {
   sl.registerLazySingleton<CommunityRepository>(() => CommunityRepositoryImpl(
         communityRemoteDataSource: sl<CommunityRemoteDataSource>(),
         storageRemoteDataSource: sl<StorageRemoteDataSource>(),
+        userRemoteDataSource: sl<UserRemoteDataSource>(),
       ));
   sl.registerLazySingleton<ImageRepository>(() => ImageRepositoryImpl(
         imageLocalDataSource: sl<ImageLocalDataSource>(),
@@ -98,6 +101,9 @@ void setup() {
   sl.registerLazySingleton<JoinOrLeaveCommunity>(
     () => JoinOrLeaveCommunity(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<FetchCommunityMembers>(
+    () => FetchCommunityMembers(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
@@ -111,6 +117,11 @@ void setup() {
   );
   sl.registerFactory<SearchCommunityBloc>(
     () => SearchCommunityBlocImpl(searchCommunity: sl<SearchCommunity>()),
+  );
+  sl.registerFactory<CommunityMembersBloc>(
+    () => CommunityMembersBloc(
+      fetchCommunityMembers: sl<FetchCommunityMembers>(),
+    ),
   );
 
   // cubits
@@ -134,6 +145,7 @@ void setup() {
       joinOrLeaveCommunity: sl<JoinOrLeaveCommunity>(),
     ),
   );
+  sl.registerFactory<AddModeratorFormCubit>(() => AddModeratorFormCubit());
 
   // utilities
 }

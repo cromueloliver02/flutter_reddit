@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/constants/constants.dart';
+import '../../../../core/datasources/datasources.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
+import '../../../auth/domain/entities/entities.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
@@ -14,12 +16,15 @@ import '../models/models.dart';
 class CommunityRepositoryImpl implements CommunityRepository {
   final CommunityRemoteDataSource _communityRemoteDataSource;
   final StorageRemoteDataSource _storageRemoteDataSource;
+  final UserRemoteDataSource _userRemoteDataSource;
 
   const CommunityRepositoryImpl({
     required CommunityRemoteDataSource communityRemoteDataSource,
     required StorageRemoteDataSource storageRemoteDataSource,
+    required UserRemoteDataSource userRemoteDataSource,
   })  : _communityRemoteDataSource = communityRemoteDataSource,
-        _storageRemoteDataSource = storageRemoteDataSource;
+        _storageRemoteDataSource = storageRemoteDataSource,
+        _userRemoteDataSource = userRemoteDataSource;
 
   @override
   StreamEither<Community> getCommunity(String communityId) async* {
@@ -191,6 +196,36 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {
       return Left(UnexpectedFailure(exception: err));
+    }
+  }
+
+  @override
+  StreamEither<List<User>> fetchCommunityMembers(String communityId) async* {
+    try {
+      final Community? community =
+          await _communityRemoteDataSource.getById(communityId).first;
+
+      if (community == null) {
+        yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
+      } else {
+        final List<String> userIds = community.members;
+
+        final Stream<List<User?>> usersStream =
+            _userRemoteDataSource.getByIds(userIds);
+
+        await for (final List<User?> users in usersStream) {
+          final List<User> communityMembers =
+              List<User>.from(users.where((d) => d != null).toList());
+
+          yield Right(communityMembers);
+        }
+      }
+    } on ServerException catch (err) {
+      yield Left(ServerFailure(exception: err));
+    } on UnexpectedException catch (err) {
+      yield Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      yield Left(UnexpectedFailure(exception: err));
     }
   }
 }
