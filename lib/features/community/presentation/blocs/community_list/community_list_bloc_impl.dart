@@ -29,6 +29,9 @@ class CommunityListBlocImpl extends CommunityListBloc {
     final StreamEither<List<Community>> eitherCommunitiesStream =
         _fetchUserCommunities(event.userId);
 
+    // a hack to fix the builder skipping the loading status
+    await Future.delayed(const Duration(milliseconds: 250));
+
     await emit.onEach<SyncEither<List<Community>>>(
       eitherCommunitiesStream,
       onData: (SyncEither<List<Community>> eitherCommunities) =>

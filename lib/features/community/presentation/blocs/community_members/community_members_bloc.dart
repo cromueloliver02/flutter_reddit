@@ -31,7 +31,8 @@ class CommunityMembersBloc
     final StreamEither<List<User>> eitherUsersStream =
         _fetchCommunityMembers(event.communityId);
 
-    await Future.delayed(const Duration(milliseconds: 500));
+    // a hack to fix the builder skipping the loading status
+    await Future.delayed(const Duration(milliseconds: 250));
 
     await emit.onEach<SyncEither<List<User>>>(
       eitherUsersStream,

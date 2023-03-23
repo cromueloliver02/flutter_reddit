@@ -31,6 +31,9 @@ class CommunityDetailsBloc
     final StreamEither<Community> eitherCommunity =
         _getCommunity(event.communityId);
 
+    // a hack to fix the builder skipping the loading status
+    await Future.delayed(const Duration(milliseconds: 250));
+
     await emit.onEach<SyncEither<Community>>(
       eitherCommunity,
       onData: (SyncEither<Community> eitherCommunity) => eitherCommunity.fold(
