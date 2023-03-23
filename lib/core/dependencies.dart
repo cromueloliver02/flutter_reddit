@@ -104,6 +104,9 @@ void setup() {
   sl.registerLazySingleton<FetchCommunityMembers>(
     () => FetchCommunityMembers(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<SaveModerators>(
+    () => SaveModerators(communityRepository: sl<CommunityRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
