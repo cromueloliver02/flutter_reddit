@@ -26,8 +26,8 @@ class AddModeratorView extends StatelessWidget {
     }
 
     if (state.communityMembers.isEmpty) {
-      return const Center(
-        child: Text('NO MEMBERS FOR THIS COMMUNITY'),
+      return const RDTEmptyMessageCard(
+        message: 'No members for this community',
       );
     }
 

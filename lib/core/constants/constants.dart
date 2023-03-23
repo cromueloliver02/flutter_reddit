@@ -31,6 +31,7 @@ const String kCorruptedImageFailureMsg =
 // default messages
 const String kDefaultErrorMsg = 'Error: Something went wrong';
 const String kDefaultNotFoundMsg = '404: Not found.';
+const String kDefaultEmptyMsg = 'Nothing to see here.';
 
 // platform exception codes
 const String kInvalidImage = 'invalid_image';
