@@ -31,39 +31,29 @@ class CommunityDetailsBloc
     final StreamEither<Community> eitherCommunity =
         _getCommunity(event.communityId);
 
-    await emit.forEach<SyncEither<Community>>(
+    await emit.onEach<SyncEither<Community>>(
       eitherCommunity,
-      onData: (SyncEither<Community> eitherCommunity) {
-        if (eitherCommunity.isLeft()) {
-          late final Failure error;
-          eitherCommunity.leftMap((Failure failure) => error = failure);
-
-          debugPrint(error.toString());
-
-          return state.copyWith(
+      onData: (SyncEither<Community> eitherCommunity) => eitherCommunity.fold(
+        (Failure error) {
+          emit(state.copyWith(
             status: () => CommunityDetailsStatus.failure,
             error: () => error,
-          );
-        }
+          ));
 
-        final Community community =
-            eitherCommunity.getOrElse(() => Community.empty());
-
-        return state.copyWith(
+          debugPrint(error.toString());
+        },
+        (Community community) => emit(state.copyWith(
           community: () => community,
           status: () => CommunityDetailsStatus.success,
-        );
-      },
-      onError: (error, stackTrace) {
-        debugPrint(error.toString());
-
-        return state.copyWith(
+        )),
+      ),
+      onError: (Object error, StackTrace stackTrace) {
+        emit(state.copyWith(
           status: () => CommunityDetailsStatus.failure,
-          error: () => Failure(
-            message: kDefaultErrorMsg,
-            exception: error,
-          ),
-        );
+          error: () => Failure(message: kDefaultErrorMsg, exception: error),
+        ));
+
+        debugPrint(error.toString());
       },
     );
   }
