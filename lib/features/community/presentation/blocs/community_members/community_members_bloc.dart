@@ -35,25 +35,23 @@ class CommunityMembersBloc
 
     await emit.onEach<SyncEither<List<User>>>(
       eitherUsersStream,
-      onData: (SyncEither<List<User>> eitherUsers) {
-        eitherUsers.fold(
-          (Failure error) => emit(state.copyWith(
-            status: () => CommunityMembersStatus.failure,
-            error: () => error,
-          )),
-          (List<User> communityMembers) => emit(state.copyWith(
-            communityMembers: () => communityMembers,
-            status: () => CommunityMembersStatus.success,
-          )),
-        );
-      },
-      onError: (error, stackTrace) {
-        debugPrint(error.toString());
-
+      onData: (SyncEither<List<User>> eitherUsers) => eitherUsers.fold(
+        (Failure error) => emit(state.copyWith(
+          status: () => CommunityMembersStatus.failure,
+          error: () => error,
+        )),
+        (List<User> users) => emit(state.copyWith(
+          communityMembers: () => users,
+          status: () => CommunityMembersStatus.success,
+        )),
+      ),
+      onError: (Object error, StackTrace stackTrace) {
         emit(state.copyWith(
           status: () => CommunityMembersStatus.failure,
           error: () => Failure(message: kDefaultErrorMsg, exception: error),
         ));
+
+        debugPrint(error.toString());
       },
     );
   }
