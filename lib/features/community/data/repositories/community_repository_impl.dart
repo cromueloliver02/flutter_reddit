@@ -215,7 +215,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
         final List<String> userIds = community.members;
 
         final Stream<List<User?>> usersStream =
-            _userRemoteDataSource.getByIds(userIds);
+            _userRemoteDataSource.getUsersByIds(userIds);
 
         await for (final List<User?> users in usersStream) {
           final List<User> communityMembers =

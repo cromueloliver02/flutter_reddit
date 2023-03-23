@@ -14,7 +14,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Stream<User?> getById(String userId) {
+  Stream<User?> getUserById(String userId) {
     try {
       final Stream<User?> userStream = _firestore
           .collection(kUsersCollection)
@@ -35,7 +35,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Stream<List<User?>> getByIds(List<String> userIds) {
+  Stream<List<User?>> getUsersByIds(List<String> userIds) {
     try {
       final Stream<List<User?>> usersStream = _firestore
           .collection(kUsersCollection)
@@ -57,7 +57,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   }
 
   @override
-  Future<void> post(UserModel user) async {
+  Future<void> createUser(UserModel user) async {
     try {
       await _firestore
           .collection(kUsersCollection)

@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await for (final fb_auth.User? authUser in authStateChanges) {
         if (authUser != null) {
           final User? user =
-              await _userRemoteDataSource.getById(authUser.uid).first;
+              await _userRemoteDataSource.getUserById(authUser.uid).first;
 
           if (user == null) {
             yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
@@ -69,11 +69,12 @@ class AuthRepositoryImpl implements AuthRepository {
           awards: const <String>[],
         );
 
-        await _userRemoteDataSource.post(payload);
+        await _userRemoteDataSource.createUser(payload);
       }
 
-      final User? user =
-          await _userRemoteDataSource.getById(userCredential.user!.uid).first;
+      final User? user = await _userRemoteDataSource
+          .getUserById(userCredential.user!.uid)
+          .first;
 
       if (user == null) {
         return const Left(ServerFailure(message: kDefaultNotFoundMsg));
