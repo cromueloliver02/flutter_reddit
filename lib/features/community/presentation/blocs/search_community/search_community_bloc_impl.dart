@@ -25,41 +25,32 @@ class SearchCommunityBlocImpl extends SearchCommunityBloc {
   ) async {
     emit(state.copyWith(status: () => SearchCommunityStatus.loading));
 
-    final StreamEither<List<Community>> eitherCommunitiesStream =
+    final StreamEither<List<Community>> eitherResultsStream =
         _searchCommunity(event.query);
 
-    await emit.forEach<SyncEither<List<Community>>>(
-      eitherCommunitiesStream,
-      onData: (SyncEither<List<Community>> eitherCommunities) {
-        if (eitherCommunities.isLeft()) {
-          late final Failure error;
-          eitherCommunities.leftMap((Failure failure) => error = failure);
-
-          debugPrint(error.toString());
-
-          return state.copyWith(
+    await emit.onEach<SyncEither<List<Community>>>(
+      eitherResultsStream,
+      onData: (SyncEither<List<Community>> eitherResults) => eitherResults.fold(
+        (Failure error) {
+          emit(state.copyWith(
             status: () => SearchCommunityStatus.failure,
             error: () => error,
-          );
-        }
+          ));
 
-        final List<Community> results = eitherCommunities.getOrElse(() => []);
-
-        return state.copyWith(
+          debugPrint(error.toString());
+        },
+        (List<Community> results) => emit(state.copyWith(
           results: () => results,
           status: () => SearchCommunityStatus.success,
-        );
-      },
-      onError: (error, stackTrace) {
-        debugPrint(error.toString());
-
-        return state.copyWith(
+        )),
+      ),
+      onError: (Object error, StackTrace stackTrace) {
+        emit(state.copyWith(
           status: () => SearchCommunityStatus.failure,
-          error: () => Failure(
-            message: kDefaultErrorMsg,
-            exception: error,
-          ),
-        );
+          error: () => Failure(message: kDefaultErrorMsg, exception: error),
+        ));
+
+        debugPrint(error.toString());
       },
     );
   }
