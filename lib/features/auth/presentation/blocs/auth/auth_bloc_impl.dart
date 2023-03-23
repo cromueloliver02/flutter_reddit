@@ -30,47 +30,42 @@ class AuthBlocImpl extends AuthBloc {
     final StreamEither<User?> eitherAuthStream =
         _getAuthStateChanges(NoParams());
 
-    await emit.forEach<SyncEither<User?>>(
+    await emit.onEach<SyncEither<User?>>(
       eitherAuthStream,
-      onData: (SyncEither<User?> eitherUser) {
-        if (eitherUser.isLeft()) {
-          late final Failure error;
-          eitherUser.leftMap((Failure failure) => error = failure);
-
-          debugPrint(error.toString());
-
-          return state.copyWith(
+      onData: (SyncEither<User?> eitherUser) => eitherUser.fold(
+        (Failure error) {
+          emit(state.copyWith(
             status: () => AuthStatus.failure,
             error: () => error,
-          );
-        }
+          ));
 
-        final User? user = eitherUser.getOrElse(() => null);
+          debugPrint(error.toString());
+        },
+        (User? user) {
+          if (user == null) {
+            emit(state.copyWith(
+              user: () => null,
+              status: () => AuthStatus.success,
+              userAuthStatus: () => UserAuthStatus.unauthenticated,
+            ));
+          }
 
-        if (user == null) {
-          return state.copyWith(
-            user: () => null,
-            status: () => AuthStatus.success,
-            userAuthStatus: () => UserAuthStatus.unauthenticated,
-          );
-        }
-
-        return state.copyWith(
-          user: () => user,
-          status: () => AuthStatus.success,
-          userAuthStatus: () => UserAuthStatus.authenticated,
-        );
-      },
-      onError: (error, stackTrace) {
-        debugPrint(error.toString());
-
-        return state.copyWith(
+          if (user != null) {
+            emit(state.copyWith(
+              user: () => user,
+              status: () => AuthStatus.success,
+              userAuthStatus: () => UserAuthStatus.authenticated,
+            ));
+          }
+        },
+      ),
+      onError: (Object error, StackTrace stackTrace) {
+        emit(state.copyWith(
           status: () => AuthStatus.failure,
-          error: () => Failure(
-            message: kDefaultErrorMsg,
-            exception: error,
-          ),
-        );
+          error: () => Failure(message: kDefaultErrorMsg, exception: error),
+        ));
+
+        debugPrint(error.toString());
       },
     );
   }
