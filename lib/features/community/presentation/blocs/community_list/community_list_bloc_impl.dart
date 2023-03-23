@@ -30,7 +30,7 @@ class CommunityListBlocImpl extends CommunityListBloc {
         _fetchUserCommunities(event.userId);
 
     // a hack to fix the builder skipping the loading status
-    await Future.delayed(const Duration(milliseconds: 250));
+    // await Future.delayed(const Duration(milliseconds: 250));
 
     await emit.onEach<SyncEither<List<Community>>>(
       eitherCommunitiesStream,

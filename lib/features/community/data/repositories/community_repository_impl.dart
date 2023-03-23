@@ -156,8 +156,9 @@ class CommunityRepositoryImpl implements CommunityRepository {
         return const Left(ServerFailure(message: kDefaultNotFoundMsg));
       }
 
-      final Community newCommunity =
-          community.copyWith(members: () => [...community.members, userId]);
+      final Community newCommunity = community.copyWith(
+        members: () => [...community.members, userId],
+      );
 
       await _communityRemoteDataSource.update(newCommunity as CommunityModel);
 
@@ -185,7 +186,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
       }
 
       final Community newCommunity = community.copyWith(
-          members: () => community.members.where((d) => d != userId).toList());
+        members: () => community.members.where((d) => d != userId).toList(),
+      );
 
       await _communityRemoteDataSource.update(newCommunity as CommunityModel);
 
