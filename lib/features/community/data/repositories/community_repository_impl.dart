@@ -27,7 +27,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
         _userRemoteDataSource = userRemoteDataSource;
 
   @override
-  StreamEither<Community> getCommunity(String communityId) async* {
+  StreamEither<Community> getCommunityById(String communityId) async* {
     try {
       final Stream<Community?> communityStream =
           _communityRemoteDataSource.getCommunityById(communityId);
@@ -47,7 +47,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  StreamEither<List<Community>> fetchUserCommunities(
+  StreamEither<List<Community>> getCommunitiesByUserId(
     String userId,
   ) async* {
     try {
@@ -204,7 +204,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
   @override
-  StreamEither<List<User>> fetchCommunityMembers(String communityId) async* {
+  StreamEither<List<User>> getCommunityMembersById(String communityId) async* {
     try {
       final Community? community =
           await _communityRemoteDataSource.getCommunityById(communityId).first;

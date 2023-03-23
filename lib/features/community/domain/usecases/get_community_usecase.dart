@@ -12,6 +12,6 @@ class GetCommunity implements StreamUseCase<Community, String> {
 
   @override
   StreamEither<Community> call(String communityId) {
-    return _communityRepository.getCommunity(communityId);
+    return _communityRepository.getCommunityById(communityId);
   }
 }

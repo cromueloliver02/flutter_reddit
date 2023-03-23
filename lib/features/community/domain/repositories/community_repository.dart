@@ -6,11 +6,11 @@ import '../../data/models/models.dart';
 import '../entities/entities.dart';
 
 abstract class CommunityRepository {
-  StreamEither<Community> getCommunity(String communityId);
+  StreamEither<Community> getCommunityById(String communityId);
 
-  StreamEither<List<Community>> fetchUserCommunities(String userId);
+  StreamEither<List<Community>> getCommunitiesByUserId(String userId);
 
-  StreamEither<List<User>> fetchCommunityMembers(String communityId);
+  StreamEither<List<User>> getCommunityMembersById(String communityId);
 
   FutureEither<void> createCommunity(CommunityModel community);
 

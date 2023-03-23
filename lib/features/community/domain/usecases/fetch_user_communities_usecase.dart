@@ -12,6 +12,6 @@ class FetchUserCommunities implements StreamUseCase<List<Community>, String> {
 
   @override
   StreamEither<List<Community>> call(String userId) {
-    return _communityRepository.fetchUserCommunities(userId);
+    return _communityRepository.getCommunitiesByUserId(userId);
   }
 }
