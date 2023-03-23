@@ -19,9 +19,7 @@ class CommunityDetailsView extends StatelessWidget {
               community: state.community,
               status: state.status,
             ),
-            if (state.community == null)
-              const SliverToBoxAdapter(child: SizedBox.shrink()),
-            if (state.community != null)
+            if (state.status == CommunityDetailsStatus.success)
               CommunityDetailsSliverHeader(state: state),
           ],
           body: CommunityDetailsPostList(state: state),
