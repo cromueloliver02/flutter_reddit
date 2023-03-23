@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../../core/widgets/widgets.dart';
 import '../../../../../auth/domain/entities/entities.dart';
 import '../../../cubits/cubits.dart';
 
@@ -19,21 +20,35 @@ class CommunityMemberList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddModeratorCubit, AddModeratorState>(
-      builder: (ctx, state) => ListView.builder(
-        itemCount: communityMembers.length,
-        itemBuilder: (ctx, idx) {
-          final User member = communityMembers[idx];
+      builder: (ctx, state) {
+        if (state.status == AddModeratorStatus.loading) {
+          return const RDTLoaderCard();
+        }
 
-          return CheckboxListTile(
-            value: state.moderatorIds.contains(member.id),
-            title: Text(member.name),
-            onChanged: (isChecked) => _toggleModerator(
-              context,
-              memberId: member.id,
-            ),
-          );
-        },
-      ),
+        if (state.status == AddModeratorStatus.failure) {
+          return const RDTErrorCard();
+        }
+
+        if (state.status == AddModeratorStatus.success) {
+          return const SizedBox.shrink();
+        }
+
+        return ListView.builder(
+          itemCount: communityMembers.length,
+          itemBuilder: (ctx, idx) {
+            final User member = communityMembers[idx];
+
+            return CheckboxListTile(
+              value: state.moderatorIds.contains(member.id),
+              title: Text(member.name),
+              onChanged: (isChecked) => _toggleModerator(
+                context,
+                memberId: member.id,
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

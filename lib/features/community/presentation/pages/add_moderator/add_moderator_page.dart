@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/utils/utils.dart';
 import '../../blocs/blocs.dart';
 import '../../cubits/cubits.dart';
 import '../pages.dart';
@@ -25,10 +26,15 @@ class AddModeratorPage extends StatefulWidget {
 class _AddModeratorPageState extends State<AddModeratorPage> {
   void _addModeratorListener(BuildContext ctx, AddModeratorState state) {
     if (state.status == AddModeratorStatus.success) {
+      showSnackBar(ctx, message: 'Saved moderators successfully.');
       ctx.goNamed(
         ModeratorToolsPage.name,
         params: {'communityId': widget.communityId},
       );
+    }
+
+    if (state.status == AddModeratorStatus.failure) {
+      showErrorDialog(ctx, message: state.error.message);
     }
   }
 

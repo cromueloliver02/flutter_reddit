@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
 
 class AddModeratorAppBar extends StatelessWidget {
@@ -21,11 +20,11 @@ class AddModeratorAppBar extends StatelessWidget {
     return AppBar(
       title: const Text('Add Moderator'),
       actions: [
-        BlocBuilder<CommunityMembersBloc, CommunityMembersState>(
+        BlocBuilder<AddModeratorCubit, AddModeratorState>(
           buildWhen: (prev, curr) => prev.status != curr.status,
           builder: (ctx, state) => IconButton(
             icon: const Icon(Icons.done),
-            onPressed: state.status == CommunityMembersStatus.loading
+            onPressed: state.status == AddModeratorStatus.loading
                 ? null
                 : () => _saveModerators(context),
           ),
