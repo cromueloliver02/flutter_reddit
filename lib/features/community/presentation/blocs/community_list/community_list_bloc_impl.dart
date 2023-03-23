@@ -29,39 +29,30 @@ class CommunityListBlocImpl extends CommunityListBloc {
     final StreamEither<List<Community>> eitherCommunitiesStream =
         _fetchUserCommunities(event.userId);
 
-    await emit.forEach<SyncEither<List<Community>>>(
+    await emit.onEach<SyncEither<List<Community>>>(
       eitherCommunitiesStream,
-      onData: (SyncEither<List<Community>> eitherCommunities) {
-        if (eitherCommunities.isLeft()) {
-          late final Failure error;
-          eitherCommunities.leftMap((Failure failure) => error = failure);
-
-          debugPrint(error.toString());
-
-          return state.copyWith(
+      onData: (SyncEither<List<Community>> eitherCommunities) =>
+          eitherCommunities.fold(
+        (Failure error) {
+          emit(state.copyWith(
             status: () => CommunityListStatus.failure,
             error: () => error,
-          );
-        }
+          ));
 
-        final List<Community> communityList =
-            eitherCommunities.getOrElse(() => []);
-
-        return state.copyWith(
+          debugPrint(error.toString());
+        },
+        (List<Community> communityList) => emit(state.copyWith(
           communityList: () => communityList,
           status: () => CommunityListStatus.success,
-        );
-      },
-      onError: (error, stackTrace) {
-        debugPrint(error.toString());
-
-        return state.copyWith(
+        )),
+      ),
+      onError: (Object error, StackTrace stackTrace) {
+        emit(state.copyWith(
           status: () => CommunityListStatus.failure,
-          error: () => Failure(
-            message: kDefaultErrorMsg,
-            exception: error,
-          ),
-        );
+          error: () => Failure(message: kDefaultErrorMsg, exception: error),
+        ));
+
+        debugPrint(error.toString());
       },
     );
   }
