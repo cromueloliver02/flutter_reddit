@@ -77,8 +77,8 @@ void setup() {
   sl.registerLazySingleton<GetAuthStateChanges>(
     () => GetAuthStateChanges(authRepository: sl<AuthRepository>()),
   );
-  sl.registerLazySingleton<FetchUserCommunities>(
-    () => FetchUserCommunities(communityRepository: sl<CommunityRepository>()),
+  sl.registerLazySingleton<GetUserCommunities>(
+    () => GetUserCommunities(communityRepository: sl<CommunityRepository>()),
   );
   sl.registerLazySingleton<CreateCommunity>(
     () => CreateCommunity(communityRepository: sl<CommunityRepository>()),
@@ -101,8 +101,8 @@ void setup() {
   sl.registerLazySingleton<JoinOrLeaveCommunity>(
     () => JoinOrLeaveCommunity(communityRepository: sl<CommunityRepository>()),
   );
-  sl.registerLazySingleton<FetchCommunityMembers>(
-    () => FetchCommunityMembers(communityRepository: sl<CommunityRepository>()),
+  sl.registerLazySingleton<GetCommunityMembers>(
+    () => GetCommunityMembers(communityRepository: sl<CommunityRepository>()),
   );
   sl.registerLazySingleton<SaveModerators>(
     () => SaveModerators(communityRepository: sl<CommunityRepository>()),
@@ -116,14 +116,14 @@ void setup() {
     ),
   );
   sl.registerFactory<CommunityListBloc>(
-    () => CommunityListBlocImpl(getUserCommunities: sl<FetchUserCommunities>()),
+    () => CommunityListBlocImpl(getUserCommunities: sl<GetUserCommunities>()),
   );
   sl.registerFactory<SearchCommunityBloc>(
     () => SearchCommunityBlocImpl(searchCommunity: sl<SearchCommunity>()),
   );
   sl.registerFactory<CommunityMembersBloc>(
     () => CommunityMembersBloc(
-      fetchCommunityMembers: sl<FetchCommunityMembers>(),
+      getCommunityMembers: sl<GetCommunityMembers>(),
     ),
   );
 

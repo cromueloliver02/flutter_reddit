@@ -3,10 +3,10 @@ import '../../../../core/usecases/usecases.dart';
 import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
-class FetchUserCommunities implements StreamUseCase<List<Community>, String> {
+class GetUserCommunities implements StreamUseCase<List<Community>, String> {
   final CommunityRepository _communityRepository;
 
-  const FetchUserCommunities({
+  const GetUserCommunities({
     required CommunityRepository communityRepository,
   }) : _communityRepository = communityRepository;
 

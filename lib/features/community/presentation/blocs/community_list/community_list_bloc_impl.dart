@@ -9,11 +9,11 @@ import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class CommunityListBlocImpl extends CommunityListBloc {
-  final FetchUserCommunities _fetchUserCommunities;
+  final GetUserCommunities _getUserCommunities;
 
   CommunityListBlocImpl({
-    required FetchUserCommunities getUserCommunities,
-  })  : _fetchUserCommunities = getUserCommunities,
+    required GetUserCommunities getUserCommunities,
+  })  : _getUserCommunities = getUserCommunities,
         super(CommunityListState.initial()) {
     on<CommunityListUserFetched>(onCommunityListUserGetRequested);
     on<CommunityListChanged>(onCommunityListChanged);
@@ -27,7 +27,7 @@ class CommunityListBlocImpl extends CommunityListBloc {
     emit(state.copyWith(status: () => CommunityListStatus.loading));
 
     final StreamEither<List<Community>> eitherCommunitiesStream =
-        _fetchUserCommunities(event.userId);
+        _getUserCommunities(event.userId);
 
     // a hack to fix the builder skipping the loading status
     // await Future.delayed(const Duration(milliseconds: 250));

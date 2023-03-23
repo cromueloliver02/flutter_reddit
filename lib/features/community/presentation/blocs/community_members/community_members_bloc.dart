@@ -13,11 +13,11 @@ part 'community_members_state.dart';
 
 class CommunityMembersBloc
     extends Bloc<CommunityMembersEvent, CommunityMembersState> {
-  final FetchCommunityMembers _fetchCommunityMembers;
+  final GetCommunityMembers _getCommunityMembers;
 
   CommunityMembersBloc({
-    required FetchCommunityMembers fetchCommunityMembers,
-  })  : _fetchCommunityMembers = fetchCommunityMembers,
+    required GetCommunityMembers getCommunityMembers,
+  })  : _getCommunityMembers = getCommunityMembers,
         super(CommunityMembersState.initial()) {
     on<CommunityMembersFetched>(_onFetchCommunityMembers);
   }
@@ -29,7 +29,7 @@ class CommunityMembersBloc
     emit(state.copyWith(status: () => CommunityMembersStatus.loading));
 
     final StreamEither<List<User>> eitherUsersStream =
-        _fetchCommunityMembers(event.communityId);
+        _getCommunityMembers(event.communityId);
 
     // a hack to fix the builder skipping the loading status
     await Future.delayed(const Duration(milliseconds: 250));
