@@ -148,7 +148,9 @@ void setup() {
       joinOrLeaveCommunity: sl<JoinOrLeaveCommunity>(),
     ),
   );
-  sl.registerFactory<AddModeratorFormCubit>(() => AddModeratorFormCubit());
+  sl.registerFactory<AddModeratorCubit>(
+    () => AddModeratorCubit(saveModerators: sl<SaveModerators>()),
+  );
 
   // utilities
 }

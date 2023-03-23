@@ -1,4 +1,4 @@
-export 'add_moderator_form/add_moderator_form_cubit.dart';
+export 'add_moderator/add_moderator_cubit.dart';
 export 'create_community/create_community_cubit.dart';
 export 'create_community_form/create_community_form_cubit.dart';
 export 'join_or_leave_community/join_or_leave_community_cubit.dart';

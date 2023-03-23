@@ -13,12 +13,12 @@ class CommunityMemberList extends StatelessWidget {
   });
 
   void _toggleModerator(BuildContext ctx, {required String memberId}) {
-    ctx.read<AddModeratorFormCubit>().toggleModerator(memberId);
+    ctx.read<AddModeratorCubit>().toggleModerator(memberId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddModeratorFormCubit, AddModeratorFormState>(
+    return BlocBuilder<AddModeratorCubit, AddModeratorState>(
       builder: (ctx, state) => ListView.builder(
         itemCount: communityMembers.length,
         itemBuilder: (ctx, idx) {

@@ -7,7 +7,12 @@ import 'add_moderator_app_bar.dart';
 import 'community_member_list.dart';
 
 class AddModeratorView extends StatelessWidget {
-  const AddModeratorView({super.key});
+  final String communityId;
+
+  const AddModeratorView({
+    super.key,
+    required this.communityId,
+  });
 
   Widget _communityMembersBuilder(
     BuildContext ctx,
@@ -37,9 +42,9 @@ class AddModeratorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: AddModeratorAppBar(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: AddModeratorAppBar(communityId: communityId),
       ),
       body: BlocBuilder<CommunityMembersBloc, CommunityMembersState>(
         buildWhen: (prev, curr) => prev.status != curr.status,

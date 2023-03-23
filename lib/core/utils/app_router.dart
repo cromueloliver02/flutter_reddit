@@ -111,8 +111,8 @@ class AppRouter {
                         BlocProvider<CommunityDetailsBloc>.value(
                           value: sl<CommunityDetailsBloc>(),
                         ),
-                        BlocProvider<AddModeratorFormCubit>.value(
-                          value: sl<AddModeratorFormCubit>(),
+                        BlocProvider<AddModeratorCubit>.value(
+                          value: sl<AddModeratorCubit>(),
                         ),
                       ],
                       child: AddModeratorPage(
