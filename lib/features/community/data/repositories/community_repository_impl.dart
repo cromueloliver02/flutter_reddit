@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 
-import '../../../../core/constants/constants.dart';
 import '../../../../core/datasources/datasources.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
@@ -29,19 +28,22 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   StreamEither<Community> getCommunityById(String communityId) async* {
     try {
-      final Stream<Community?> communityStream =
+      final Stream<Community> communityStream =
           _communityRemoteDataSource.getCommunityById(communityId);
 
-      await for (final Community? community in communityStream) {
-        if (community != null) {
-          yield Right(community);
-        } else {
-          yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
-        }
+      await for (final Community community in communityStream) {
+        yield Right(community);
       }
     } on ServerException catch (err) {
       yield Left(ServerFailure(exception: err));
+    } on NotFoundException catch (err) {
+      yield Left(NotFoundFailure(
+        exception: err,
+        message: 'Community not found',
+      ));
     } on UnexpectedException catch (err) {
+      yield Left(UnexpectedFailure(exception: err));
+    } catch (err) {
       yield Left(UnexpectedFailure(exception: err));
     }
   }
@@ -69,10 +71,10 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   FutureEither<void> createCommunity(CommunityModel community) async {
     try {
-      final Community? existingCommunity =
-          await _communityRemoteDataSource.getCommunityById(community.id).first;
+      final bool communityExists =
+          await _communityRemoteDataSource.checkCommunityExists(community.id);
 
-      if (existingCommunity != null) {
+      if (communityExists) {
         throw CommunityNameAlreadyExistException();
       }
 
@@ -84,6 +86,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
+      return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }
   }
@@ -122,6 +126,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return Left(ServerFailure(exception: err));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
+    } catch (err) {
+      return Left(UnexpectedFailure(exception: err));
     }
   }
 
@@ -149,12 +155,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
     required String userId,
   }) async {
     try {
-      final Community? community =
+      final Community community =
           await _communityRemoteDataSource.getCommunityById(communityId).first;
-
-      if (community == null) {
-        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
-      }
 
       final Community newCommunity = community.copyWith(
         members: () => [...community.members, userId],
@@ -166,6 +168,11 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return const Right(null);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
+    } on NotFoundException catch (err) {
+      return Left(NotFoundFailure(
+        exception: err,
+        message: 'Community not found',
+      ));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {
@@ -179,12 +186,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
     required String userId,
   }) async {
     try {
-      final Community? community =
+      final Community community =
           await _communityRemoteDataSource.getCommunityById(communityId).first;
-
-      if (community == null) {
-        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
-      }
 
       final Community newCommunity = community.copyWith(
         members: () => community.members.where((d) => d != userId).toList(),
@@ -196,6 +199,11 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return const Right(null);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
+    } on NotFoundException catch (err) {
+      return Left(NotFoundFailure(
+        exception: err,
+        message: 'Community not found',
+      ));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {
@@ -206,26 +214,27 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   StreamEither<List<User>> getCommunityMembersById(String communityId) async* {
     try {
-      final Community? community =
+      final Community community =
           await _communityRemoteDataSource.getCommunityById(communityId).first;
 
-      if (community == null) {
-        yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
-      } else {
-        final List<String> userIds = community.members;
+      final List<String> userIds = community.members;
 
-        final Stream<List<User?>> usersStream =
-            _userRemoteDataSource.getUsersByIds(userIds);
+      final Stream<List<User?>> usersStream =
+          _userRemoteDataSource.getUsersByIds(userIds);
 
-        await for (final List<User?> users in usersStream) {
-          final List<User> communityMembers =
-              List<User>.from(users.where((d) => d != null).toList());
+      await for (final List<User?> users in usersStream) {
+        final List<User> communityMembers =
+            List<User>.from(users.where((d) => d != null).toList());
 
-          yield Right(communityMembers);
-        }
+        yield Right(communityMembers);
       }
     } on ServerException catch (err) {
       yield Left(ServerFailure(exception: err));
+    } on NotFoundException catch (err) {
+      yield Left(NotFoundFailure(
+        exception: err,
+        message: 'Community not found',
+      ));
     } on UnexpectedException catch (err) {
       yield Left(UnexpectedFailure(exception: err));
     } catch (err) {
@@ -239,12 +248,8 @@ class CommunityRepositoryImpl implements CommunityRepository {
     required List<String> moderatorIds,
   }) async {
     try {
-      final Community? community =
+      final Community community =
           await _communityRemoteDataSource.getCommunityById(communityId).first;
-
-      if (community == null) {
-        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
-      }
 
       final Community newCommunity = community.copyWith(
         mods: () => moderatorIds,
@@ -256,6 +261,11 @@ class CommunityRepositoryImpl implements CommunityRepository {
       return const Right(null);
     } on ServerException catch (err) {
       return Left(ServerFailure(exception: err));
+    } on NotFoundException catch (err) {
+      return Left(NotFoundFailure(
+        exception: err,
+        message: 'Community not found',
+      ));
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
     } catch (err) {

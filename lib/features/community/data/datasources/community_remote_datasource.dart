@@ -6,7 +6,7 @@ import '../../domain/entities/entities.dart';
 import '../models/models.dart';
 
 abstract class CommunityRemoteDataSource {
-  Stream<Community?> getCommunityById(String id);
+  Stream<Community> getCommunityById(String communityId);
 
   Stream<List<Community>> getCommunitiesByUserId(String userId);
 
@@ -15,6 +15,8 @@ abstract class CommunityRemoteDataSource {
   Future<void> updateCommunity(CommunityModel community);
 
   Stream<List<Community>> searchCommunity(String query);
+
+  Future<bool> checkCommunityExists(String communityId);
 }
 
 class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
@@ -25,14 +27,18 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
   }) : _firestore = firestore;
 
   @override
-  Stream<Community?> getCommunityById(String communityId) {
+  Stream<Community> getCommunityById(String communityId) {
     try {
-      final Stream<Community?> communityStream = _firestore
+      final Stream<Community> communityStream = _firestore
           .collection(kCommunitiesCollection)
           .doc(communityId)
           .snapshots()
           .map((DocumentSnapshot communityDoc) {
-        if (!communityDoc.exists) return null;
+        if (!communityDoc.exists) {
+          throw const NotFoundException(
+            error: 'CommunityRemoteDataSource.getCommunityById()',
+          );
+        }
 
         return CommunityModel.fromDoc(communityDoc);
       });
@@ -40,6 +46,8 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
       return communityStream;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
+    } on NotFoundException catch (err, stackTrace) {
+      throw NotFoundException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {
       throw UnexpectedException(error: err, stackTrace: stackTrace);
     }
@@ -52,9 +60,18 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
           .collection(kCommunitiesCollection)
           .where('members', arrayContains: userId)
           .snapshots()
-          .map((snapshot) => snapshot.docs
-              .map((DocumentSnapshot doc) => CommunityModel.fromDoc(doc))
-              .toList());
+          .map((snapshot) {
+        final List<Community> communities = [];
+
+        for (final DocumentSnapshot communityDoc in snapshot.docs) {
+          if (communityDoc.exists) {
+            final Community community = CommunityModel.fromDoc(communityDoc);
+            communities.add(community);
+          }
+        }
+
+        return communities;
+      });
 
       return communitiesStream;
     } on FirebaseException catch (err, stackTrace) {
@@ -114,6 +131,22 @@ class CommunityRemoteDataSourceImpl implements CommunityRemoteDataSource {
               .toList());
 
       return communitiesStream;
+    } on FirebaseException catch (err, stackTrace) {
+      throw ServerException(error: err, stackTrace: stackTrace);
+    } catch (err, stackTrace) {
+      throw UnexpectedException(error: err, stackTrace: stackTrace);
+    }
+  }
+
+  @override
+  Future<bool> checkCommunityExists(String communityId) async {
+    try {
+      final DocumentSnapshot communityDoc = await _firestore
+          .collection(kCommunitiesCollection)
+          .doc(communityId)
+          .get();
+
+      return communityDoc.exists;
     } on FirebaseException catch (err, stackTrace) {
       throw ServerException(error: err, stackTrace: stackTrace);
     } catch (err, stackTrace) {

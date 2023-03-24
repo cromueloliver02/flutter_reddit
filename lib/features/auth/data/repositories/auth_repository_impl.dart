@@ -32,18 +32,19 @@ class AuthRepositoryImpl implements AuthRepository {
 
       await for (final fb_auth.User? authUser in authStateChanges) {
         if (authUser != null) {
-          final User? user =
+          final User user =
               await _userRemoteDataSource.getUserById(authUser.uid).first;
-
-          if (user == null) {
-            yield const Left(ServerFailure(message: kDefaultNotFoundMsg));
-          }
 
           yield Right(user);
         } else {
           yield const Right(null);
         }
       }
+    } on NotFoundException catch (err) {
+      yield Left(NotFoundFailure(
+        exception: err,
+        message: 'User not found',
+      ));
     } catch (err) {
       yield Left(UnexpectedFailure(exception: err));
     }
@@ -72,13 +73,9 @@ class AuthRepositoryImpl implements AuthRepository {
         await _userRemoteDataSource.createUser(payload);
       }
 
-      final User? user = await _userRemoteDataSource
+      final User user = await _userRemoteDataSource
           .getUserById(userCredential.user!.uid)
           .first;
-
-      if (user == null) {
-        return const Left(ServerFailure(message: kDefaultNotFoundMsg));
-      }
 
       return Right(user);
     } on ServerException catch (err) {
@@ -87,8 +84,11 @@ class AuthRepositoryImpl implements AuthRepository {
       return const Right(null);
     } on UnexpectedException catch (err) {
       return Left(UnexpectedFailure(exception: err));
-    } on NetworkException catch (err) {
-      return Left(NetworkFailure(exception: err));
+    } on NotFoundException catch (err) {
+      return Left(NotFoundFailure(
+        exception: err,
+        message: 'User not found',
+      ));
     } catch (err) {
       return Left(UnexpectedFailure(exception: err));
     }

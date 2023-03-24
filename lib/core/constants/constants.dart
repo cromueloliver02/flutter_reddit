@@ -27,6 +27,7 @@ const String kCommunityNameAlreadyExistFailureMsg =
     'Community name already exist.';
 const String kCorruptedImageFailureMsg =
     'The image file you\'re trying to open is invalid or damaged. Please check the file and try again.';
+const String kNotFoundFailureMsg = 'Resource not found.';
 
 // default messages
 const String kDefaultErrorMsg = 'Error: Something went wrong';
