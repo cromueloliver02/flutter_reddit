@@ -41,11 +41,9 @@ class AddModeratorCubit extends Cubit<AddModeratorState> {
   }
 
   void setSelectedModerators(List<String> existingModeratorIds) {
-    Set<String> moderatorIds = state.moderatorIds;
-
-    moderatorIds = {...moderatorIds, ...existingModeratorIds}.toSet();
-
-    emit(state.copyWith(moderatorIds: () => moderatorIds));
+    emit(state.copyWith(
+      moderatorIds: () => existingModeratorIds.toSet(),
+    ));
   }
 
   void toggleModerator(String userId) {
