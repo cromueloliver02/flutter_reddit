@@ -1,1 +1,1 @@
-export 'user_profile/user_profile_page.dart';
+export 'user_details/user_details_page.dart';

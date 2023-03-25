@@ -1,5 +1,5 @@
+import '../../../../core/entities/entities.dart';
 import '../../../../core/typedefs.dart';
-import '../entities/entities.dart';
 
 abstract class AuthRepository {
   StreamEither<User?> get authStateChanges;

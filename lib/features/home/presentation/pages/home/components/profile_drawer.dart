@@ -10,8 +10,14 @@ import '../../../../../user/presentation/pages/pages.dart';
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
 
-  void _goToProfilePage(BuildContext ctx) {
-    ctx.goNamed(UserProfilePage.name);
+  void _goToUserDetailsPage(BuildContext ctx) {
+    final String userId = ctx.read<AuthBloc>().state.user!.id;
+
+    Navigator.pop(ctx);
+    ctx.goNamed(
+      UserDetailsPage.name,
+      params: {'userId': userId},
+    );
   }
 
   void _signOut(BuildContext ctx) {
@@ -51,7 +57,7 @@ class ProfileDrawer extends StatelessWidget {
             ListTile(
               title: const Text('My Profile'),
               leading: const Icon(Icons.person),
-              onTap: () => _goToProfilePage(context),
+              onTap: () => _goToUserDetailsPage(context),
             ),
             ListTile(
               title: const Text('Dark Mode'),

@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/datasources/datasources.dart';
+import '../../../../core/entities/entities.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
 import '../../../../core/typedefs.dart';
-import '../../../auth/domain/entities/entities.dart';
 import '../../domain/entities/entities.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';

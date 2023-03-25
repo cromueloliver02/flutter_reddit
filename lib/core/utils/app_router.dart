@@ -8,6 +8,7 @@ import '../../features/community/presentation/cubits/cubits.dart';
 import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
 import '../../features/splash/presentation/pages/pages.dart';
+import '../../features/user/presentation/blocs/blocs.dart';
 import '../../features/user/presentation/pages/pages.dart';
 import '../blocs/blocs.dart';
 import '../dependencies.dart';
@@ -58,9 +59,14 @@ class AppRouter {
             ),
           ),
           GoRoute(
-            path: UserProfilePage.path,
-            name: UserProfilePage.name,
-            builder: (ctx, state) => const UserProfilePage(),
+            path: UserDetailsPage.path,
+            name: UserDetailsPage.name,
+            builder: (ctx, state) => BlocProvider<UserDetailsBloc>.value(
+              value: sl<UserDetailsBloc>(),
+              child: UserDetailsPage(
+                userId: state.params['userId']!,
+              ),
+            ),
           ),
           GoRoute(
             path: CommunityDetailsPage.path,

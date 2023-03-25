@@ -1,6 +1,6 @@
+import '../../../../core/entities/entities.dart';
 import '../../../../core/typedefs.dart';
 import '../../../../core/usecases/usecases.dart';
-import '../../../auth/domain/entities/entities.dart';
 import '../repositories/repositories.dart';
 
 class GetCommunityMembers implements StreamUseCase<List<User>, String> {

@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/blocs/blocs.dart';
 import '../../../../../core/constants/constants.dart';
+import '../../../../../core/entities/entities.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
 import '../../../../../core/usecases/usecases.dart';
-import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 class AuthBlocImpl extends AuthBloc {

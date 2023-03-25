@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart' as fb_auth;
 
 import '../../../../core/constants/constants.dart';
 import '../../../../core/datasources/datasources.dart';
+import '../../../../core/entities/entities.dart';
 import '../../../../core/errors/exceptions/exceptions.dart';
 import '../../../../core/errors/failures/failures.dart';
+import '../../../../core/models/models.dart';
 import '../../../../core/typedefs.dart';
-import '../../domain/entities/entities.dart';
 import '../../domain/repositories/repositories.dart';
 import '../datasources/datasources.dart';
-import '../models/models.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final GoogleSignInDataSource _googleSignInDataSource;

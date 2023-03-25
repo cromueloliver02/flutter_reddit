@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../../core/entities/entities.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
 import '../../../../../core/usecases/usecases.dart';
-import '../../../domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 part 'sign_in_state.dart';

@@ -18,6 +18,10 @@ import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
 import '../features/user/data/datasources/datasources.dart';
+import '../features/user/data/repositories/repositories.dart';
+import '../features/user/domain/repositories/repositories.dart';
+import '../features/user/domain/usecases/usecases.dart';
+import '../features/user/presentation/blocs/blocs.dart';
 import 'blocs/blocs.dart';
 import 'datasources/datasources.dart';
 
@@ -66,9 +70,9 @@ void setup() {
   sl.registerLazySingleton<ImageRepository>(() => ImageRepositoryImpl(
         imageLocalDataSource: sl<ImageLocalDataSource>(),
       ));
-  sl.registerLazySingleton<CommunityDetailsBloc>(
-    () => CommunityDetailsBloc(getCommunity: sl<GetCommunity>()),
-  );
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(
+        userRemoteDataSource: sl<UserRemoteDataSource>(),
+      ));
 
   // use cases
   sl.registerLazySingleton<SignInWithGoogle>(
@@ -107,6 +111,9 @@ void setup() {
   sl.registerLazySingleton<SaveModerators>(
     () => SaveModerators(communityRepository: sl<CommunityRepository>()),
   );
+  sl.registerLazySingleton<GetUserProfile>(
+    () => GetUserProfile(userRepository: sl<UserRepository>()),
+  );
 
   // blocs
   sl.registerFactory<AuthBloc>(
@@ -125,6 +132,12 @@ void setup() {
     () => CommunityMembersBloc(
       getCommunityMembers: sl<GetCommunityMembers>(),
     ),
+  );
+  sl.registerLazySingleton<CommunityDetailsBloc>(
+    () => CommunityDetailsBloc(getCommunity: sl<GetCommunity>()),
+  );
+  sl.registerLazySingleton<UserDetailsBloc>(
+    () => UserDetailsBloc(getUserProfile: sl<GetUserProfile>()),
   );
 
   // cubits

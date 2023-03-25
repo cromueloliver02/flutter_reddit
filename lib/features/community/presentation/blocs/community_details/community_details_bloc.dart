@@ -28,14 +28,14 @@ class CommunityDetailsBloc
   ) async {
     emit(state.copyWith(status: () => CommunityDetailsStatus.loading));
 
-    final StreamEither<Community> eitherCommunity =
+    final StreamEither<Community> eitherCommunityStream =
         _getCommunity(event.communityId);
 
     // a hack to fix the builder skipping the loading status
     await Future.delayed(const Duration(milliseconds: 250));
 
     await emit.onEach<SyncEither<Community>>(
-      eitherCommunity,
+      eitherCommunityStream,
       onData: (SyncEither<Community> eitherCommunity) => eitherCommunity.fold(
         (Failure error) {
           emit(state.copyWith(

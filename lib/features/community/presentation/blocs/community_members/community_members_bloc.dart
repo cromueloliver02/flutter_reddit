@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/constants/constants.dart';
+import '../../../../../core/entities/entities.dart';
 import '../../../../../core/errors/failures/failures.dart';
 import '../../../../../core/typedefs.dart';
-import '../../../../auth/domain/entities/entities.dart';
 import '../../../domain/usecases/usecases.dart';
 
 part 'community_members_event.dart';

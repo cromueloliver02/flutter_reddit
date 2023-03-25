@@ -19,6 +19,18 @@ class User extends Equatable {
     required this.awards,
   });
 
+  factory User.empty() {
+    return const User(
+      id: '',
+      name: '',
+      profilePic: '',
+      banner: '',
+      isAuthenticated: false,
+      karma: 0,
+      awards: <String>[],
+    );
+  }
+
   @override
   List<Object> get props {
     return [

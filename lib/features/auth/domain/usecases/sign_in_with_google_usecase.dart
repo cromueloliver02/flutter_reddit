@@ -1,6 +1,6 @@
+import '../../../../core/entities/entities.dart';
 import '../../../../core/typedefs.dart';
 import '../../../../core/usecases/usecases.dart';
-import '../entities/entities.dart';
 import '../repositories/repositories.dart';
 
 class SignInWithGoogle implements FutureUseCase<User?, NoParams> {

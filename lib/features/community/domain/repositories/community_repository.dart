@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import '../../../../core/entities/entities.dart';
 import '../../../../core/typedefs.dart';
-import '../../../auth/domain/entities/entities.dart';
 import '../../data/models/models.dart';
 import '../entities/entities.dart';
 
