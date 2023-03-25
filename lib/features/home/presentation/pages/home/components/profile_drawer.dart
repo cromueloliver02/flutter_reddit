@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/blocs/blocs.dart';
 import '../../../../../../core/constants/constants.dart';
 import '../../../../../../core/utils/utils.dart';
+import '../../../../../user/presentation/pages/pages.dart';
 
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
+
+  void _goToProfilePage(BuildContext ctx) {
+    ctx.goNamed(UserProfilePage.name);
+  }
 
   void _signOut(BuildContext ctx) {
     ctx.read<AuthBloc>().add(AuthSignOutRequested());
@@ -45,7 +51,7 @@ class ProfileDrawer extends StatelessWidget {
             ListTile(
               title: const Text('My Profile'),
               leading: const Icon(Icons.person),
-              onTap: () {},
+              onTap: () => _goToProfilePage(context),
             ),
             ListTile(
               title: const Text('Dark Mode'),

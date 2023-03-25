@@ -17,7 +17,7 @@ import '../features/community/domain/repositories/repositories.dart';
 import '../features/community/domain/usecases/usecases.dart';
 import '../features/community/presentation/blocs/blocs.dart';
 import '../features/community/presentation/cubits/cubits.dart';
-import '../features/profile/data/datasources/datasources.dart';
+import '../features/user/data/datasources/datasources.dart';
 import 'blocs/blocs.dart';
 import 'datasources/datasources.dart';
 
