@@ -25,7 +25,7 @@ class UserDetailsView extends StatelessWidget {
               status: state.status,
             ),
             if (state.status == UserDetailsStatus.success)
-              UserDetailsSliverHeader(state: state),
+              UserDetailsSliverHeader(userId: userId, state: state),
           ],
           body: UserDetailsPostList(state: state),
         ),

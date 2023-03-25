@@ -67,6 +67,15 @@ class AppRouter {
                 userId: state.params['userId']!,
               ),
             ),
+            routes: [
+              GoRoute(
+                path: EditUserPage.path,
+                name: EditUserPage.name,
+                builder: (ctx, state) => EditUserPage(
+                  userId: state.params['userId']!,
+                ),
+              ),
+            ],
           ),
           GoRoute(
             path: CommunityDetailsPage.path,

@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../blocs/blocs.dart';
+import '../../pages.dart';
 
 class UserDetailsSliverHeader extends StatelessWidget {
+  final String userId;
   final UserDetailsState state;
 
   const UserDetailsSliverHeader({
     super.key,
+    required this.userId,
     required this.state,
   });
+
+  void _goToEditUserPage(BuildContext ctx, {required String userId}) {
+    ctx.goNamed(
+      EditUserPage.name,
+      params: {'userId': userId},
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +41,7 @@ class UserDetailsSliverHeader extends StatelessWidget {
               ),
               RDTOutlinedButton(
                 title: 'Edit Profile',
-                onPressed: () {},
+                onPressed: () => _goToEditUserPage(context, userId: userId),
               ),
             ],
           ),
