@@ -18,9 +18,10 @@ class RedditApp extends StatelessWidget {
       AppRouter.router.goNamed(LoginPage.name);
     }
 
-    if (state.userAuthStatus == UserAuthStatus.unknown) {
-      AppRouter.router.goNamed(AuthSplashPage.name);
-    }
+    // TODO: to be deleted
+    // if (state.userAuthStatus == UserAuthStatus.unknown) {
+    //   AppRouter.router.goNamed(AuthSplashPage.name);
+    // }
   }
 
   @override
