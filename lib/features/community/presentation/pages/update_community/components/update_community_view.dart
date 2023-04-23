@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
 import 'avatar_image_field.dart';
-import 'banner_image_field.dart';
 import 'update_community_app_bar.dart';
 
 class UpdateCommunityView extends StatelessWidget {
@@ -37,7 +37,18 @@ class UpdateCommunityView extends StatelessWidget {
                     height: 180,
                     child: Stack(
                       children: [
-                        BannerImageField(banner: state.community!.banner),
+                        BlocSelector<UpdateCommunityFormCubit,
+                            UpdateCommunityFormState, XFile?>(
+                          selector: (state) => state.bannerImageFile,
+                          builder: (ctx, bannerImageFile) =>
+                              RDTBannerImageField(
+                            banner: state.community!.banner,
+                            bannerImageFile: bannerImageFile,
+                            onPickBannerImage: ctx
+                                .read<UpdateCommunityFormCubit>()
+                                .pickBannerImage,
+                          ),
+                        ),
                         Positioned(
                           left: 20,
                           bottom: 0,
