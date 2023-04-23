@@ -71,8 +71,11 @@ class AppRouter {
               GoRoute(
                 path: EditUserPage.path,
                 name: EditUserPage.name,
-                builder: (ctx, state) => EditUserPage(
-                  userId: state.params['userId']!,
+                builder: (ctx, state) => BlocProvider<UserDetailsBloc>.value(
+                  value: sl<UserDetailsBloc>(),
+                  child: EditUserPage(
+                    userId: state.params['userId']!,
+                  ),
                 ),
               ),
             ],

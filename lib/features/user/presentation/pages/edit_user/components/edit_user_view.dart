@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../blocs/blocs.dart';
 import 'edit_user_app_bar.dart';
+import 'image_fields.dart';
 
 class EditUserView extends StatelessWidget {
   const EditUserView({super.key});
@@ -15,8 +18,19 @@ class EditUserView extends StatelessWidget {
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: EditUserAppBar(),
       ),
-      body: const Center(
-        child: Text('EDIT PROFILE PAGE'),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: BlocBuilder<UserDetailsBloc, UserDetailsState>(
+          builder: (ctx, state) => SizedBox(
+            height: 180,
+            child: ImageFields(
+              currentAvatarImageUrl: state.user!.profilePic,
+              currentBannerImageUrl: state.user!.banner,
+              onPickAvatarImage: () {},
+              onPickBannerImage: () {},
+            ),
+          ),
+        ),
       ),
     );
   }
