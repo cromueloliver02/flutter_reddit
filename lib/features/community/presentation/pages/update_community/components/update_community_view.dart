@@ -35,6 +35,10 @@ class UpdateCommunityView extends StatelessWidget {
                 child: ImageFields(
                   currentAvatarImageUrl: state.community!.avatar,
                   currentBannerImageUrl: state.community!.banner,
+                  onPickAvatarImage:
+                      ctx.read<UpdateCommunityFormCubit>().pickAvatarImage,
+                  onPickBannerImage:
+                      ctx.read<UpdateCommunityFormCubit>().pickBannerImage,
                 ),
               ),
             ),
