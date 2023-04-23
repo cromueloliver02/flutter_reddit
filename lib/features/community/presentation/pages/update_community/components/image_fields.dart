@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../core/widgets/widgets.dart';
+import '../../../cubits/cubits.dart';
 
 class ImageFields extends StatelessWidget {
   final String currentAvatarImageUrl;
@@ -18,23 +20,25 @@ class ImageFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        RDTBannerImageField(
-          bannerImageUrl: currentBannerImageUrl,
-          bannerImageFile: null,
-          onPickImage: onPickBannerImage,
-        ),
-        Positioned(
-          left: 20,
-          bottom: 0,
-          child: RDTAvatarImageField(
-            avatarImageUrl: currentAvatarImageUrl,
-            avatarImageFile: null,
-            onPickImage: onPickAvatarImage,
+    return BlocBuilder<UpdateCommunityFormCubit, UpdateCommunityFormState>(
+      builder: (ctx, state) => Stack(
+        children: [
+          RDTBannerImageField(
+            bannerImageUrl: currentBannerImageUrl,
+            bannerImageFile: state.bannerImageFile,
+            onPickImage: onPickBannerImage,
           ),
-        ),
-      ],
+          Positioned(
+            left: 20,
+            bottom: 0,
+            child: RDTAvatarImageField(
+              avatarImageUrl: currentAvatarImageUrl,
+              avatarImageFile: state.avatarImageFile,
+              onPickImage: onPickAvatarImage,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
