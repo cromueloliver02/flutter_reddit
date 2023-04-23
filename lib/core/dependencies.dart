@@ -22,6 +22,7 @@ import '../features/user/data/repositories/repositories.dart';
 import '../features/user/domain/repositories/repositories.dart';
 import '../features/user/domain/usecases/usecases.dart';
 import '../features/user/presentation/blocs/blocs.dart';
+import '../features/user/presentation/cubits/cubits.dart';
 import 'blocs/blocs.dart';
 import 'datasources/datasources.dart';
 
@@ -163,6 +164,9 @@ void setup() {
   );
   sl.registerFactory<AddModeratorCubit>(
     () => AddModeratorCubit(saveModerators: sl<SaveModerators>()),
+  );
+  sl.registerFactory<EditUserFormCubit>(
+    () => EditUserFormCubit(pickImage: sl<PickImage>()),
   );
 
   // utilities

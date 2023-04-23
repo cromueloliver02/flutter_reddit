@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../blocs/blocs.dart';
+import '../../../cubits/cubits.dart';
 import 'edit_user_app_bar.dart';
 import 'image_fields.dart';
 
@@ -26,8 +27,8 @@ class EditUserView extends StatelessWidget {
             child: ImageFields(
               currentAvatarImageUrl: state.user!.profilePic,
               currentBannerImageUrl: state.user!.banner,
-              onPickAvatarImage: () {},
-              onPickBannerImage: () {},
+              onPickAvatarImage: ctx.read<EditUserFormCubit>().pickAvatarImage,
+              onPickBannerImage: ctx.read<EditUserFormCubit>().pickBannerImage,
             ),
           ),
         ),

@@ -9,6 +9,7 @@ import '../../features/community/presentation/pages/pages.dart';
 import '../../features/home/presentation/pages/pages.dart';
 import '../../features/splash/presentation/pages/pages.dart';
 import '../../features/user/presentation/blocs/blocs.dart';
+import '../../features/user/presentation/cubits/cubits.dart';
 import '../../features/user/presentation/pages/pages.dart';
 import '../blocs/blocs.dart';
 import '../dependencies.dart';
@@ -71,8 +72,15 @@ class AppRouter {
               GoRoute(
                 path: EditUserPage.path,
                 name: EditUserPage.name,
-                builder: (ctx, state) => BlocProvider<UserDetailsBloc>.value(
-                  value: sl<UserDetailsBloc>(),
+                builder: (ctx, state) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<UserDetailsBloc>.value(
+                      value: sl<UserDetailsBloc>(),
+                    ),
+                    BlocProvider<EditUserFormCubit>.value(
+                      value: sl<EditUserFormCubit>(),
+                    ),
+                  ],
                   child: EditUserPage(
                     userId: state.params['userId']!,
                   ),
