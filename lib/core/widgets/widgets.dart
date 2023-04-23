@@ -1,3 +1,4 @@
+export 'rdt_avatar_image_field.dart';
 export 'rdt_banner_image_field.dart';
 export 'rdt_elevated_button.dart';
 export 'rdt_empty_message_card.dart';

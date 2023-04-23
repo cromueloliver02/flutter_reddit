@@ -5,7 +5,6 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../../core/widgets/widgets.dart';
 import '../../../blocs/blocs.dart';
 import '../../../cubits/cubits.dart';
-import 'avatar_image_field.dart';
 import 'update_community_app_bar.dart';
 
 class UpdateCommunityView extends StatelessWidget {
@@ -52,10 +51,20 @@ class UpdateCommunityView extends StatelessWidget {
                         Positioned(
                           left: 20,
                           bottom: 0,
-                          child: AvatarImageField(
-                            avatar: state.community!.avatar,
+                          child: BlocSelector<UpdateCommunityFormCubit,
+                              UpdateCommunityFormState, XFile?>(
+                            selector: (state) => state.avatarImageFile,
+                            builder: (ctx, avatarImageFile) {
+                              return RDTAvatarImageField(
+                                avatar: state.community!.avatar,
+                                avatarImageFile: avatarImageFile,
+                                onPickAvatarImage: context
+                                    .read<UpdateCommunityFormCubit>()
+                                    .pickAvatarImage,
+                              );
+                            },
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
