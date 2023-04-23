@@ -7,15 +7,15 @@ import 'package:image_picker/image_picker.dart';
 import '../../../../../../core/constants/constants.dart';
 
 class RDTBannerImageField extends StatelessWidget {
-  final String banner;
+  final String bannerImageUrl;
   final XFile? bannerImageFile;
-  final VoidCallback onPickBannerImage;
+  final VoidCallback onPickImage;
 
   const RDTBannerImageField({
     super.key,
-    required this.banner,
+    required this.bannerImageUrl,
     required this.bannerImageFile,
-    required this.onPickBannerImage,
+    required this.onPickImage,
   });
 
   @override
@@ -23,7 +23,7 @@ class RDTBannerImageField extends StatelessWidget {
     final TextTheme textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: onPickBannerImage,
+      onTap: onPickImage,
       child: DottedBorder(
         radius: const Radius.circular(10),
         dashPattern: const [10, 4],
@@ -42,7 +42,7 @@ class RDTBannerImageField extends StatelessWidget {
                     File(bannerImageFile!.path),
                     fit: BoxFit.cover,
                   )
-                : banner.isEmpty || banner == kBannerDefault
+                : bannerImageUrl.isEmpty || bannerImageUrl == kBannerDefault
                     ? const Center(
                         child: Icon(
                           Icons.camera_alt_outlined,
@@ -50,7 +50,7 @@ class RDTBannerImageField extends StatelessWidget {
                         ),
                       )
                     : Image.network(
-                        banner,
+                        bannerImageUrl,
                         fit: BoxFit.cover,
                       ),
           ),
